@@ -1,4 +1,38 @@
+/* Animated border reveal button styles */
+.btn-border-reveal {
+  background-color: transparent;
+  color: black;
+  border: 2px solid #F29D00;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.btn {
+  transition: all 0.5s ease;
+}
+
+.btn-border-reveal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 0;
+  height: 100%;
+  background-color: #F29D00;
+  transition: width 0.8s ease;
+  z-index: -1;
+}
+
+.btn-border-reveal:hover::after {
+  width: 100%;
+}
+
+.btn-border-reveal:hover {
+  color: black;
+}
 @import "tailwindcss";
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
 
 :root {
   --background: #ffffff;
@@ -8,8 +42,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-open-sans);
+  --font-plant: var(--font-plant);
+  --breakpoint-3xl: 105rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +57,98 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-open-sans), system-ui, sans-serif;
+}
+
+/* Font Face for Plant font */
+@font-face {
+  font-family: 'Plant';
+  src: url('./fonts/plantc.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* Custom animations for Hero Section */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 1s ease-out;
+}
+
+.animate-fade-in-delay {
+  animation: fade-in 1s ease-out 0.3s both;
+}
+
+.animate-fade-in-delay-2 {
+  animation: fade-in 1s ease-out 0.6s both;
+}
+
+/* Custom text size utilities */
+.text-20 {
+  font-size: 20px;
+}
+
+/* Custom color utilities - Design System */
+.text-primary {
+  color: #027DB9 !important;
+}
+
+.text-secondary {
+  color: #1EA7CB !important;
+}
+
+.text-accent {
+  color: #F29D00 !important;
+}
+
+.bg-primary {
+  background-color: #027DB9 !important;
+}
+
+.bg-secondary {
+  background-color: #1EA7CB !important;
+}
+
+.bg-accent {
+  background-color: #F29D00 !important;
+}
+
+.border-primary {
+  border-color: #027DB9 !important;
+}
+
+.border-secondary {
+  border-color: #1EA7CB !important;
+}
+
+.border-accent {
+  border-color: #F29D00 !important;
+}
+
+/* Custom responsive utilities for 3xl (1680px+) */
+@media (min-width: 1680px) {
+  .custom-3xl\:bottom-50 {
+    bottom: 12.5rem !important;
+  }
+  
+  .custom-3xl\:px-72 {
+    padding-left: 18rem !important;
+    padding-right: 18rem !important;
+  }
+  
+  .custom-3xl\:text-8xl {
+    font-size: 6rem !important;
+    line-height: 1 !important;
+  }
 }
