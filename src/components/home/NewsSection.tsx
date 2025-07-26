@@ -52,7 +52,7 @@ export default function NewsSection() {
         <section className="bg-white py-16 px-8 md:px-16 lg:px-56 min-h-screen flex flex-col items-center justify-center">
             <div className="container mx-auto">
                 <div className="text-center mb-12">
-                    <h1 className="text-xl font-semibold text-primary font-plant mb-2">Stories from the Coast</h1>
+                    <h1 className="text-xl  text-primary font-plant mb-2">Stories from the Coast</h1>
                     <p className="text-black text-2xl md:text-3xl lg:text-[32px] -mt-1 font-semibold">Latest News & Updates</p>
                 </div>
 

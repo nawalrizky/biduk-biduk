@@ -103,9 +103,9 @@ const HotelSection = () => {
                 {/* Desktop left navigation button OUTSIDE the slider wrapper with new style */}
               
            
-                <div className="flex flex-col lg:flex-row justify-between items-start mb-8 lg:items-center lg:mb-12 ">
+                <div className="flex flex-col lg:flex-row justify-between items-center mb-8 lg:items-center lg:mb-12 ">
                     <div className="mb-6 lg:mb-0">
-                        <span className="text-primary font-plant text-xl mb-2 block">
+                        <span className="text-primary font-plant text-center text-xl mb-2 block">
                             Your Beachside Escape
                         </span>
                         <h2 className="text-4xl lg:text-5xl font-semibold text-black leading-tight">

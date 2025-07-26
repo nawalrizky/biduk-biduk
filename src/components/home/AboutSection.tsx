@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function AboutSection() {
   return (
     <section
-      className="h-[70vh] md:h-[50vh] "
+      className="h-[85vh] md:h-[50vh] "
       style={{
         backgroundColor: "white",
         backgroundImage:
