@@ -119,6 +119,7 @@ export default function DiscoverSection() {
                     alt={destination.name}
                     width={500}
                     height={500}
+                    loading="lazy"
                     className="w-80 h-80 object-cover rounded-[20px] hover:scale-105 transition-transform duration-300 shadow-lg"
                   />
                   <div className="flex flex-col items-center w-full px-4 3xl:px-10">
@@ -208,6 +209,7 @@ export default function DiscoverSection() {
                   alt={destination.name}
                   width={600}
                   height={600}
+                  loading="lazy"
                   className="w-full h-[280px] rounded-xl object-cover"
                 />
                 

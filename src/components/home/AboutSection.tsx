@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function AboutSection() {
   return (
     <section
-      className="h-[85vh] md:h-[50vh] "
+      className="h-screen md:h-[50vh] "
       style={{
         backgroundColor: "white",
         backgroundImage:
@@ -16,6 +16,7 @@ export default function AboutSection() {
           alt="About Biduk-Biduk"
           width={500}
           height={500}
+          loading="lazy"
           className="w-full md:w-[55%] lg:w-[70%] h-auto"
         />
         <div className="flex flex-col justify-center items-start text-left gap-2">

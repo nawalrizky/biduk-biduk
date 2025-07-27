@@ -1,10 +1,11 @@
 "use client"
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function NewsSection() {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const touchStartX = useRef<number | null>(null);
     
     // Sample news data - replace with your actual data
     const newsItems = [
@@ -17,14 +18,14 @@ export default function NewsSection() {
         },
         {
             id: 2,
-            image: "/images/home/hero.png",
+            image: "/images/home/destination/image1.png",
             category: "News",
             title: "Second News Article Title Here",
             description: "Another lorem ipsum text for the second news article to demonstrate the mobile carousel functionality."
         },
         {
             id: 3,
-            image: "/images/home/hero.png",
+            image: "/images/home/destination/image2.png",
             category: "News",
             title: "Third Amazing News Story",
             description: "Third news article description with more lorem ipsum content for testing purposes."
@@ -38,7 +39,6 @@ export default function NewsSection() {
         }
     ];
 
-   
     const getImageIndex = (offset: number) => {
         const index = currentIndex + offset;
         if (index >= newsItems.length) return index - newsItems.length;
@@ -46,7 +46,25 @@ export default function NewsSection() {
         return index;
     };
 
-   
+    // Handle swipe gesture for mobile
+    const handleTouchStart = (e: React.TouchEvent) => {
+        touchStartX.current = e.touches[0].clientX;
+    };
+    const handleTouchEnd = (e: React.TouchEvent) => {
+        if (touchStartX.current === null) return;
+        const touchEndX = e.changedTouches[0].clientX;
+        const diff = touchEndX - touchStartX.current;
+        if (Math.abs(diff) > 40) {
+            if (diff < 0) {
+                // Swipe left
+                setCurrentIndex((prev) => (prev + 1) % newsItems.length);
+            } else {
+                // Swipe right
+                setCurrentIndex((prev) => (prev - 1 + newsItems.length) % newsItems.length);
+            }
+        }
+        touchStartX.current = null;
+    };
 
     return (
         <section className="bg-white py-16 px-8 md:px-16 lg:px-56 min-h-screen flex flex-col items-center justify-center">
@@ -58,7 +76,7 @@ export default function NewsSection() {
 
                 {/* Mobile Version - Stacked Images Side by Side */}
                 <div className="block md:hidden">
-                    <div className="relative">
+                    <div className="relative" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
                         {/* Stacked Images Container */}
                         <div className="relative h-64 mb-6 overflow-hidden">
                             <div className="flex items-center justify-center h-full">
@@ -69,9 +87,9 @@ export default function NewsSection() {
                                         alt="Previous news"
                                         fill
                                         className="object-cover rounded-lg shadow-md"
+                                        loading="lazy"
                                     />
                                 </div>
-                                
                                 {/* Current image (center) */}
                                 <div className="relative w-64 h-48 z-10">
                                     <Image
@@ -79,9 +97,9 @@ export default function NewsSection() {
                                         alt={`News Image ${currentIndex + 1}`}
                                         fill
                                         className="object-cover rounded-lg shadow-lg"
+                                        loading="lazy"
                                     />
                                 </div>
-                                
                                 {/* Next image (right side) */}
                                 <div className="absolute right-0 w-20 h-48 opacity-60 transform scale-90">
                                     <Image
@@ -89,6 +107,7 @@ export default function NewsSection() {
                                         alt="Next news"
                                         fill
                                         className="object-cover rounded-lg shadow-md"
+                                        loading="lazy"
                                     />
                                 </div>
                             </div>
@@ -152,6 +171,7 @@ export default function NewsSection() {
                                                 alt={`News Image ${index + 1}`}
                                                 width={400}
                                                 height={250}
+                                                loading="lazy"
                                                 className="w-full h-56 object-cover rounded-lg shadow-md"
                                             />
                                             <div className="flex flex-col gap-3 mt-4 flex-1">
@@ -210,6 +230,7 @@ export default function NewsSection() {
                                 alt={`News Image ${index + 1}`}
                                 width={500}
                                 height={300}
+                                loading="lazy"
                                 className="w-full h-48 object-cover rounded-lg shadow-md"
                             />
                             <div className="flex flex-col gap-3 mt-4 flex-1">

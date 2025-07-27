@@ -39,6 +39,7 @@ export default function DestinationSection() {
               alt="Biduk Sea View"
               width={500}
               height={500}
+              loading="lazy"
               className="w-64 h-[546px] object-cover rounded-lg shadow-lg 
                                 hover:scale-105 transition-transform duration-300"
             />
@@ -51,6 +52,7 @@ export default function DestinationSection() {
               alt="Dermaga Labuan Cermin"
               width={500}
               height={500}
+              loading="lazy"
               className="w-64 h-80 object-cover rounded-lg shadow-lg 
                                 hover:scale-105 transition-transform duration-300"
             />
@@ -59,6 +61,7 @@ export default function DestinationSection() {
               alt="Perahu Labuan Cermin"
               width={500}
               height={500}
+              loading="lazy"
               className="w-64 h-96 object-cover rounded-lg shadow-lg 
                                 hover:scale-105 transition-transform duration-300"
             />
@@ -72,6 +75,7 @@ export default function DestinationSection() {
               alt="Labuan Cermin"
               width={500}
               height={500}
+              loading="lazy"
               className="w-112 h-64 object-cover rounded-lg shadow-lg
                                 hover:scale-105 transition-transform duration-300"
             />
@@ -80,6 +84,7 @@ export default function DestinationSection() {
               alt="Bangkuduan"
               width={500}
               height={500}
+              loading="lazy"
               className="w-112 h-64 object-cover rounded-lg shadow-lg 
                                 hover:scale-105 transition-transform duration-300"
             />
@@ -105,6 +110,7 @@ export default function DestinationSection() {
                 alt="Biduk Surfing"
                 width={500}
                 height={500}
+                loading="lazy"
                 className="flex-1 h-32 sm:h-36 object-cover rounded-lg shadow-lg"
               />
               <Image
@@ -112,6 +118,7 @@ export default function DestinationSection() {
                 alt="Biduk Snorkeling"
                 width={500}
                 height={500}
+                loading="lazy"
                 className="flex-1 h-32 sm:h-36 object-cover rounded-lg shadow-lg"
               />
             </div>
@@ -120,6 +127,7 @@ export default function DestinationSection() {
               alt="Biduk Beach"
               width={500}
               height={500}
+              loading="lazy"
               className="w-1/2 flex-1 object-cover rounded-lg shadow-lg"
             />
           </div>
@@ -131,6 +139,7 @@ export default function DestinationSection() {
               alt="Bangkuduan"
               width={500}
               height={500}
+              loading="lazy"
               className="w-full h-48 object-cover rounded-lg shadow-lg"
             />
           </div>
@@ -142,6 +151,7 @@ export default function DestinationSection() {
               alt="Perahu Labuan Cermin"
               width={500}
               height={500}
+              loading="lazy"
               className="w-32 flex-1 sm:h-48  object-cover rounded-lg shadow-lg"
             />
             <Image
@@ -149,6 +159,7 @@ export default function DestinationSection() {
               alt="Destination 5"
               width={500}
               height={500}
+              loading="lazy"
               className="w-32 flex-1 sm:h-48  object-cover rounded-lg shadow-lg"
             />
           </div>

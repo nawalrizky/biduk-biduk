@@ -93,7 +93,7 @@ const ExploreSection: React.FC = () => {
 
   useEffect(() => {
     // Hide click content on scroll or click outside
-    const handleHideClickContent = (e: MouseEvent | Event) => {
+    const handleHideClickContent = () => {
       setClickedMarker(null)
       setClickPosition(null)
     }
@@ -391,6 +391,7 @@ const ExploreSection: React.FC = () => {
             alt="Facilities Icon" 
             width={48} 
             height={48} 
+            loading='lazy'
             className="w-10 h-10 sm:w-12 sm:h-12" 
           />
           <div className="flex flex-col items-start">
@@ -403,7 +404,8 @@ const ExploreSection: React.FC = () => {
             src="/images/home/icon2.png" 
             alt="Destinations Icon" 
             width={48} 
-            height={48} 
+            height={48}
+            loading='lazy' 
             className="w-10 h-10 sm:w-12 sm:h-12" 
           />
           <div className="flex flex-col items-start">
@@ -417,6 +419,7 @@ const ExploreSection: React.FC = () => {
             alt="Hotels Icon" 
             width={48} 
             height={48} 
+            loading='lazy'
             className="w-10 h-10 sm:w-12 sm:h-12" 
           />
           <div className="flex flex-col items-start">
@@ -430,6 +433,7 @@ const ExploreSection: React.FC = () => {
             alt="Tour Package Icon" 
             width={48} 
             height={48} 
+            loading='lazy'
             className="w-10 h-10 sm:w-12 sm:h-12" 
           />
           <div className="flex flex-col items-start">
