@@ -1,0 +1,11 @@
+{
+  "navbar": {
+    "home": "Beranda",
+    "place": "Tempat",
+    "stay": "Penginapan",
+    "contact": "Kontak",
+    "follow": "Ikuti Kami",
+    "language": "Bahasa"
+  },
+  "book_now": "Pesan Sekarang →"
+}

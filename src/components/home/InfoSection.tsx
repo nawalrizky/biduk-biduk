@@ -7,10 +7,11 @@ export default function InfoSection() {
             {/* Background Image Mobile */}
             <div className="relative w-full h-64 -mt-40">
                 <Image
-                    src="/images/home/bg_mobile.png"
+                    src="/images/home/hero/bg_mobile.png"
                     alt="Background decoration mobile"
                     width={768}
                     height={400}
+                    priority
                     className="w-full h-full object-contain"
                 />
             </div>
@@ -21,10 +22,11 @@ export default function InfoSection() {
                 {/* First Row - Location (1) */}
                 <div className="flex gap-2 items-center justify-center">
                     <Image
-                        src="/images/home/icon_location.png"
+                        src="/images/home/hero/icon_location.png"
                         alt="icon location"
                         width={1000}
                         height={1000}
+                        loading='lazy'
                         className="w-auto h-10"
                     />
                     <div className="flex flex-col text-left">

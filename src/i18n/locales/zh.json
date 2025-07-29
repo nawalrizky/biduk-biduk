@@ -1,0 +1,11 @@
+{
+  "navbar": {
+    "home": "首页",
+    "place": "景点",
+    "stay": "住宿",
+    "contact": "联系",
+    "follow": "关注我们",
+    "language": "语言"
+  },
+  "book_now": "立即预订 →"
+}

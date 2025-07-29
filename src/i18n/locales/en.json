@@ -1,0 +1,11 @@
+{
+  "navbar": {
+    "home": "Home",
+    "place": "Place",
+    "stay": "Stay",
+    "contact": "Contact",
+    "follow": "Follow Us",
+    "language": "Language"
+  },
+  "book_now": "Book Now →"
+}

@@ -219,7 +219,7 @@ const HeroSection = () => {
       {/* Background Image Bottom - Desktop */}
       <div className="hidden md:block absolute bottom-0 lg:-mb-28 left-0 w-full z-10">
         <Image
-          src="/images/home/bg.png"
+          src="/images/home/hero/bg.png"
           alt="Background decoration"
           width={1920}
           height={400}
@@ -233,7 +233,7 @@ const HeroSection = () => {
       <div className="hidden md:flex absolute bottom-15 lg:bottom-5 3xl:bottom-12 w-full justify-between z-20 px-20 lg:px-56 ">
         <div className="flex gap-2 items-center">
           <Image
-            src="/images/home/icon_location.png"
+            src="/images/home/hero/icon_location.png"
             alt="icon location"
             width={1000}
             height={1000}

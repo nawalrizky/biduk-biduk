@@ -140,6 +140,7 @@ const HotelSection = () => {
                                             alt={item.title} 
                                             width={400} 
                                             height={480}
+                                            loading="lazy"
                                             className="w-full h-80 object-cover rounded-xl group-hover:scale-110 transition-transform duration-500"
                                         />
                                     </div>

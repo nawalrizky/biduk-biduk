@@ -150,12 +150,12 @@ const ExploreSection: React.FC = () => {
   // Marker data
     const markerData = [
     {
-      id: 'pantai-biduk',
+      id: 'labuan cermin',
       coordinates: [118.68365837631133, 1.2552809003754883] as [number, number],
-      title: 'Pantai Biduk-Biduk',
-      type: 'Pantai Wisata',
-      description: 'Pantai dengan pasir putih yang eksotis dan view sunset menawan',
-      image: '/images/home/destination/image1.png'
+      title: 'Labuan Cermin',
+      type: 'Wisata Alam',
+      description: 'Laguna air dua rasa yang terkendal dengan kejernihan airnya',
+      image: '/images/home/destination/image6.png'
     },
     {
       id: 'dermaga-nelayan',
@@ -186,7 +186,7 @@ const ExploreSection: React.FC = () => {
     <section 
       className="flex justify-center items-center min-h-screen relative bg-cover bg-center bg-no-repeat overflow-x-hidden"
       style={{
-        backgroundImage: "url('/images/home/explore.png')"
+        backgroundImage: "url('/images/home/explore/explore.png')"
       }}
     >
       {/* Overlay */}
@@ -387,7 +387,7 @@ const ExploreSection: React.FC = () => {
       <div className="flex flex-col sm:flex-row mx-auto sm:mx-0 px-32 sm:px-0 lg:flex-col gap-6 sm:gap-8 lg:gap-12 lg:mt-36 w-full lg:w-auto justify-center lg:justify-start items-start sm:items-center lg:items-start">
         <div className="flex items-start sm:items-center gap-3 lg:gap-4 justify-start sm:justify-center lg:justify-start w-full">
           <Image 
-            src="/images/home/icon1.png" 
+            src="/images/home/explore/icon1.png" 
             alt="Facilities Icon" 
             width={48} 
             height={48} 
@@ -401,7 +401,7 @@ const ExploreSection: React.FC = () => {
         </div>
         <div className="flex items-start sm:items-center gap-3 lg:gap-4 justify-start sm:justify-center lg:justify-start w-full">
           <Image 
-            src="/images/home/icon2.png" 
+            src="/images/home/explore/icon2.png" 
             alt="Destinations Icon" 
             width={48} 
             height={48}
@@ -415,7 +415,7 @@ const ExploreSection: React.FC = () => {
         </div>
         <div className="flex items-start sm:items-center gap-3 lg:gap-4 justify-start sm:justify-center lg:justify-start w-full">
           <Image 
-            src="/images/home/icon3.png" 
+            src="/images/home/explore/icon3.png" 
             alt="Hotels Icon" 
             width={48} 
             height={48} 
@@ -429,7 +429,7 @@ const ExploreSection: React.FC = () => {
         </div>
         <div className="flex items-start sm:items-center gap-3 lg:gap-4 justify-start sm:justify-center lg:justify-start w-full">
           <Image 
-            src="/images/home/icon4.png" 
+            src="/images/home/explore/icon4.png" 
             alt="Tour Package Icon" 
             width={48} 
             height={48} 

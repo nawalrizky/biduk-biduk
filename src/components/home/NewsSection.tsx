@@ -13,7 +13,7 @@ export default function NewsSection() {
             id: 1,
             image: "/images/home/hero.png",
             category: "News",
-            title: "Lorem Ipsum Dolor Sit Amet Ngentet",
+            title: "Lorem Ipsum Dolor Sit Amet ",
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
         },
         {
@@ -222,16 +222,16 @@ export default function NewsSection() {
                 </div>
 
                 {/* Desktop Version - Original Grid */}
-                <div className="hidden lg:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="hidden lg:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 ">
                     {newsItems.map((item, index) => (
-                        <div key={index} className="flex flex-col h-full">
+                        <div key={index} className="flex flex-col h-full lg:shadow-xl lg:rounded-3xl lg:p-4 bg-[#F1FAFF] hover:scale-105 transition-transform duration-300">
                             <Image
                                 src={item.image}
                                 alt={`News Image ${index + 1}`}
                                 width={500}
                                 height={300}
                                 loading="lazy"
-                                className="w-full h-48 object-cover rounded-lg shadow-md"
+                                className="w-full h-48 object-cover rounded-xl "
                             />
                             <div className="flex flex-col gap-3 mt-4 flex-1">
                                 <h2 className="text-xl font-plant text-primary">{item.category}</h2>

@@ -87,7 +87,7 @@ const Footer = () => {
                             <div className="flex items-center gap-3">
                                 {/* Logo placeholder - replace with your actual logo */}
                                 <Image
-                                    src="/images/home/logo.png"
+                                    src="/images/logo.png"
                                     alt="Biduk Biduk Logo"
                                     width={500}
                                     height={500}

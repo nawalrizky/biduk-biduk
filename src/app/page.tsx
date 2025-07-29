@@ -8,13 +8,10 @@ import NewsSection from "@/components/home/NewsSection";
 import ExploreSection from "@/components/home/ExploreSection";
 import PackageSection from "@/components/home/PackageSection";
 
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
     <main>
-      <Navbar />
       <HeroSection />
       <InfoSection />
       <DestinationSection />
@@ -24,7 +21,6 @@ export default function Home() {
       <NewsSection />
       <ExploreSection />
       <PackageSection />
-      <Footer />
     </main>
   );
 }
