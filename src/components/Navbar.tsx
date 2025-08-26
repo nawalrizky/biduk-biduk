@@ -85,7 +85,7 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <div className="ml-10 flex items-baseline gap-11">
               {navItems.map((item) => {
                 const isActive = pathname === item.href;
@@ -147,11 +147,11 @@ const Navbar = () => {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-white  focus:outline-none focus:ring-2 focus:ring-white p-2"
+              className="text-white  focus:outline-none p-2"
               aria-controls="mobile-menu"
               aria-expanded={isMobileMenuOpen}
             >
@@ -166,7 +166,7 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Navigation */}
-      <div className={`md:hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`} id="mobile-menu">
+      <div className={`lg:hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`} id="mobile-menu">
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-black/20 backdrop-blur-md">
           {navItems.map((item) => {
             const isActive = pathname === item.href;

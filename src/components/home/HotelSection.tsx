@@ -1,10 +1,85 @@
-"use client";
+"use client"
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
-import Slider from 'react-slick';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+import { useEffect, useRef } from 'react';
+import Lenis from 'lenis';
 
 const HotelSection = () => {
+  const lenisRef = useRef<Lenis | null>(null);
+
+  useEffect(() => {
+    // Initialize Lenis
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      touchMultiplier: 2,
+      infinite: false,
+    });
+
+    lenisRef.current = lenis;
+
+    // Update ScrollTrigger on scroll
+    lenis.on('scroll', ScrollTrigger.update);
+
+    // Add Lenis to gsap ticker
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      lenis.destroy();
+      gsap.ticker.remove(lenis.raf);
+    };
+  }, []);
+  
+   useGSAP(() => {
+    
+    gsap.registerPlugin(ScrollTrigger);
+    const hotelSection = document.querySelector('.hotel-wrapper') as HTMLElement;
+
+    if (hotelSection) {
+      // Different scroll distances based on screen size
+      const getScrollDistance = () => {
+        const screenWidth = window.innerWidth;
+        if (screenWidth >= 1024) { // Desktop
+          return -(hotelSection.scrollWidth - window.innerWidth + 200);
+        } else if (screenWidth >= 768) { // Tablet
+          return -(hotelSection.scrollWidth - window.innerWidth + 100);
+        } else { // Mobile
+          return -(hotelSection.scrollWidth - window.innerWidth + 50);
+        }
+      };
+
+      const getEndDistance = () => {
+        const screenWidth = window.innerWidth;
+        if (screenWidth >= 1024) { // Desktop
+          return "+=" + (hotelSection.scrollWidth + 200);
+        } else if (screenWidth >= 768) { // Tablet
+          return "+=" + (hotelSection.scrollWidth + 100);
+        } else { // Mobile
+          return "+=" + (hotelSection.scrollWidth);
+        }
+      };
+
+      gsap.to('.hotel-wrapper', {
+         x: getScrollDistance,
+        scrollTrigger: {
+          trigger: '.horizontal-scroll',
+          start: 'center center',
+          end: getEndDistance,
+          scrub: true,
+          pin: ".horizontal-scroll",
+          invalidateOnRefresh: true,
+          anticipatePin: 1,
+        },
+      });
+    }
+  }, []);
 
     const hotelContent = [
         {img:'/images/home/hero.png', location:'Berau', title:'Ocean View Resort'},          
@@ -12,107 +87,24 @@ const HotelSection = () => {
         {img:'/images/home/hero.png', location:'Maratua Island', title:'Maratua Paradise Resort'},          
         {img:'/images/home/hero.png', location:'Sangalaki Island', title:'Turtle Bay Lodge'},
         {img:'/images/home/hero.png', location:'Kakaban Island', title:'Jellyfish Lake Resort'},          
-      ]; 
-
-      const settings = {
-        dots: false,
-        infinite: true,
-        speed: 2000,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        arrows: false,
-        swipeToSlide: true,
-        autoplay: true,
-        autoplaySpeed: 4000,
-        responsive: [
-          {
-            breakpoint: 1399,
-            settings: {
-              slidesToShow: 4,
-            }
-          },
-          {
-            breakpoint: 1199,
-            settings: {
-              slidesToShow: 3,
-            }
-          },
-          {
-            breakpoint: 991,
-            settings: {
-              slidesToShow: 2,
-            }
-          },
-          {
-            breakpoint: 575,
-            settings: {
-              slidesToShow: 1,
-            }
-          }
-        ]
-      };  
-
-    // Slider ref for navigation
-    const sliderRef = React.useRef<Slider>(null);
-    // Handler for previous slide
-    const prevSlide = () => sliderRef?.current?.slickPrev();
-    const nextSlide = () => sliderRef?.current?.slickNext();
+        {img:'/images/home/hero.png', location:'Kakaban Island', title:'Jellyfish Lake Resort'},          
+                
+    ];
     return (
-        <section className="relative bg-white py-16 px-8 lg:py-24 lg:px-56 overflow-x-hidden">
+        <section className="horizontal-scroll relative bg-white overflow-hidden py-40 lg:py-40">
             <div className="absolute inset-0 bg-secondary opacity-15"></div>
-              <button
-                  onClick={prevSlide}
-                  className="hidden lg:block absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/10 hover:bg-black/40 text-white px-3 rounded-xl transition-all duration-300 backdrop-blur-sm"
-                  aria-label="Previous slide"
-                >
-                  <svg
-                    className="w-8 h-20"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 32 80"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={3}
-                      d="M20 64l-10-24 10-24"
-                    />
-                  </svg>
-              </button>
-              <button
-                  onClick={nextSlide}
-                  className="hidden lg:block absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/10 hover:bg-black/40 text-white px-3 rounded-xl transition-all duration-300 backdrop-blur-sm"
-                  aria-label="Next slide"
-                >
-                  <svg
-                    className="w-8 h-20 rotate-180"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 32 80"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={3}
-                      d="M20 64l-10-24 10-24"
-                    />
-                  </svg>
-              </button>
-              
-            <div className="container mx-auto py-10 relative z-10">
-                {/* Desktop left navigation button OUTSIDE the slider wrapper with new style */}
-              
-           
-                <div className="flex flex-col lg:flex-row justify-between items-center mb-8 lg:items-center lg:mb-12 ">
-                    <div className="mb-6 lg:mb-0">
-                        <span className="text-primary font-plant text-center text-xl mb-2 block">
+            <div className="container mx-auto px-4 lg:px-0 relative z-10">
+
+                <div className="flex flex-col lg:flex-row justify-center items-center mb-8 lg:px-56">
+                    <div className="mb-6 lg:mb-0 w-full lg:w-2/3 flex flex-col justify-center text-center lg:text-left">
+                        <span className="text-primary font-plant text-lg lg:text-xl mb-2 block lg:pr-24">
                             Your Beachside Escape
                         </span>
-                        <h2 className="text-4xl lg:text-5xl font-semibold text-black leading-tight">
+                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-black leading-tight">
                            Stay, Swim, Relax
                         </h2>
                     </div>
-                    <Link href="/hotels" className="hidden lg:flex text-primary font-plant text-3xl mb-2  items-center gap-2">
+                    <Link href="/hotels" className="hidden lg:flex text-primary w-1/3 font-plant text-3xl mb-2 pl-38 items-center gap-2">
                        Explore More
                         <svg
                             width="16"
@@ -129,41 +121,42 @@ const HotelSection = () => {
                     </Link>
                 </div>
 
-                <div className="hotel-slider-wrapper  relative">
-                    <Slider ref={sliderRef} {...settings}>
+                {/* Horizontal scroll layout for all devices */}
+                <div className="hotel-wrapper h-[50vh] md:h-[55vh] lg:h-[55vh]">
+                    <div className="flex gap-6 md:gap-8 lg:gap-12 pl-4 md:pl-8 lg:pl-54">
                         {hotelContent.map((item, i) => (
-                            <div key={i} className="px-3 ">
-                                <div className="group relative overflow-hidden rounded-xl transition-all duration-500">
-                                    <div className="relative overflow-hidden rounded-xl">
+                            <div key={i} className="flex-shrink-0 w-64 md:w-72 lg:w-80">
+                                <div className="group card-hotel rounded-xl h-full transition-all duration-500">
+                                    <div className="overflow-hidden rounded-xl">
                                         <Image 
                                             src={item.img} 
                                             alt={item.title} 
                                             width={400} 
                                             height={480}
                                             loading="lazy"
-                                            className="w-full h-80 object-cover rounded-xl group-hover:scale-110 transition-transform duration-500"
+                                            className="w-full h-48 md:h-64 lg:h-80 object-cover rounded-xl group-hover:scale-110 transition-transform duration-500"
                                         />
                                     </div>
                                     {/* Content Below Image */}
                                     <div className="p-2">
                                         <div className="flex flex-col justify-between items-start">
                                             <div>
-                                                <h1 className='text-primary font-plant text-xl mb-1'>Hotel</h1>
-                                                <h3 className="text-2xl font-semibold mb-1 text-black">
+                                                <h1 className='text-primary font-plant text-lg md:text-xl mb-1'>Hotel</h1>
+                                                <h3 className="text-xl md:text-2xl font-semibold mb-1 text-black">
                                                     <Link href={`/hotels/${item.title.toLowerCase().replace(/\s+/g, '-')}`} className="hover:text-accent transition-colors">
                                                         {item.title}
                                                     </Link>
                                                 </h3>
                                             </div>
-                                           <div className='flex justify-between items-center w-full mt-4'>
-                                            <div className='flex flex-col gap-2'>
+                                           <div className='flex justify-between items-center w-full mt-2 md:mt-4'>
+                                            <div className='flex flex-col gap-1 md:gap-2'>
                                             <div className='flex items-center gap-2'>
                                             {/* 5 stars icon */}
                                             <div className="flex">
                                                 {[...Array(5)].map((_, index) => (
                                                     <svg
                                                         key={index}
-                                                        className="w-4 h-4 text-accent fill-current"
+                                                        className="w-3 h-3 md:w-4 md:h-4 text-accent fill-current"
                                                         viewBox="0 0 20 20"
                                                         xmlns="http://www.w3.org/2000/svg"
                                                     >
@@ -171,25 +164,26 @@ const HotelSection = () => {
                                                     </svg>
                                                 ))}
                                             </div>
-                                            <p className="text-black font-bold text-sm">4,5/5</p>
+                                            <p className="text-black font-bold text-xs md:text-sm">4,5/5</p>
                                             </div>
-                                            <p className="text-black font-bold text-sm">500 reviews</p>
+                                            <p className="text-black font-bold text-xs md:text-sm">500 reviews</p>
                                             </div>
-                                            {/* Book Now with the same style as visit btn on discover */}
+                                            {/* Book Now button */}
                                             <Link 
                                                 href={`/hotels/${item.title.toLowerCase().replace(/\s+/g, '-')}`}
-                                                className="btn-border-reveal bg-transparent border-2 border-accent text-black font-semibold px-6 py-2 lg:px-3  rounded-full hover:bg-accent transition-colors text-sm lg:text-[12px] flex items-center gap-2 h-fit"
+                                                className="btn-border-reveal bg-transparent border-2 border-accent text-black font-semibold px-3 md:px-4 lg:px-6 py-1.5 md:py-2 rounded-full hover:bg-accent transition-colors text-xs md:text-sm lg:text-[12px] flex items-center gap-1 md:gap-2 h-fit"
                                             >
                                                 Book Now
                                                 <svg
-                                                    width="14"
-                                                    height="14"
+                                                    width="12"
+                                                    height="12"
                                                     viewBox="0 0 24 24"
                                                     fill="none"
                                                     stroke="currentColor"
                                                     strokeWidth="2"
                                                     strokeLinecap="round"
                                                     strokeLinejoin="round"
+                                                    className="md:w-[14px] md:h-[14px]"
                                                 >
                                                     <path d="M5 12h14M12 5l7 7-7 7" />
                                                 </svg>
@@ -200,10 +194,12 @@ const HotelSection = () => {
                                 </div>
                             </div>
                         ))}
-                    </Slider>
-                    {/* Mobile Explore More link below slider */}
-                    <div className="flex lg:hidden justify-center mt-10">
-                        <Link href="/hotels" className="text-primary font-plant text-xl  flex items-center gap-2">
+                    </div>
+                    {/* Explore More link below horizontal scroll */}
+                    
+                </div>
+                <div className="flex lg:hidden justify-center -mt-12">
+                        <Link href="/hotels" className="text-primary font-plant text-xl flex items-center gap-2">
                             Explore More
                             <svg
                                 width="16"
@@ -219,7 +215,6 @@ const HotelSection = () => {
                             </svg>
                         </Link>
                     </div>
-                </div>
             </div>
         </section>
     );
