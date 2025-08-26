@@ -3,7 +3,7 @@ import InfoSection from "@/components/home/InfoSection";
 import DestinationSection from "@/components/home/DestinationSection";
 import AboutSection from "@/components/home/AboutSection";
 import DiscoverSection from "@/components/home/DiscoverSection";
-import HotelSection from "@/components/home/HotelSection2";
+import HotelSection from "@/components/home/HotelSection";
 import NewsSection from "@/components/home/NewsSection";
 import ExploreSection from "@/components/home/ExploreSection";
 import PackageSection from "@/components/home/PackageSection";
