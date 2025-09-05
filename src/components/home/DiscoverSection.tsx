@@ -36,13 +36,7 @@ export default function DiscoverSection() {
     return () => clearInterval(timer);
   }, [destinations.length, isAutoPlay]);
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % destinations.length);
-  };
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + destinations.length) % destinations.length);
-  };
 
   // Enhanced Mouse handlers untuk drag yang lebih responsif
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>): void => {

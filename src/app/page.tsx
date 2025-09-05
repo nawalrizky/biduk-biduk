@@ -7,6 +7,7 @@ import HotelSection from "@/components/home/HotelSection";
 import NewsSection from "@/components/home/NewsSection";
 import ExploreSection from "@/components/home/ExploreSection";
 import PackageSection from "@/components/home/PackageSection";
+import ChatbotButton from "@/components/ui/ChatbotButton";
 
 
 export default function Home() {
@@ -21,6 +22,9 @@ export default function Home() {
       <NewsSection />
       <ExploreSection />
       <PackageSection />
+      
+      {/* Floating Chatbot Button */}
+      <ChatbotButton />
     </main>
   );
 }

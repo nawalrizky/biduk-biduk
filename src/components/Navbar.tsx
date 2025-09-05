@@ -12,7 +12,12 @@ const Navbar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAtTop, setIsAtTop] = useState(true);
+  const [isClient, setIsClient] = useState(false);
   const pathname = usePathname();
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,13 +39,15 @@ const Navbar = () => {
   }, [lastScrollY]);
 
   const { t } = useTranslation();
+  
+  // Prevent hydration mismatch by only showing translated content after client-side hydration
   const navItems = [
-    { name: t('navbar.home'), href: '/' },
-    { name: t('navbar.place'), href: '/place' },
-    { name: t('navbar.stay'), href: '/stay' },
-    { name: t('navbar.contact'), href: '/contact' },
-    { name: t('navbar.follow'), href: '/follow' },
-    { name: t('navbar.language'), href: '/language', isLanguage: true },
+    { name: isClient ? t('navbar.home') : 'Home', href: '/' },
+    { name: isClient ? t('navbar.place') : 'Place', href: '/place' },
+    { name: isClient ? t('navbar.stay') : 'Stay', href: '/stay' },
+    { name: isClient ? t('navbar.contact') : 'Contact', href: '/contact' },
+    { name: isClient ? t('navbar.follow') : 'Follow', href: '/follow' },
+    { name: isClient ? t('navbar.language') : 'Language', href: '/language', isLanguage: true },
   ];
 
   const languageOptions = [
