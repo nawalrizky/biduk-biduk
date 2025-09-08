@@ -17,10 +17,11 @@ const ChatbotButton = () => {
     "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"; // Test key
 
   const handleButtonClick = () => {
-    // if (!isVerified) {
-    //   setShowRecaptcha(true);
-    // } else {
-    setIsModalOpen(true);
+    if (!isVerified) {
+      setShowRecaptcha(true);
+    } else {
+      setIsModalOpen(true);
+    }
   };
 
   const handleRecaptchaChange = (token: string | null) => {
@@ -70,9 +71,9 @@ const ChatbotButton = () => {
               <span className="text-white font-semibold text-base flex-shrink-0">
                 Ask Us Anything!
               </span>
-               <Image
+              <Image
                 src="/icon/arrow_up.svg"
-                alt="Chat Icon"
+                alt="Arrow Up Icon"
                 width={24}
                 height={24}
                 className="w-5 h-5"
@@ -94,13 +95,6 @@ const ChatbotButton = () => {
               />
             </svg>
           )}
-
-          {/* Debug: Always show text to test */}
-          {isModalOpen && (
-            <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-2 py-1 rounded text-xs">
-              Modal Open: {isModalOpen.toString()}
-            </div>
-          )}
         </div>
 
         {/* Pulse Animation */}
@@ -116,7 +110,7 @@ const ChatbotButton = () => {
       )}
 
       {/* reCAPTCHA Modal */}
-      {/* {showRecaptcha && (
+      {showRecaptcha && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center">
           <div 
             className="absolute inset-0 bg-black/40 backdrop-blur-sm"
@@ -159,7 +153,7 @@ const ChatbotButton = () => {
             </div>
           </div>
         </div>
-      )} */}
+      )}
 
       {/* Chatbot Modal */}
       <ChatbotModal isOpen={isModalOpen} onClose={closeModal} />
