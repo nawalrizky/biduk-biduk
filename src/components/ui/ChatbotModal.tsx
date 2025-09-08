@@ -21,7 +21,18 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: 'Hello! I\'m your Biduk-Biduk travel assistant. How can I help you today?',
+      text: `🌍 Welcome to Biduk-Biduk Travel Assistant! / Selamat datang di Asisten Perjalanan Biduk-Biduk!
+
+I can help you in multiple languages. Please select your preferred language using the language button in the top-right corner:
+• 🇺🇸 English
+• 🇮🇩 Bahasa Indonesia  
+• 🇸🇦 العربية (Arabic)
+• 🇨🇳 中文 (Chinese)
+• 🇫🇷 Français (French)
+• 🇪🇸 Español (Spanish)
+
+How can I assist you with your Biduk-Biduk travel plans today?
+`,
       sender: 'bot',
       timestamp: new Date(),
     },
@@ -29,14 +40,13 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
 
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [language, setLanguage] = useState<'en' | 'id'>('en');
+  const [language, setLanguage] = useState<'en' | 'id' | 'ar' | 'zh' | 'fr' | 'es'>('en'); // Multi-language support
   const [showClearModal, setShowClearModal] = useState(false);
   const [userReplyCount, setUserReplyCount] = useState(0);
   const [hasReachedLimit, setHasReachedLimit] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const MAX_CHARACTERS = 500;
   const MAX_USER_REPLIES = 3;
 
   const scrollToBottom = () => {
@@ -46,6 +56,20 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    // Cleanup function to restore scroll when component unmounts
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
 
   // Auto-resize textarea
   useEffect(() => {
@@ -62,7 +86,18 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
   const confirmClearConversation = () => {
     const welcomeMessage: Message = {
       id: '1',
-      text: 'Hello! I\'m your Biduk-Biduk travel assistant. How can I help you today?',
+      text: `🌍 Welcome to Biduk-Biduk Travel Assistant! / Selamat datang di Asisten Perjalanan Biduk-Biduk!
+
+I can help you in multiple languages. Please select your preferred language using the language button in the top-right corner:
+• 🇺🇸 English
+• 🇮🇩 Bahasa Indonesia  
+• 🇸🇦 العربية (Arabic)
+• 🇨🇳 中文 (Chinese)
+• 🇫🇷 Français (French)
+• 🇪🇸 Español (Spanish)
+
+How can I assist you with your Biduk-Biduk travel plans today?
+`,
       sender: 'bot',
       timestamp: new Date(),
     };
@@ -72,29 +107,59 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
     setShowClearModal(false);
   };
 
-  // Function to truncate message if it exceeds character limit
-  const truncateMessage = (text: string): string => {
-    if (text.length <= MAX_CHARACTERS) {
-      return text;
-    }
-    return text.substring(0, MAX_CHARACTERS) + '...';
-  };
-
   // Function to create direct contact message
   const createDirectContactMessage = (): Message => {
-    const contactText = language === 'id' 
-      ? `Sepertinya Anda membutuhkan informasi lebih detail. Untuk bantuan langsung dan informasi terkini, silakan hubungi:
+    const contactText = (() => {
+      switch (language) {
+        case 'id':
+          return `Sepertinya Anda membutuhkan informasi lebih detail. Untuk bantuan langsung dan informasi terkini, silakan hubungi:
 
 📞 Pokdarwis Desir: 0812-1000-2190
 📧 Email: bidukbidukpokdarwis@gmail.com
 
-Tim lokal kami akan dengan senang hati membantu Anda merencanakan kunjungan yang sempurna ke Biduk-Biduk!`
-      : `It looks like you need more detailed information. For direct assistance and up-to-date information, please contact:
+Tim lokal kami akan dengan senang hati membantu Anda merencanakan kunjungan yang sempurna ke Biduk-Biduk!`;
+
+        case 'ar':
+          return `يبدو أنك تحتاج إلى معلومات أكثر تفصيلاً. للحصول على المساعدة المباشرة والمعلومات المحدثة، يرجى الاتصال:
+
+📞 Pokdarwis Desir: 0812-1000-2190
+📧 البريد الإلكتروني: bidukbidukpokdarwis@gmail.com
+
+سيسعد فريقنا المحلي بمساعدتك في التخطيط للزيارة المثالية إلى بيدوك-بيدوك!`;
+
+        case 'zh':
+          return `看起来您需要更详细的信息。如需直接帮助和最新信息，请联系：
+
+📞 Pokdarwis Desir: 0812-1000-2190
+📧 邮箱: bidukbidukpokdarwis@gmail.com
+
+我们的当地团队很乐意帮助您规划完美的Biduk-Biduk之旅！`;
+
+        case 'fr':
+          return `Il semble que vous ayez besoin d'informations plus détaillées. Pour une assistance directe et des informations à jour, veuillez contacter:
+
+📞 Pokdarwis Desir: 0812-1000-2190
+📧 Email: bidukbidukpokdarwis@gmail.com
+
+Notre équipe locale sera ravie de vous aider à planifier la visite parfaite à Biduk-Biduk!`;
+
+        case 'es':
+          return `Parece que necesitas información más detallada. Para asistencia directa e información actualizada, por favor contacta:
+
+📞 Pokdarwis Desir: 0812-1000-2190
+📧 Email: bidukbidukpokdarwis@gmail.com
+
+¡Nuestro equipo local estará encantado de ayudarte a planear la visita perfecta a Biduk-Biduk!`;
+
+        default: // 'en'
+          return `It looks like you need more detailed information. For direct assistance and up-to-date information, please contact:
 
 📞 Pokdarwis Desir: 0812-1000-2190
 📧 Email: bidukbidukpokdarwis@gmail.com
 
 Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`;
+      }
+    })();
 
     return {
       id: (Date.now() + 1).toString(),
@@ -183,14 +248,13 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
 
       const data = await response.json();
       
-      // Get the response text and truncate if necessary
+      // Get the response text (no truncation for bot replies)
       const responseText = data.reply || data.response || data.message || 'Sorry, I couldn\'t process your request right now.';
-      const truncatedText = truncateMessage(responseText);
       
-      // Create bot message with API response
+      // Create bot message with full API response
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: truncatedText,
+        text: responseText,
         sender: 'bot',
         timestamp: new Date(),
       };
@@ -220,12 +284,52 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
     }
   };
 
-  const quickReplies = [
-    'Tell me about destinations',
-    'Hotel recommendations',
-    'Travel packages',
-    'Local cuisine',
-  ];
+  const quickReplies = (() => {
+    switch (language) {
+      case 'id':
+        return [
+          'Ceritakan tentang destinasi',
+          'Rekomendasi hotel',
+          'Paket wisata',
+          'Kuliner lokal',
+        ];
+      case 'ar':
+        return [
+          'أخبرني عن الوجهات',
+          'توصيات الفنادق',
+          'حزم السفر',
+          'المأكولات المحلية',
+        ];
+      case 'zh':
+        return [
+          '告诉我目的地信息',
+          '酒店推荐',
+          '旅行套餐',
+          '当地美食',
+        ];
+      case 'fr':
+        return [
+          'Parlez-moi des destinations',
+          'Recommandations d\'hôtels',
+          'Forfaits voyage',
+          'Cuisine locale',
+        ];
+      case 'es':
+        return [
+          'Cuéntame sobre destinos',
+          'Recomendaciones de hoteles',
+          'Paquetes de viaje',
+          'Cocina local',
+        ];
+      default: // 'en'
+        return [
+          'Tell me about destinations',
+          'Hotel recommendations',
+          'Travel packages',
+          'Local cuisine',
+        ];
+    }
+  })();
 
   const handleQuickReply = async (reply: string) => {
     // Check if user has reached the reply limit
@@ -300,13 +404,12 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
 
       const data = await response.json();
       
-      // Get the response text and truncate if necessary
+      // Get the response text (no truncation for bot replies)
       const responseText = data.reply || data.response || data.message || 'Sorry, I couldn\'t process your request right now.';
-      const truncatedText = truncateMessage(responseText);
       
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: truncatedText,
+        text: responseText,
         sender: 'bot',
         timestamp: new Date(),
       };
@@ -334,40 +437,90 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50">
-      {/* Backdrop */}
+    <div 
+      className="fixed inset-0 z-50" 
+      onWheel={(e) => e.preventDefault()}
+    >
+      {/* Enhanced Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/20 backdrop-blur-sm"
+        className="absolute inset-0"
         onClick={onClose}
       ></div>
 
       {/* Modal Container */}
       <div className="relative h-full flex items-end justify-end p-4 pointer-events-none">
-        {/* Modal */}
-        <div className="relative bg-white rounded-lg shadow-2xl w-full max-w-md h-[600px] flex flex-col animate-in slide-in-from-bottom-4 duration-300 pointer-events-auto">
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b bg-primary text-white rounded-t-lg">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-              <svg
-                className="w-5 h-5 text-primary"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M12 2C6.48 2 2 6.48 2 12c0 1.54.36 2.98.97 4.29L1 23l6.71-1.97C9.02 21.64 10.46 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.21 0-2.35-.24-3.41-.68l-.24-.11-2.56.75.75-2.56-.11-.24C5.76 14.35 5 13.21 5 12c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7z"/>
-                <path d="M8.5 7.5h7v1h-7zm0 2h7v1h-7zm0 2h5v1h-5z"/>
-              </svg>
-            </div>
-            <div>
-              <h3 className="font-semibold">Travel Assistant</h3>
-              <p className="text-xs text-white/80">Online now</p>
-            </div>
+        {/* Glassmorphism Modal */}
+        <div className="relative bg-black/20  backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl w-full max-w-md h-[600px] flex flex-col animate-in slide-in-from-bottom-4 duration-300 pointer-events-auto">
+        {/* Simplified Header */}
+        <div className="flex items-center justify-between p-4">
+          <div className="flex items-center gap-1">
+            {/* Language Buttons */}
+            <button
+              onClick={() => setLanguage('en')}
+              className={`text-xs px-2 py-1 rounded transition-colors ${
+                language === 'en' 
+                  ? 'bg-white/30 text-white border border-white/50' 
+                  : 'text-white/70 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              🇺🇸
+            </button>
+            <button
+              onClick={() => setLanguage('id')}
+              className={`text-xs px-2 py-1 rounded transition-colors ${
+                language === 'id' 
+                  ? 'bg-white/30 text-white border border-white/50' 
+                  : 'text-white/70 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              🇮🇩
+            </button>
+            <button
+              onClick={() => setLanguage('ar')}
+              className={`text-xs px-2 py-1 rounded transition-colors ${
+                language === 'ar' 
+                  ? 'bg-white/30 text-white border border-white/50' 
+                  : 'text-white/70 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              🇸🇦
+            </button>
+            <button
+              onClick={() => setLanguage('zh')}
+              className={`text-xs px-2 py-1 rounded transition-colors ${
+                language === 'zh' 
+                  ? 'bg-white/30 text-white border border-white/50' 
+                  : 'text-white/70 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              🇨🇳
+            </button>
+            <button
+              onClick={() => setLanguage('fr')}
+              className={`text-xs px-2 py-1 rounded transition-colors ${
+                language === 'fr' 
+                  ? 'bg-white/30 text-white border border-white/50' 
+                  : 'text-white/70 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              🇫🇷
+            </button>
+            <button
+              onClick={() => setLanguage('es')}
+              className={`text-xs px-2 py-1 rounded transition-colors ${
+                language === 'es' 
+                  ? 'bg-white/30 text-white border border-white/50' 
+                  : 'text-white/70 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              🇪🇸
+            </button>
           </div>
           <div className="flex items-center gap-2">
             {/* Clear Conversation Button */}
             <button
               onClick={clearConversation}
-              className="text-white/80 hover:text-white transition-colors p-1"
+              className="text-white/80 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-full"
               title="Clear conversation"
             >
               <svg
@@ -385,55 +538,49 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
               </svg>
             </button>
             
-            {/* Language Selector */}
-            <select
-              value={language}
-              onChange={(e) => setLanguage(e.target.value as 'en' | 'id')}
-              className="bg-white/20 text-white text-sm px-2 py-1 rounded border-none outline-none backdrop-blur-sm"
-            >
-              <option value="en" className="text-black">EN</option>
-              <option value="id" className="text-black">ID</option>
-            </select>
-            
             <button
-            onClick={onClose}
-            className="text-white hover:text-white/80 transition-colors"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+              onClick={onClose}
+              className="text-white/80 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-full"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
           </div>
         </div>
 
         {/* Messages Area */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        <div 
+          className="flex-1 overflow-y-auto p-4 space-y-4 overscroll-contain custom-scrollbar"
+          onWheel={(e) => {
+            // Prevent parent scrolling when scrolling within chat area
+            e.stopPropagation();
+          }}
+        >
           {messages.map((message) => (
             <div
               key={message.id}
               className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               <div
-                className={`max-w-[80%] p-3 rounded-lg ${
+                className={`max-w-[80%] p-3 rounded-lg backdrop-blur-sm border ${
                   message.sender === 'user'
-                    ? 'bg-primary text-white rounded-br-none'
-                    : 'bg-gray-100 text-gray-800 rounded-bl-none'
+                    ? 'bg-transparent text-white font-medium border-white/40 rounded-br-none'
+                    : 'bg-transparent text-white font-medium border-white/30 rounded-bl-none'
                 }`}
               >
                 <pre className="text-sm whitespace-pre-wrap font-sans">{message.text}</pre>
-                <p className={`text-xs mt-1 ${
-                  message.sender === 'user' ? 'text-white/70' : 'text-gray-500'
-                }`}>
+                <p className="text-xs mt-1 text-white">
                   {message.timestamp.toLocaleTimeString([], { 
                     hour: '2-digit', 
                     minute: '2-digit' 
@@ -446,7 +593,7 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
           {/* Typing Indicator */}
           {isTyping && (
             <div className="flex justify-start">
-              <div className="bg-gray-100 text-gray-800 rounded-lg rounded-bl-none p-3">
+              <div className="bg-white/60 backdrop-blur-sm border border-white/30 text-gray-800 rounded-lg rounded-bl-none p-3">
                 <div className="flex space-x-1">
                   <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
                   <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
@@ -462,13 +609,24 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
         {/* Quick Replies */}
         {messages.length === 1 && (
           <div className="px-4 pb-2">
-            <p className="text-xs text-gray-500 mb-2">Quick questions:</p>
+            <p className="text-xs text-white/80 mb-2">
+              {(() => {
+                switch (language) {
+                  case 'id': return 'Pertanyaan cepat:';
+                  case 'ar': return 'أسئلة سريعة:';
+                  case 'zh': return '快速问题：';
+                  case 'fr': return 'Questions rapides:';
+                  case 'es': return 'Preguntas rápidas:';
+                  default: return 'Quick questions:';
+                }
+              })()}
+            </p>
             <div className="flex flex-wrap gap-2">
               {quickReplies.map((reply) => (
                 <button
                   key={reply}
                   onClick={() => handleQuickReply(reply)}
-                  className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-full transition-colors"
+                  className="text-xs bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white/90 border border-white/30 px-3 py-1 rounded-full transition-colors"
                 >
                   {reply}
                 </button>
@@ -478,24 +636,38 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
         )}
 
         {/* Input Area */}
-        <div className="border-t p-4">
+        <div className="p-4">
           {/* Reply Counter */}
           {userReplyCount > 0 && !hasReachedLimit && (
-            <div className="mb-2 text-xs text-gray-500 text-center">
-              {language === 'id' 
-                ? `Sisa percobaan: ${MAX_USER_REPLIES - userReplyCount} dari ${MAX_USER_REPLIES}`
-                : `Remaining attempts: ${MAX_USER_REPLIES - userReplyCount} of ${MAX_USER_REPLIES}`
-              }
+            <div className="mb-2 text-xs text-white/70 font-semibold text-center">
+              {(() => {
+                const remaining = MAX_USER_REPLIES - userReplyCount;
+                const total = MAX_USER_REPLIES;
+                switch (language) {
+                  case 'id': return `Sisa percobaan: ${remaining} dari ${total}`;
+                  case 'ar': return `المحاولات المتبقية: ${remaining} من ${total}`;
+                  case 'zh': return `剩余尝试次数: ${remaining} / ${total}`;
+                  case 'fr': return `Tentatives restantes: ${remaining} sur ${total}`;
+                  case 'es': return `Intentos restantes: ${remaining} de ${total}`;
+                  default: return `Remaining attempts: ${remaining} of ${total}`;
+                }
+              })()}
             </div>
           )}
           
           {/* Reached Limit Message */}
           {hasReachedLimit && (
-            <div className="mb-2 text-xs text-orange-600 text-center font-medium">
-              {language === 'id' 
-                ? '⚠️ Batas percobaan tercapai. Pesan selanjutnya akan diarahkan ke kontak langsung.'
-                : '⚠️ Maximum attempts reached. Next messages will be directed to direct contact.'
-              }
+            <div className="mb-2 text-xs text-orange-200 text-center font-medium">
+              {(() => {
+                switch (language) {
+                  case 'id': return '⚠️ Batas percobaan tercapai. Pesan selanjutnya akan diarahkan ke kontak langsung.';
+                  case 'ar': return '⚠️ تم الوصول إلى الحد الأقصى للمحاولات. سيتم توجيه الرسائل التالية إلى الاتصال المباشر.';
+                  case 'zh': return '⚠️ 已达到最大尝试次数。下一条消息将转至直接联系。';
+                  case 'fr': return '⚠️ Nombre maximum de tentatives atteint. Les prochains messages seront dirigés vers un contact direct.';
+                  case 'es': return '⚠️ Máximo de intentos alcanzado. Los próximos mensajes serán dirigidos al contacto directo.';
+                  default: return '⚠️ Maximum attempts reached. Next messages will be directed to direct contact.';
+                }
+              })()}
             </div>
           )}
           
@@ -504,8 +676,17 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
               ref={textareaRef}
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
-              placeholder="Type your message..."
-              className="flex-1 border text-black border-gray-300 rounded-2xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none min-h-[40px] max-h-[120px]"
+              placeholder={(() => {
+                switch (language) {
+                  case 'id': return 'Ketik pesan Anda...';
+                  case 'ar': return 'اكتب رسالتك...';
+                  case 'zh': return '输入您的消息...';
+                  case 'fr': return 'Tapez votre message...';
+                  case 'es': return 'Escribe tu mensaje...';
+                  default: return 'Type your message...';
+                }
+              })()}
+              className="flex-1 bg-white/80 backdrop-blur-sm border border-white/40 rounded-2xl px-4 py-2 text-sm text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/60 resize-none min-h-[40px] max-h-[120px]"
               disabled={isTyping}
               rows={1}
               onKeyDown={(e) => {
@@ -518,10 +699,10 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
             <button
               type="submit"
               disabled={!inputText.trim() || isTyping}
-              className="bg-primary hover:bg-primary/90 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-full p-2 transition-colors"
+              className="bg-white/80 backdrop-blur-sm hover:bg-white/90 disabled:bg-white/40 disabled:cursor-not-allowed text-gray-700 border border-white/40 rounded-full p-2 transition-colors"
             >
               <svg
-                className="w-5 h-5"
+                className="w-5 h-5 rotate-90"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -585,6 +766,28 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
           </div>
         </div>
       )}
+      
+      {/* Custom Scrollbar Styles */}
+      <style jsx global>{`
+        .custom-scrollbar {
+          scrollbar-width: thin;
+          scrollbar-color: rgba(255, 255, 255, 0.4) rgba(255, 255, 255, 0.1);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 4px;
+          margin: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.4);
+          border-radius: 4px;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+      
+      `}</style>
     </div>
   );
 };

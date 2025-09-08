@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useRef } from 'react';
-import ReCAPTCHA from 'react-google-recaptcha';
-import ChatbotModal from './ChatbotModal';
+import { useState, useRef } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
+import Image from "next/image";
+import ChatbotModal from "./ChatbotModal";
 
 const ChatbotButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -11,14 +12,15 @@ const ChatbotButton = () => {
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   // You need to replace this with your actual reCAPTCHA site key
-  const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"; // Test key
+  const RECAPTCHA_SITE_KEY =
+    process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ||
+    "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"; // Test key
 
   const handleButtonClick = () => {
-    if (!isVerified) {
-      setShowRecaptcha(true);
-    } else {
-      setIsModalOpen(true);
-    }
+    // if (!isVerified) {
+    //   setShowRecaptcha(true);
+    // } else {
+    setIsModalOpen(true);
   };
 
   const handleRecaptchaChange = (token: string | null) => {
@@ -49,29 +51,36 @@ const ChatbotButton = () => {
       {/* Floating Chat Button */}
       <button
         onClick={handleButtonClick}
-        className="fixed bottom-6 right-6 z-50 bg-primary hover:bg-primary/90 text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 group"
+        className={`fixed bottom-6 right-6 z-50 bg-black/20 backdrop-blur-md border-white/30 border text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 group ${
+          isModalOpen ? "rounded-full px-6 py-2" : "rounded-full p-4"
+        }`}
         aria-label="Open chatbot"
       >
         {/* Chat Icon */}
-        <div className={`transition-transform duration-300 ${isModalOpen ? 'rotate-180' : ''}`}>
+        <div className="flex items-center justify-center">
           {!isModalOpen ? (
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+            <div className="flex items-center gap-3 whitespace-nowrap min-w-0">
+              <Image
+                src="/icon/chat.svg"
+                alt="Chat Icon"
+                width={24}
+                height={24}
+                className="w-5 h-5"
               />
-            </svg>
+              <span className="text-white font-semibold text-base flex-shrink-0">
+                Ask Us Anything!
+              </span>
+               <Image
+                src="/icon/arrow_up.svg"
+                alt="Chat Icon"
+                width={24}
+                height={24}
+                className="w-5 h-5"
+              />
+            </div>
           ) : (
             <svg
-              className="w-6 h-6"
+              className="w-5 h-5 flex-shrink-0"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -85,10 +94,17 @@ const ChatbotButton = () => {
               />
             </svg>
           )}
+
+          {/* Debug: Always show text to test */}
+          {isModalOpen && (
+            <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-2 py-1 rounded text-xs">
+              Modal Open: {isModalOpen.toString()}
+            </div>
+          )}
         </div>
-        
+
         {/* Pulse Animation */}
-        <div className="absolute inset-0 rounded-full bg-primary animate-ping opacity-25"></div>
+        <div className="absolute inset-0 rounded-full bg-white/20 animate-ping opacity-25"></div>
       </button>
 
       {/* Tooltip */}
@@ -100,7 +116,7 @@ const ChatbotButton = () => {
       )}
 
       {/* reCAPTCHA Modal */}
-      {showRecaptcha && (
+      {/* {showRecaptcha && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center">
           <div 
             className="absolute inset-0 bg-black/40 backdrop-blur-sm"
@@ -143,7 +159,7 @@ const ChatbotButton = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Chatbot Modal */}
       <ChatbotModal isOpen={isModalOpen} onClose={closeModal} />
