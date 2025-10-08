@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import { destinationsApi, Destination } from "@/lib/api";
 
 export default function DiscoverSection() {
   const [currentSlide, setCurrentSlide] = useState<number>(4);
@@ -10,25 +11,30 @@ export default function DiscoverSection() {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [dragOffset, setDragOffset] = useState<number>(0);
   const [isAutoPlay, setIsAutoPlay] = useState<boolean>(true);
+  const [destinations, setDestinations] = useState<Destination[]>([]);
   
   const containerRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number | null>(null);
 
-  const destinations: { name: string; image: string }[] = [
-    { name: "Labuan Cermin", image: "/images/home/hero.png" },
-    { name: "Bangkuduan", image: "/images/home/hero.png" },
-    { name: "Labuan Cermin", image: "/images/home/hero.png" },
-    { name: "Bangkuduan", image: "/images/home/hero.png" },
-    { name: "Labuan Cermin", image: "/images/home/hero.png" },
-    { name: "Bangkuduan", image: "/images/home/hero.png" },
-    { name: "Labuan Cermin", image: "/images/home/hero.png" },
-    { name: "Bangkuduan", image: "/images/home/hero.png" },
-  { name: "Labuan Cermin", image: "/images/home/hero.png" },
-  ];
+  // Fetch destinations from API
+  useEffect(() => {
+    const fetchDestinations = async () => {
+      try {
+        const response = await destinationsApi.getActive(1, 12);
+        if (response.data && response.data.length > 0) {
+          setDestinations(response.data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch destinations:', error);
+      }
+    };
+
+    fetchDestinations();
+  }, []);
 
   // Auto slide setiap 4 detik (pause saat dragging)
   useEffect(() => {
-    if (!isAutoPlay) return;
+    if (!isAutoPlay || destinations.length === 0) return;
     
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % destinations.length);
@@ -175,7 +181,7 @@ export default function DiscoverSection() {
         {/* Slider Container */}
         <div
           ref={containerRef}
-          className="relative w-full mt-12 overflow-hidden cursor-grab active:cursor-grabbing select-none"
+          className="relative w-full mt-12 pb-14 overflow-hidden cursor-grab active:cursor-grabbing select-none"
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
@@ -227,7 +233,7 @@ export default function DiscoverSection() {
                   }}
                 >
                   <Image
-                    src={destination.image}
+                    src={Array.isArray(destination.images) ? destination.images[0] : destination.images}
                     alt={destination.name}
                     width={500}
                     height={500}
@@ -320,7 +326,7 @@ export default function DiscoverSection() {
                 }}
               >
                 <Image
-                  src={destination.image}
+                  src={Array.isArray(destination.images) ? destination.images[0] : destination.images}
                   alt={destination.name}
                   width={600}
                   height={600}

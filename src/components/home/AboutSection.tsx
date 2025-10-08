@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function AboutSection() {
   return (
@@ -30,7 +31,7 @@ export default function AboutSection() {
             local hospitality invite you to experience Indonesia&apos;s coastal
             beauty at its purest.
           </p>
-           <button className="text-base md:text-lg lg:text-xl font-plant text-primary mt-2">Explore Tour Package →</button>
+           <Link href="#package" className="text-base md:text-lg lg:text-xl font-plant text-primary mt-2">Explore  Tour Package →</Link>
         </div>
       </div>
     </section>

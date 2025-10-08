@@ -1,48 +1,56 @@
 "use client"
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { articlesApi, Article } from "@/lib/api";
 
 export default function NewsSection() {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [articles, setArticles] = useState<Article[]>([]);
+    const [loading, setLoading] = useState(true);
     const touchStartX = useRef<number | null>(null);
     
-    // Sample news data - replace with your actual data
-    const newsItems = [
-        {
-            id: 1,
-            image: "/images/home/hero.png",
-            category: "News",
-            title: "Lorem Ipsum Dolor Sit Amet ",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-        },
-        {
-            id: 2,
-            image: "/images/home/destination/image1.png",
-            category: "News",
-            title: "Second News Article Title Here",
-            description: "Another lorem ipsum text for the second news article to demonstrate the mobile carousel functionality."
-        },
-        {
-            id: 3,
-            image: "/images/home/destination/image2.png",
-            category: "News",
-            title: "Third Amazing News Story",
-            description: "Third news article description with more lorem ipsum content for testing purposes."
-        },
-        {
-            id: 4,
-            image: "/images/home/hero.png",
-            category: "News",
-            title: "Fourth Breaking News Update",
-            description: "Fourth and final news article description to complete our news section carousel."
-        }
-    ];
+    useEffect(() => {
+        const fetchArticles = async () => {
+            try {
+                setLoading(true);
+                console.log("🔍 Fetching articles...");
+                const response = await articlesApi.getAll(1, 4);
+                console.log("📦 Articles API Response:", response);
+                console.log("✅ Response success:", response.success);
+                console.log("📄 Response data:", response.data);
+                console.log("📊 Data length:", response.data?.length);
+                
+                if (response.success && response.data && response.data.length > 0) {
+                    setArticles(response.data);
+                    console.log("✨ Articles set to state:", response.data);
+                } else {
+                    console.warn("⚠️ No articles found or response not successful");
+                    console.warn("⚠️ Trying without pagination...");
+                    
+                    // Try direct fetch without pagination params
+                    const directResponse = await articlesApi.getAll(1, 100);
+                    console.log("📦 Direct API Response:", directResponse);
+                    if (directResponse.data && directResponse.data.length > 0) {
+                        setArticles(directResponse.data.slice(0, 4));
+                        console.log("✨ Articles set from direct fetch");
+                    }
+                }
+            } catch (error) {
+                console.error("❌ Failed to fetch articles:", error);
+            } finally {
+                setLoading(false);
+                console.log("🏁 Loading finished");
+            }
+        };
+
+        fetchArticles();
+    }, []);
 
     const getImageIndex = (offset: number) => {
         const index = currentIndex + offset;
-        if (index >= newsItems.length) return index - newsItems.length;
-        if (index < 0) return newsItems.length + index;
+        if (index >= articles.length) return index - articles.length;
+        if (index < 0) return articles.length + index;
         return index;
     };
 
@@ -57,14 +65,48 @@ export default function NewsSection() {
         if (Math.abs(diff) > 40) {
             if (diff < 0) {
                 // Swipe left
-                setCurrentIndex((prev) => (prev + 1) % newsItems.length);
+                setCurrentIndex((prev) => (prev + 1) % articles.length);
             } else {
                 // Swipe right
-                setCurrentIndex((prev) => (prev - 1 + newsItems.length) % newsItems.length);
+                setCurrentIndex((prev) => (prev - 1 + articles.length) % articles.length);
             }
         }
         touchStartX.current = null;
     };
+
+    if (loading) {
+        return (
+            <section className="bg-white py-16 px-8 md:px-16 lg:px-56 min-h-screen flex flex-col items-center justify-center">
+                <div className="container mx-auto">
+                    <div className="text-center mb-12">
+                        <h1 className="text-xl text-primary font-plant mb-2">Stories from the Coast</h1>
+                        <p className="text-black text-2xl md:text-3xl lg:text-[32px] -mt-1 font-semibold">Latest News & Updates</p>
+                    </div>
+                    <div className="hidden lg:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {[1, 2, 3, 4].map((i) => (
+                            <div key={i} className="flex flex-col h-full lg:shadow-xl lg:rounded-3xl lg:p-4 bg-[#F1FAFF] animate-pulse">
+                                <div className="w-full h-48 bg-gray-200 rounded-xl"></div>
+                                <div className="flex flex-col gap-3 mt-4 flex-1">
+                                    <div className="h-6 bg-gray-200 rounded w-20"></div>
+                                    <div className="h-6 bg-gray-200 rounded w-full"></div>
+                                    <div className="h-20 bg-gray-200 rounded w-full"></div>
+                                    <div className="h-10 bg-gray-200 rounded-full w-32 mt-auto"></div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
+    if (!articles || articles.length === 0) {
+        console.log("⚠️ No articles to display, returning null");
+        // Return null to hide the section completely when no articles
+        return null;
+    }
+    
+    console.log("🎨 Rendering NewsSection with", articles.length, "articles");
 
     return (
         <section className="bg-white py-16 px-8 md:px-16 lg:px-56 min-h-screen flex flex-col items-center justify-center">
@@ -81,67 +123,77 @@ export default function NewsSection() {
                         <div className="relative h-64 mb-6 overflow-hidden">
                             <div className="flex items-center justify-center h-full">
                                 {/* Previous image (left side) */}
-                                <div className="absolute left-0 w-20 h-48 opacity-60 transform scale-90">
-                                    <Image
-                                        src={newsItems[getImageIndex(-1)].image}
-                                        alt="Previous news"
-                                        fill
-                                        className="object-cover rounded-lg shadow-md"
-                                        loading="lazy"
-                                    />
-                                </div>
+                                {articles[getImageIndex(-1)]?.featured_image_url && (
+                                    <div className="absolute left-0 w-20 h-48 opacity-60 transform scale-90">
+                                        <Image
+                                            src={articles[getImageIndex(-1)].featured_image_url}
+                                            alt="Previous news"
+                                            fill
+                                            className="object-cover rounded-lg shadow-md"
+                                            loading="lazy"
+                                        />
+                                    </div>
+                                )}
                                 {/* Current image (center) */}
-                                <div className="relative w-64 h-48 z-10">
-                                    <Image
-                                        src={newsItems[currentIndex].image}
-                                        alt={`News Image ${currentIndex + 1}`}
-                                        fill
-                                        className="object-cover rounded-lg shadow-lg"
-                                        loading="lazy"
-                                    />
-                                </div>
+                                {articles[currentIndex]?.featured_image_url && (
+                                    <div className="relative w-64 h-48 z-10">
+                                        <Image
+                                            src={articles[currentIndex].featured_image_url}
+                                            alt={`News Image ${currentIndex + 1}`}
+                                            fill
+                                            className="object-cover rounded-lg shadow-lg"
+                                            loading="lazy"
+                                        />
+                                    </div>
+                                )}
                                 {/* Next image (right side) */}
-                                <div className="absolute right-0 w-20 h-48 opacity-60 transform scale-90">
-                                    <Image
-                                        src={newsItems[getImageIndex(1)].image}
-                                        alt="Next news"
-                                        fill
-                                        className="object-cover rounded-lg shadow-md"
-                                        loading="lazy"
-                                    />
-                                </div>
+                                {articles[getImageIndex(1)]?.featured_image_url && (
+                                    <div className="absolute right-0 w-20 h-48 opacity-60 transform scale-90">
+                                        <Image
+                                            src={articles[getImageIndex(1)].featured_image_url}
+                                            alt="Next news"
+                                            fill
+                                            className="object-cover rounded-lg shadow-md"
+                                            loading="lazy"
+                                        />
+                                    </div>
+                                )}
                             </div>
                         </div>
 
                         {/* News Content */}
-                        <div className="flex flex-col gap-3 h-40">
-                            <h2 className="text-xl font-plant text-primary">{newsItems[currentIndex].category}</h2>
-                            <h2 className="text-xl font-semibold text-black line-clamp-2 leading-tight">
-                                {newsItems[currentIndex].title}
-                            </h2>
-                            <p className="text-black text-sm leading-relaxed line-clamp-3 flex-1">
-                                {newsItems[currentIndex].description}
-                            </p>
-                            <button className="btn-border-reveal w-fit px-6 py-2 text-base bg-transparent border-2 border-accent text-black font-semibold rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2">
-                                Read More
-                                <svg
-                                    width="16"
-                                    height="16"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                >
-                                    <path d="M5 12h14M12 5l7 7-7 7" />
-                                </svg>
-                            </button>
-                        </div>
+                        {articles[currentIndex] && (
+                            <div className="flex flex-col gap-3 h-40">
+                                <h2 className="text-xl font-plant text-primary">{articles[currentIndex].category_name}</h2>
+                                <h2 className="text-xl font-semibold text-black line-clamp-2 leading-tight">
+                                    {articles[currentIndex].title}
+                                </h2>
+                                <p className="text-black text-sm leading-relaxed line-clamp-3 flex-1">
+                                    {articles[currentIndex].content}
+                                </p>
+                                <Link href={`/articles/${articles[currentIndex].id}`}>
+                                    <button className="btn-border-reveal w-fit px-6 py-2 text-base bg-transparent border-2 border-accent text-black font-semibold rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2">
+                                        Read More
+                                        <svg
+                                            width="16"
+                                            height="16"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        >
+                                            <path d="M5 12h14M12 5l7 7-7 7" />
+                                        </svg>
+                                    </button>
+                                </Link>
+                            </div>
+                        )}
 
                         {/* Dots Indicator */}
                         <div className="flex justify-center mt-6 space-x-2">
-                            {newsItems.map((_, index) => (
+                            {articles.map((_, index) => (
                                 <button
                                     key={index}
                                     onClick={() => setCurrentIndex(index)}
@@ -163,40 +215,42 @@ export default function NewsSection() {
                                 className="flex transition-transform duration-300 ease-in-out"
                                 style={{ transform: `translateX(-${currentIndex * 50}%)` }}
                             >
-                                {newsItems.map((item, index) => (
-                                    <div key={index} className="w-1/2 flex-shrink-0 px-4">
+                                {articles.map((article) => (
+                                    <div key={article.id} className="w-1/2 flex-shrink-0 px-4">
                                         <div className="flex flex-col h-full">
                                             <Image
-                                                src={item.image}
-                                                alt={`News Image ${index + 1}`}
+                                                src={article.featured_image_url}
+                                                alt={article.title}
                                                 width={400}
                                                 height={250}
                                                 loading="lazy"
                                                 className="w-full h-56 object-cover rounded-lg shadow-md"
                                             />
                                             <div className="flex flex-col gap-3 mt-4 flex-1">
-                                                <h2 className="text-lg font-plant text-primary">{item.category}</h2>
+                                                <h2 className="text-lg font-plant text-primary">{article.category_name}</h2>
                                                 <h2 className="text-lg font-semibold text-black line-clamp-2 leading-tight">
-                                                    {item.title}
+                                                    {article.title}
                                                 </h2>
                                                 <p className="text-sm text-black leading-relaxed line-clamp-3 flex-1">
-                                                    {item.description}
+                                                    {article.content}
                                                 </p>
-                                                <button className="btn-border-reveal w-fit px-5 py-2 text-sm bg-transparent border-2 border-accent text-black font-semibold rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2 mt-auto">
-                                                    Read More
-                                                    <svg
-                                                        width="14"
-                                                        height="14"
-                                                        viewBox="0 0 24 24"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        strokeWidth="2"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                    >
-                                                        <path d="M5 12h14M12 5l7 7-7 7" />
-                                                    </svg>
-                                                </button>
+                                                <Link href={`/articles/${article.id}`}>
+                                                    <button className="btn-border-reveal w-fit px-5 py-2 text-sm bg-transparent border-2 border-accent text-black font-semibold rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2 mt-auto">
+                                                        Read More
+                                                        <svg
+                                                            width="14"
+                                                            height="14"
+                                                            viewBox="0 0 24 24"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            strokeWidth="2"
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                        >
+                                                            <path d="M5 12h14M12 5l7 7-7 7" />
+                                                        </svg>
+                                                    </button>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
@@ -208,7 +262,7 @@ export default function NewsSection() {
 
                         {/* Dots Indicator */}
                         <div className="flex justify-center mt-8 space-x-2">
-                            {Array.from({ length: newsItems.length - 1 }).map((_, index) => (
+                            {Array.from({ length: articles.length - 1 }).map((_, index) => (
                                 <button
                                     key={index}
                                     onClick={() => setCurrentIndex(index)}
@@ -223,39 +277,41 @@ export default function NewsSection() {
 
                 {/* Desktop Version - Original Grid */}
                 <div className="hidden lg:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 ">
-                    {newsItems.map((item, index) => (
-                        <div key={index} className="flex flex-col h-full lg:shadow-xl lg:rounded-3xl lg:p-4 bg-[#F1FAFF] hover:scale-105 transition-transform duration-300">
+                    {articles.map((article) => (
+                        <div key={article.id} className="flex flex-col h-full lg:shadow-xl lg:rounded-3xl lg:p-4 bg-[#F1FAFF] hover:scale-105 transition-transform duration-300">
                             <Image
-                                src={item.image}
-                                alt={`News Image ${index + 1}`}
+                                src={article.featured_image_url}
+                                alt={article.title}
                                 width={500}
                                 height={300}
                                 loading="lazy"
                                 className="w-full h-48 object-cover rounded-xl "
                             />
                             <div className="flex flex-col gap-3 mt-4 flex-1">
-                                <h2 className="text-xl font-plant text-primary">{item.category}</h2>
+                                <h2 className="text-xl font-plant text-primary">{article.category_name}</h2>
                                 <h2 className="text-xl font-semibold text-black line-clamp-2 leading-tight">
-                                    {item.title}
+                                    {article.title}
                                 </h2>
                                 <p className="text-black text-sm leading-relaxed line-clamp-4 flex-1">
-                                    {item.description}
+                                    {article.content}
                                 </p>
-                                <button className="btn-border-reveal w-fit px-6 py-2 text-base bg-transparent border-2 border-accent text-black font-semibold rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2 mt-auto">
-                                    Read More
-                                    <svg
-                                        width="16"
-                                        height="16"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    >
-                                        <path d="M5 12h14M12 5l7 7-7 7" />
-                                    </svg>
-                                </button>
+                                <Link href={`/articles/${article.id}`}>
+                                    <button className="btn-border-reveal w-fit px-6 py-2 text-base bg-transparent border-2 border-accent text-black font-semibold rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2 mt-auto">
+                                        Read More
+                                        <svg
+                                            width="16"
+                                            height="16"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        >
+                                            <path d="M5 12h14M12 5l7 7-7 7" />
+                                        </svg>
+                                    </button>
+                                </Link>
                             </div>
                         </div>
                     ))}
@@ -263,7 +319,7 @@ export default function NewsSection() {
 
                 {/* Watch More Link - Hidden on mobile, visible on tablet and desktop */}
                 <div className="hidden md:flex justify-center mt-16 lg:mt-28">
-                    <Link href="/hotels" className="text-primary font-plant text-2xl lg:text-3xl flex items-center gap-2">
+                    <Link href="/articles" className="text-primary font-plant text-2xl lg:text-3xl flex items-center gap-2">
                         Watch More
                         <svg
                             width="16"

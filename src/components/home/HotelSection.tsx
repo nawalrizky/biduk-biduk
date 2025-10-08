@@ -4,11 +4,29 @@ import Link from 'next/link';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Lenis from 'lenis';
+import { hotelsApi, Hotel } from '@/lib/api';
 
 const HotelSection = () => {
   const lenisRef = useRef<Lenis | null>(null);
+  const [hotels, setHotels] = useState<Hotel[]>([]);
+
+  // Fetch hotels from API
+  useEffect(() => {
+    const fetchHotels = async () => {
+      try {
+        const response = await hotelsApi.getActive(1, 12);
+        if (response.results?.data?.items) {
+          setHotels(response.results.data.items);
+        }
+      } catch (error) {
+        console.error('Failed to fetch hotels:', error);
+      }
+    };
+
+    fetchHotels();
+  }, []);
 
   useEffect(() => {
     // Initialize Lenis
@@ -42,7 +60,7 @@ const HotelSection = () => {
     gsap.registerPlugin(ScrollTrigger);
     const hotelSection = document.querySelector('.hotel-wrapper') as HTMLElement;
 
-    if (hotelSection) {
+    if (hotelSection && hotels.length > 0) { // Add check for hotels
       // Different scroll distances based on screen size
       const getScrollDistance = () => {
         const screenWidth = window.innerWidth;
@@ -66,6 +84,13 @@ const HotelSection = () => {
         }
       };
 
+      // Kill any existing ScrollTrigger instances for this element
+      ScrollTrigger.getAll().forEach(trigger => {
+        if (trigger.vars.trigger === '.horizontal-scroll') {
+          trigger.kill();
+        }
+      });
+
       gsap.to('.hotel-wrapper', {
          x: getScrollDistance,
         scrollTrigger: {
@@ -79,23 +104,14 @@ const HotelSection = () => {
         },
       });
     }
-  }, []);
+  }, [hotels]); // Add hotels as dependency
 
-    const hotelContent = [
-        {img:'/images/home/hero.png', location:'Berau', title:'Ocean View Resort'},          
-        {img:'/images/home/hero.png', location:'Derawan Island', title:'Derawan Beach Hotel'},          
-        {img:'/images/home/hero.png', location:'Maratua Island', title:'Maratua Paradise Resort'},          
-        {img:'/images/home/hero.png', location:'Sangalaki Island', title:'Turtle Bay Lodge'},
-        {img:'/images/home/hero.png', location:'Kakaban Island', title:'Jellyfish Lake Resort'},          
-        {img:'/images/home/hero.png', location:'Kakaban Island', title:'Jellyfish Lake Resort'},          
-                
-    ];
     return (
         <section className="horizontal-scroll relative bg-white overflow-hidden py-40 lg:py-40">
             <div className="absolute inset-0 bg-secondary opacity-15"></div>
             <div className="container mx-auto px-4 lg:px-0 relative z-10">
 
-                <div className="flex flex-col lg:flex-row justify-center items-center mb-8 lg:px-56">
+                <div className="flex flex-col lg:flex-row justify-center items-center mb-8 lg:px-24">
                     <div className="mb-6 lg:mb-0 w-full lg:w-2/3 flex flex-col justify-center text-center lg:text-left">
                         <span className="text-primary font-plant text-lg lg:text-xl mb-2 block lg:pr-24">
                             Your Beachside Escape
@@ -104,7 +120,7 @@ const HotelSection = () => {
                            Stay, Swim, Relax
                         </h2>
                     </div>
-                    <Link href="/hotels" className="hidden lg:flex text-primary w-1/3 font-plant text-3xl mb-2 pl-38 items-center gap-2">
+                    <Link href="/hotels" className="hidden lg:flex text-primary font-plant text-3xl mb-2  items-center gap-2">
                        Explore More
                         <svg
                             width="16"
@@ -123,14 +139,14 @@ const HotelSection = () => {
 
                 {/* Horizontal scroll layout for all devices */}
                 <div className="hotel-wrapper h-[50vh] md:h-[55vh] lg:h-[55vh]">
-                    <div className="flex gap-6 md:gap-8 lg:gap-12 pl-4 md:pl-8 lg:pl-54">
-                        {hotelContent.map((item, i) => (
-                            <div key={i} className="flex-shrink-0 w-64 md:w-72 lg:w-80">
+                    <div className="flex gap-6 md:gap-8 lg:gap-12 pl-4 md:pl-8 lg:pl-44">
+                        {hotels.map((hotel) => (
+                            <div key={hotel.hotel_id} className="flex-shrink-0 w-64 md:w-72 lg:w-80">
                                 <div className="group card-hotel rounded-xl h-full transition-all duration-500">
                                     <div className="overflow-hidden rounded-xl">
                                         <Image 
-                                            src={item.img} 
-                                            alt={item.title} 
+                                            src={hotel.image} 
+                                            alt={hotel.name} 
                                             width={400} 
                                             height={480}
                                             loading="lazy"
@@ -143,8 +159,8 @@ const HotelSection = () => {
                                             <div>
                                                 <h1 className='text-primary font-plant text-lg md:text-xl mb-1'>Hotel</h1>
                                                 <h3 className="text-xl md:text-2xl font-semibold mb-1 text-black">
-                                                    <Link href={`/hotels/${item.title.toLowerCase().replace(/\s+/g, '-')}`} className="hover:text-accent transition-colors">
-                                                        {item.title}
+                                                    <Link href={`/hotels/${hotel.hotel_id}`} className="hover:text-accent transition-colors">
+                                                        {hotel.name}
                                                     </Link>
                                                 </h3>
                                             </div>
@@ -153,7 +169,7 @@ const HotelSection = () => {
                                             <div className='flex items-center gap-2'>
                                             {/* 5 stars icon */}
                                             <div className="flex">
-                                                {[...Array(5)].map((_, index) => (
+                                                {[...Array(hotel.total_rating)].map((_, index) => (
                                                     <svg
                                                         key={index}
                                                         className="w-3 h-3 md:w-4 md:h-4 text-accent fill-current"
@@ -164,13 +180,13 @@ const HotelSection = () => {
                                                     </svg>
                                                 ))}
                                             </div>
-                                            <p className="text-black font-bold text-xs md:text-sm">4,5/5</p>
+                                            <p className="text-black font-bold text-xs md:text-sm">{hotel.total_rating}/5</p>
                                             </div>
-                                            <p className="text-black font-bold text-xs md:text-sm">500 reviews</p>
+                                            <p className="text-black font-bold text-xs md:text-sm">{hotel.total_rating_users.toLocaleString()} reviews</p>
                                             </div>
                                             {/* Book Now button */}
                                             <Link 
-                                                href={`/hotels/${item.title.toLowerCase().replace(/\s+/g, '-')}`}
+                                                href={hotel.book_url || `/hotels/${hotel.hotel_id}`}
                                                 className="btn-border-reveal bg-transparent border-2 border-accent text-black font-semibold px-3 md:px-4 lg:px-6 py-1.5 md:py-2 rounded-full hover:bg-accent transition-colors text-xs md:text-sm lg:text-[12px] flex items-center gap-1 md:gap-2 h-fit"
                                             >
                                                 Book Now

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { geoMercator, geoPath } from 'd3-geo'
 import { Group } from '@visx/group'
 import Image from 'next/image'
+import { destinationsApi, Destination } from '@/lib/api'
 
 interface Feature {
   type: 'Feature'
@@ -39,6 +40,7 @@ interface BidukBidukData {
 
 const ExploreSection: React.FC = () => {
   const [mapData, setMapData] = useState<BidukBidukData | null>(null)
+  const [destinations, setDestinations] = useState<Destination[]>([])
   const [loading, setLoading] = useState(true)
   const [hoveredMarker, setHoveredMarker] = useState<string | null>(null)
   const [clickedMarker, setClickedMarker] = useState<string | null>(null)
@@ -76,19 +78,35 @@ const ExploreSection: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    const loadMapData = async () => {
+    const loadData = async () => {
       try {
-        const response = await fetch('/biduk_biduk.json')
-        const data = await response.json()
-        setMapData(data)
+        setLoading(true)
+        
+        console.log('🔍 [ExploreSection] Loading data...')
+        
+        // Load map data and destinations in parallel
+        const [mapResponse, destinationsData] = await Promise.all([
+          fetch('/biduk_biduk.json'),
+          destinationsApi.getActive()
+        ])
+        
+        const mapData = await mapResponse.json()
+        
+        console.log('🗺️ [ExploreSection] Map data loaded:', mapData)
+        console.log('📦 [ExploreSection] Destinations API Response:', destinationsData)
+        console.log('📊 [ExploreSection] Destinations data:', destinationsData.data)
+        console.log('📏 [ExploreSection] Destinations count:', destinationsData.data?.length)
+        
+        setMapData(mapData)
+        setDestinations(destinationsData.data || []) // Use data property, not results
         setLoading(false)
       } catch (error) {
-        console.error('Error loading map data:', error)
+        console.error('❌ [ExploreSection] Error loading data:', error)
         setLoading(false)
       }
     }
 
-    loadMapData()
+    loadData()
   }, [])
 
   useEffect(() => {
@@ -126,10 +144,10 @@ const ExploreSection: React.FC = () => {
       <section 
         className="flex justify-center items-center min-h-screen relative bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: "url('/images/home/explore.png')"
+          backgroundImage: "url('/images/home/explore/explore.png')"
         }}
       >
-        
+        <div className="absolute inset-0 bg-[#027DB9] opacity-50"></div>
         <div className="relative z-10">
           <p className="text-white font-semibold">Failed to load map data</p>
         </div>
@@ -147,25 +165,15 @@ const ExploreSection: React.FC = () => {
 
   const feature = mapData.features[0]
 
-  // Marker data
-    const markerData = [
-    {
-      id: 'labuan cermin',
-      coordinates: [118.68365837631133, 1.2552809003754883] as [number, number],
-      title: 'Labuan Cermin',
-      type: 'Wisata Alam',
-      description: 'Laguna air dua rasa yang terkendal dengan kejernihan airnya',
-      image: '/images/home/destination/image6.png'
-    },
-    {
-      id: 'dermaga-nelayan',
-      coordinates: [118.73299248841035, 1.2288381386994967] as [number, number],
-      title: 'Dermaga Nelayan',
-      type: 'Pelabuhan Tradisional',
-      description: 'Tempat berlabuh perahu-perahu nelayan lokal dengan aktivitas harian yang menarik',
-      image: '/images/home/destination/image2.png'
-    }
-  ]
+  // Convert API destinations to marker data format
+  const markerData = destinations?.map(destination => ({
+    id: destination.id.toString(),
+    coordinates: [destination.coordinates.longitude, destination.coordinates.latitude] as [number, number],
+    title: destination.name,
+    type: destination.category.name,
+    description: destination.description,
+    image: Array.isArray(destination.images) ? destination.images[0] : destination.images || '/images/placeholder.png' // Use first image or placeholder
+  })) || []
 
   const handleMarkerHover = (markerId: string, event: React.MouseEvent) => {
     setHoveredMarker(markerId)

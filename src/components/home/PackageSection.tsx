@@ -77,7 +77,7 @@ const PackageSection = () => {
   const prevSlide = () => sliderRef?.current?.slickPrev();
   const nextSlide = () => sliderRef?.current?.slickNext();
   return (
-    <section className="relative bg-white py-16 px-8 lg:py-24 lg:px-56 overflow-x-hidden">
+    <section id="package" className="relative bg-white py-16 px-8 lg:py-24 lg:px-56 overflow-x-hidden">
       <div className="absolute inset-0 bg-secondary opacity-15"></div>
       <button
         onClick={prevSlide}

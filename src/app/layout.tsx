@@ -42,6 +42,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://www.google.com" />
+        <link rel="preconnect" href="https://www.gstatic.com" crossOrigin="" />
+        <link rel="dns-prefetch" href="https://recaptchaenterprise.googleapis.com" />
+      </head>
       <body className={`${openSans.variable} ${plantFont.variable} font-sans antialiased`}>
         <Navbar />
         {children}

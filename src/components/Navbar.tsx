@@ -44,7 +44,7 @@ const Navbar = () => {
   const navItems = [
     { name: isClient ? t('navbar.home') : 'Home', href: '/' },
     { name: isClient ? t('navbar.place') : 'Place', href: '/place' },
-    { name: isClient ? t('navbar.stay') : 'Stay', href: '/stay' },
+    { name: isClient ? t('navbar.stay') : 'Stay', href: '/hotels' },
     { name: isClient ? t('navbar.contact') : 'Contact', href: '/contact' },
     { name: isClient ? t('navbar.follow') : 'Follow', href: '/follow' },
     { name: isClient ? t('navbar.language') : 'Language', href: '/language', isLanguage: true },

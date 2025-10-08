@@ -88,7 +88,7 @@ How can I assist you with your Biduk-Biduk travel plans today?
       id: '1',
       text: `🌍 Welcome to Biduk-Biduk Travel Assistant! / Selamat datang di Asisten Perjalanan Biduk-Biduk!
 
-I can help you in multiple languages. Please select your preferred language using the language button in the top-right corner:
+I can help you in multiple languages. Please select your preferred language using the language button in the top-left corner:
 • 🇺🇸 English
 • 🇮🇩 Bahasa Indonesia  
 • 🇸🇦 العربية (Arabic)
