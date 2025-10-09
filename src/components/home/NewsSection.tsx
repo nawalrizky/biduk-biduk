@@ -82,9 +82,9 @@ export default function NewsSection() {
                         <h1 className="text-xl text-primary font-plant mb-2">Stories from the Coast</h1>
                         <p className="text-black text-2xl md:text-3xl lg:text-[32px] -mt-1 font-semibold">Latest News & Updates</p>
                     </div>
-                    <div className="hidden lg:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div className="hidden lg:flex flex-wrap gap-8 justify-center">
                         {[1, 2, 3, 4].map((i) => (
-                            <div key={i} className="flex flex-col h-full lg:shadow-xl lg:rounded-3xl lg:p-4 bg-[#F1FAFF] animate-pulse">
+                            <div key={i} className="flex flex-col h-full lg:shadow-xl lg:rounded-3xl lg:p-4 bg-[#F1FAFF] animate-pulse w-full sm:w-[calc(50%-1rem)] lg:w-[calc(25%-1.5rem)] max-w-sm">
                                 <div className="w-full h-48 bg-gray-200 rounded-xl"></div>
                                 <div className="flex flex-col gap-3 mt-4 flex-1">
                                     <div className="h-6 bg-gray-200 rounded w-20"></div>
@@ -276,9 +276,9 @@ export default function NewsSection() {
                 </div>
 
                 {/* Desktop Version - Original Grid */}
-                <div className="hidden lg:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 ">
+                <div className="hidden lg:flex flex-wrap gap-8 justify-center">
                     {articles.map((article) => (
-                        <div key={article.id} className="flex flex-col h-full lg:shadow-xl lg:rounded-3xl lg:p-4 bg-[#F1FAFF] hover:scale-105 transition-transform duration-300">
+                        <div key={article.id} className="flex flex-col h-full lg:shadow-xl lg:rounded-3xl lg:p-4 bg-[#F1FAFF] hover:scale-105 transition-transform duration-300 w-full sm:w-[calc(50%-1rem)] lg:w-[calc(25%-1.5rem)] max-w-sm">
                             <Image
                                 src={article.featured_image_url}
                                 alt={article.title}

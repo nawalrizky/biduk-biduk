@@ -5,17 +5,47 @@ import Image from "next/image";
 import Link from "next/link";
 import { hotelsApi, Hotel } from "@/lib/api";
 
+// Helper function to extract image URL from HotelImage object or string
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getImageUrl = (image: any): string | null => {
+  if (typeof image === 'string') {
+    return image.trim() !== "" ? image : null;
+  }
+  if (typeof image === 'object' && image !== null) {
+    const url = image.image_url || image.image || "";
+    return typeof url === 'string' && url.trim() !== "" ? url : null;
+  }
+  return null;
+};
+
 export default function HotelsPage() {
   const [hotels, setHotels] = useState<Hotel[]>([]);
   const [loading, setLoading] = useState(true);
+  const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
+
+  const handleImageError = (hotelId: number) => {
+    console.error(`❌ Image failed to load for hotel ${hotelId}`);
+    setImageErrors(prev => ({ ...prev, [hotelId]: true }));
+  };
 
   useEffect(() => {
     const fetchHotels = async () => {
       try {
         setLoading(true);
         const response = await hotelsApi.getActive(1, 8);
+        console.log('🏨 Hotels API Response:', response);
         if (response.results?.data?.items) {
-          setHotels(response.results.data.items.slice(0, 8));
+          const hotelItems = response.results.data.items.slice(0, 8);
+          console.log('🏨 Hotel Items:', hotelItems);
+          hotelItems.forEach((hotel, index) => {
+            console.log(`Hotel ${index}:`, {
+              name: hotel.name,
+              image: hotel.image,
+              images: hotel.images,
+              hasImages: hotel.images && hotel.images.length > 0
+            });
+          });
+          setHotels(hotelItems);
         }
       } catch (error) {
         console.error("Failed to fetch hotels:", error);
@@ -128,24 +158,39 @@ export default function HotelsPage() {
               key={hotel.hotel_id}
               className="rounded-2xl overflow-hidden transition-all duration-300"
             >
-              <div className="group">
-                <div className="overflow-hidden rounded-2xl">
-                  <Image
-                    src={hotel.image}
-                    alt={hotel.name}
-                    width={400}
-                    height={500}
-                    loading="lazy"
-                    className="w-full rounded-2xl h-[280px] md:h-[240px] lg:h-56 object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
+                            <div className="group">
+                <Link href={`/hotels/${hotel.hotel_id}`} className="block overflow-hidden rounded-2xl">
+                  <div className="relative w-full h-[280px] md:h-[240px] lg:h-56">
+                    <Image
+                      src={
+                        imageErrors[hotel.hotel_id] 
+                          ? "/images/home/explore/explore.png" 
+                          : (() => {
+                              // Extract first valid image
+                              const firstImage = hotel.images && hotel.images.length > 0 ? getImageUrl(hotel.images[0]) : null;
+                              const fallbackImage = hotel.image && hotel.image.trim() !== "" ? hotel.image : null;
+                              return firstImage || fallbackImage || "/images/home/explore/explore.png";
+                            })()
+                      }
+                      alt={hotel.name}
+                      fill
+                      loading="lazy"
+                      className="rounded-2xl object-cover group-hover:scale-110 transition-transform duration-500"
+                      onError={() => handleImageError(hotel.hotel_id)}
+                    />
+                  </div>
+                </Link>
                 {/* Content Below Image */}
                 <div className="py-3 px-1">
-                  {/* Hotel Label */}
-                  <p className="text-primary text-xs font-medium mb-1">Hotel</p>
+             
                   
                   <h3 className="text-lg lg:text-xl font-semibold mb-3 text-black line-clamp-1">
-                    {hotel.name}
+                    <Link 
+                      href={`/hotels/${hotel.hotel_id}`}
+                      className="hover:text-accent transition-colors"
+                    >
+                      {hotel.name}
+                    </Link>
                   </h3>
                   
                   <div className="flex items-center justify-between gap-3">
@@ -174,7 +219,7 @@ export default function HotelsPage() {
                     
                     <Link
                       href={hotel.book_url || `/hotels/${hotel.hotel_id}`}
-                      className="bg-transparent border-2 border-accent text-black font-semibold px-4 lg:px-6 py-2 rounded-full hover:bg-accent hover:text-white transition-colors text-sm flex items-center gap-2 whitespace-nowrap"
+                      className="btn-border-reveal border-2 border-accent text-black font-semibold px-4 lg:px-6 py-2 rounded-full hover:bg-accent hover:text-white transition-colors text-sm flex items-center gap-2 whitespace-nowrap"
                     >
                       Book Now →
                     </Link>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 interface SlideData {
@@ -21,13 +21,13 @@ const HeroSection = () => {
     },
     {
       id: 2,
-      image: "/images/home/hero.png",
+      image: "/images/home/destination/image4.png",
       title: "Jelajahi Keindahan Alam",
       subtitle: "Temukan pesona tersembunyi di setiap sudut desa",
     },
     {
       id: 3,
-      image: "/images/home/hero.png",
+      image: "/images/home/destination/image6.png",
       title: "Pengalaman Tak Terlupakan",
       subtitle: "Ciptakan kenangan indah bersama masyarakat lokal",
     },
@@ -43,76 +43,102 @@ const HeroSection = () => {
     },
     {
       id: 2,
-      image: "/images/home/hero_mobile.png",
+      image: "/images/home/destination/image4.png",
       title: "Jelajahi Keindahan Alam",
       subtitle: "Temukan pesona tersembunyi di setiap sudut desa",
     },
     {
       id: 3,
-      image: "/images/home/hero_mobile.png",
+      image: "/images/home/destination/image6.png",
       title: "Pengalaman Tak Terlupakan",
       subtitle: "Ciptakan kenangan indah bersama masyarakat lokal",
     },
   ];
 
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const goToSlide = (index: number) => {
+    if (isAnimating) return;
+    setIsAnimating(true);
     setCurrentSlide(index);
+    setTimeout(() => setIsAnimating(false), 1000);
   };
 
   const nextSlide = () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
     setCurrentSlide((prev) => (prev + 1) % slides.length);
+    setTimeout(() => setIsAnimating(false), 1000);
   };
 
   const prevSlide = () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+    setTimeout(() => setIsAnimating(false), 1000);
   };
+
+  // Auto-play functionality
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000); // Change slide every 5 seconds
+
+    return () => clearInterval(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <section className="relative w-full h-screen lg:h-[110vh] overflow-hidden">
       {/* Background Image Carousel */}
       <div className="absolute inset-0">
-        {/* Desktop Images */}
-        <div className="hidden md:block">
-          {slides.map((slide, index) => (
-            <div
-              key={slide.id}
-              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                index === currentSlide ? "opacity-100" : "opacity-0"
-              }`}
-            >
-              <Image
-                src={slide.image}
-                alt={slide.title}
-                fill
-                className="object-cover"
-                priority={index === 0}
-                quality={100}
-              />
-            </div>
-          ))}
+        {/* Desktop Images - Sliding Carousel */}
+        <div className="hidden md:block relative w-full h-full overflow-hidden">
+          <div 
+            className="flex h-full transition-transform duration-1000 ease-in-out"
+            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+          >
+            {slides.map((slide, index) => (
+              <div
+                key={slide.id}
+                className="relative min-w-full h-full flex-shrink-0"
+              >
+                <Image
+                  src={slide.image}
+                  alt={slide.title}
+                  fill
+                  className="object-cover"
+                  priority={index === 0}
+                  quality={100}
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Mobile Images */}
-        <div className="md:hidden">
-          {mobileSlides.map((slide, index) => (
-            <div
-              key={slide.id}
-              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                index === currentSlide ? "opacity-100" : "opacity-0"
-              }`}
-            >
-              <Image
-                src={slide.image}
-                alt={slide.title}
-                fill
-                className="object-cover"
-                priority={index === 0}
-                quality={100}
-              />
-            </div>
-          ))}
+        {/* Mobile Images - Sliding Carousel */}
+        <div className="md:hidden relative w-full h-full overflow-hidden">
+          <div 
+            className="flex h-full transition-transform duration-1000 ease-in-out"
+            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+          >
+            {mobileSlides.map((slide, index) => (
+              <div
+                key={slide.id}
+                className="relative min-w-full h-full flex-shrink-0"
+              >
+                <Image
+                  src={slide.image}
+                  alt={slide.title}
+                  fill
+                  className="object-cover"
+                  priority={index === 0}
+                  quality={100}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 

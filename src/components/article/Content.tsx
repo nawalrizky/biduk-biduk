@@ -1,12 +1,16 @@
 "use client";
 import Link from "next/link";
 import { Article } from "@/lib/api";
+import { useState } from "react";
 
 interface ArticleContentProps {
   article: Article;
 }
 
 export default function ArticleContent({ article }: ArticleContentProps) {
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [copySuccess, setCopySuccess] = useState(false);
+
   const formatDate = (dateString: string | null) => {
     if (!dateString) return "Not published yet";
     const date = new Date(dateString);
@@ -17,26 +21,33 @@ export default function ArticleContent({ article }: ArticleContentProps) {
     });
   };
 
+  const articleUrl = typeof window !== 'undefined' 
+    ? `${window.location.origin}/articles/${article.id}` 
+    : '';
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(articleUrl);
+      setCopySuccess(true);
+      setTimeout(() => {
+        setCopySuccess(false);
+      }, 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
+
+  const closeModal = () => {
+    setIsShareModalOpen(false);
+    setCopySuccess(false);
+  };
+
   return (
+    <>
     <div className="z-20 flex flex-col lg:px-56 items-center bg-white min-h-screen pb-16">
       {/* Meta Information */}
       <div className="mt-12 lg:mt-24 flex flex-wrap items-center justify-center gap-4 mb-8 text-sm text-gray-600 px-6">
-        <div className="flex items-center gap-2">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-            <circle cx="12" cy="7" r="4" />
-          </svg>
-          <span>By {article.author_name}</span>
-        </div>
+        
         <div className="flex items-center gap-2">
           <svg
             width="16"
@@ -112,7 +123,10 @@ export default function ArticleContent({ article }: ArticleContentProps) {
         </Link>
 
         {/* Share Button */}
-        <button className="px-6 py-2 bg-primary text-white font-semibold rounded-full hover:bg-primary/90 transition-colors flex items-center gap-2">
+        <button 
+          onClick={() => setIsShareModalOpen(true)}
+          className="px-6 py-2 bg-primary text-white font-semibold rounded-full hover:bg-primary/90 transition-colors flex items-center gap-2"
+        >
           <svg
             width="18"
             height="18"
@@ -133,5 +147,108 @@ export default function ArticleContent({ article }: ArticleContentProps) {
         </button>
       </div>
     </div>
+
+      {/* Share Modal */}
+      {isShareModalOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={closeModal}
+        >
+          <div 
+            className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 transform transition-all"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-2xl font-bold text-black">Share Article</h3>
+              <button
+                onClick={closeModal}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Article Info */}
+            <div className="mb-6">
+              <p className="text-sm text-gray-600 mb-2">Share this article:</p>
+              <p className="font-semibold text-black line-clamp-2">{article.title}</p>
+            </div>
+
+            {/* Link Display */}
+            <div className="mb-6">
+              <label className="text-sm font-medium text-gray-700 mb-2 block">
+                Article Link
+              </label>
+              <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                <input
+                  type="text"
+                  value={articleUrl}
+                  readOnly
+                  className="flex-1 bg-transparent text-sm text-gray-600 outline-none"
+                />
+              </div>
+            </div>
+
+            {/* Copy Button */}
+            <button
+              onClick={handleCopyLink}
+              className={`w-full py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 ${
+                copySuccess
+                  ? 'bg-green-500 text-white'
+                  : 'bg-primary text-white hover:bg-primary/90'
+              }`}
+            >
+              {copySuccess ? (
+                <>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  Link Copied!
+                </>
+              ) : (
+                <>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                  </svg>
+                  Copy Link
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

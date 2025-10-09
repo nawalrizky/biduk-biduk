@@ -3,34 +3,36 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { destinationsApi, Destination } from "@/lib/api";
+import { packagesApi, Package } from "@/lib/api";
 
-export default function PlacePage() {
-  const [destinations, setDestinations] = useState<Destination[]>([]);
+export default function PackagesPage() {
+  const [packages, setPackages] = useState<Package[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const pageSize = 8;
 
   useEffect(() => {
-    const fetchDestinations = async () => {
+    const fetchPackages = async () => {
       try {
         setLoading(true);
-        const response = await destinationsApi.getActive(currentPage, pageSize);
-        if (response.data && response.data.length > 0) {
-          setDestinations(response.data);
-          setTotalPages(response.pagination.total_pages);
+        const response = await packagesApi.getActive(currentPage, pageSize);
+        if (response.results?.data?.items && response.results.data.items.length > 0) {
+          setPackages(response.results.data.items);
+          // Calculate total pages from count
+          const total = Math.ceil(response.count / pageSize);
+          setTotalPages(total);
         } else {
-          setDestinations([]);
+          setPackages([]);
         }
       } catch (error) {
-        console.error("Failed to fetch destinations:", error);
+        console.error("Failed to fetch packages:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchDestinations();
+    fetchPackages();
   }, [currentPage]);
 
   const handlePageChange = (page: number) => {
@@ -72,12 +74,13 @@ export default function PlacePage() {
             {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
               <div
                 key={i}
-                className="flex flex-col items-center"
+                className="bg-white rounded-2xl shadow-lg overflow-hidden"
               >
-                <div className="w-full aspect-square bg-gray-200 rounded-[20px] animate-pulse"></div>
-                <div className="w-full px-4 mt-4">
+                <div className="w-full h-48 bg-gray-200 animate-pulse"></div>
+                <div className="p-4">
                   <div className="h-6 bg-gray-200 rounded animate-pulse mb-2"></div>
-                  <div className="h-10 bg-gray-200 rounded-full animate-pulse w-24 mx-auto"></div>
+                  <div className="h-4 bg-gray-200 rounded animate-pulse w-20 mb-3"></div>
+                  <div className="h-10 bg-gray-200 rounded-full animate-pulse"></div>
                 </div>
               </div>
             ))}
@@ -116,43 +119,84 @@ export default function PlacePage() {
       <div className="relative text-white pt-20 pb-8 lg:pt-24 lg:pb-10 z-10">
         <div className="container mx-auto px-6 lg:px-8 relative z-10 text-center">
           <h1 className="text-primary font-plant text-sm lg:text-xl mb-2 lg:mb-4">
-            Explore Paradise
+            Best Deals
           </h1>
           <h2 className="text-2xl lg:text-5xl text-black font-semibold mb-3 lg:mb-4">
-            Discover Amazing Places
+            Tour Packages
           </h2>
         </div>
       </div>
 
-      {/* Destinations Grid */}
+      {/* Packages Grid */}
       <div className="container mx-auto px-6 lg:px-8 py-8 sm:py-12 lg:py-16 relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8">
-          {destinations.map((destination) => (
+          {packages.map((pkg) => (
             <div
-              key={destination.id}
-              className="flex flex-col items-center group"
+              key={pkg.package_id}
+              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 group"
             >
-              {/* Image */}
-              <div className="relative w-full aspect-square overflow-hidden rounded-[20px] shadow-lg">
-                <Image
-                  src={Array.isArray(destination.images) ? destination.images[0] : destination.images}
-                  alt={destination.name}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-500"
-                  loading="lazy"
-                />
+              {/* Package Image */}
+              <div className="relative w-full h-48 overflow-hidden">
+                {pkg.image_url ? (
+                  <Image
+                    src={pkg.image_url}
+                    alt={pkg.name}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-accent/20 to-primary/20 flex items-center justify-center">
+                    <svg
+                      className="w-16 h-16 text-accent/50"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                      />
+                    </svg>
+                  </div>
+                )}
               </div>
-              
-              {/* Destination Info */}
-              <div className="flex flex-col items-center w-full px-4 mt-4">
-                <h3 className="text-lg lg:text-xl text-black font-semibold text-center line-clamp-2">
-                  {destination.name}
+
+              {/* Package Info */}
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-black mb-2 line-clamp-2">
+                  {pkg.name}
                 </h3>
-                <Link 
-                  href={`/place/${destination.id}`}
-                  className="btn-border-reveal font-semibold mt-2 w-fit px-6 py-2 text-sm lg:text-base bg-transparent border-2 border-accent text-black rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2"
+                <p className="text-accent font-bold text-xl mb-1">
+                  Rp {parseFloat(pkg.price).toLocaleString('id-ID')}
+                </p>
+                
+                {/* Rating */}
+                {pkg.total_rating > 0 && (
+                  <div className="flex items-center gap-1 text-sm text-gray-600 mb-3">
+                    <svg className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                    </svg>
+                    <span>{pkg.total_rating.toFixed(1)}</span>
+                    <span className="text-gray-400">({pkg.total_rating_users})</span>
+                  </div>
+                )}
+
+                {/* Destinations Count */}
+                {((pkg.destination_details && pkg.destination_details.length > 0) || 
+                  (pkg.destinations && pkg.destinations.length > 0)) && (
+                  <p className="text-sm text-gray-600 mb-3">
+                    {(pkg.destination_details || pkg.destinations || []).length} Destination{(pkg.destination_details || pkg.destinations || []).length > 1 ? 's' : ''}
+                  </p>
+                )}
+
+                <Link
+                  href={`/packages/${pkg.package_id}`}
+                  className="btn-border-reveal w-full bg-transparent border-2 border-accent text-black font-semibold px-4 py-2 rounded-full hover:bg-accent hover:text-white transition-colors text-sm flex items-center justify-center gap-2"
                 >
-                  Visit
+                  View Details
                   <svg
                     width="16"
                     height="16"
@@ -172,10 +216,10 @@ export default function PlacePage() {
         </div>
 
         {/* Empty State */}
-        {destinations.length === 0 && !loading && (
+        {packages.length === 0 && !loading && (
           <div className="text-center py-20">
             <h3 className="text-2xl font-semibold text-gray-600 mb-4">
-              No destinations available at the moment
+              No packages available at the moment
             </h3>
             <p className="text-gray-500">Please check back later</p>
           </div>

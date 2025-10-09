@@ -91,13 +91,24 @@ export interface ArticleListResponse {
 }
 
 // Hotel types
+export interface HotelImage {
+  id: number;
+  hotel: number;
+  image: string;
+  image_url?: string;
+  caption?: string;
+  is_primary?: boolean;
+  created_at?: string;
+  updated_at?: string;
+}
+
 export interface Hotel {
   hotel_id: number;
   name: string;
   price: string;
   description: string;
   image: string;
-  images: string[];
+  images: HotelImage[] | string[];
   book_url?: string;
   maps_url?: string;
   is_active: boolean;
@@ -116,6 +127,44 @@ export interface HotelListResponse {
     message: string;
     data: {
       items: Hotel[];
+      applied_queries: Record<string, unknown>;
+    };
+  };
+}
+
+// Package types
+export interface PackageDestination {
+  id: number;
+  name: string;
+  location: string;
+  description: string;
+}
+
+export interface Package {
+  package_id: number;
+  name: string;
+  description?: string;
+  price: string;
+  image?: string;
+  image_url: string | null;
+  is_active: boolean;
+  total_rating: number;
+  total_rating_users: number;
+  destinations?: PackageDestination[];
+  destination_details?: PackageDestination[]; // API returns this field
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface PackageListResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: {
+    success: boolean;
+    message: string;
+    data: {
+      items: Package[];
       applied_queries: Record<string, unknown>;
     };
   };
@@ -304,8 +353,18 @@ export const hotelsApi = {
   // Get hotel by ID
   getById: async (id: number): Promise<Hotel | null> => {
     try {
-      const response = await apiCall<Hotel>(`/hotels/${id}/`);
-      return response;
+      console.log(`🔍 Fetching hotel with ID: ${id}`);
+      const response = await apiCall<{ success: boolean; message: string; data: Hotel }>(`/hotels/${id}/`);
+      console.log('🏨 Hotel API response:', response);
+      
+      // Handle nested response structure
+      if (response.data) {
+        console.log('✅ Hotel data found in response.data');
+        return response.data;
+      }
+      // Fallback to direct response if not nested
+      console.log('✅ Returning response directly');
+      return response as unknown as Hotel;
     } catch (error) {
       console.error(`Failed to fetch hotel with ID ${id}:`, error);
       return null;
@@ -395,6 +454,78 @@ export const articlesApi = {
         data: [], 
         pagination: { count: 0, next: null, previous: null, page_size: pageSize, current_page: page, total_pages: 0 } 
       };
+    }
+  },
+};
+
+// Packages API functions
+export const packagesApi = {
+  // Get all packages with pagination
+  getAll: async (page: number = 1, pageSize: number = 12): Promise<PackageListResponse> => {
+    try {
+      console.log(`📡 API Call: /packages/?page=${page}&page_size=${pageSize}`);
+      const response = await apiCall<PackageListResponse>(`/packages/?page=${page}&page_size=${pageSize}`);
+      console.log("📦 Packages API response:", response);
+      return response;
+    } catch (error) {
+      console.error('Failed to fetch packages:', error);
+      return {
+        count: 0,
+        next: null,
+        previous: null,
+        results: {
+          success: false,
+          message: 'Failed to fetch packages',
+          data: {
+            items: [],
+            applied_queries: {},
+          },
+        },
+      };
+    }
+  },
+
+  // Get active packages only
+  getActive: async (page: number = 1, pageSize: number = 12): Promise<PackageListResponse> => {
+    try {
+      console.log(`📡 API Call: /packages/?is_active=true&page=${page}&page_size=${pageSize}`);
+      const response = await apiCall<PackageListResponse>(`/packages/?is_active=true&page=${page}&page_size=${pageSize}`);
+      console.log("📦 Active packages response:", response);
+      return response;
+    } catch (error) {
+      console.error('Failed to fetch active packages:', error);
+      return {
+        count: 0,
+        next: null,
+        previous: null,
+        results: {
+          success: false,
+          message: 'Failed to fetch packages',
+          data: {
+            items: [],
+            applied_queries: {},
+          },
+        },
+      };
+    }
+  },
+
+  // Get package by ID
+  getById: async (id: number): Promise<Package | null> => {
+    try {
+      console.log(`📡 Fetching package with ID: ${id}`);
+      const response = await apiCall<{ success: boolean; message: string; data: Package }>(`/packages/${id}/`);
+      console.log("📦 Package detail response:", response);
+      
+      // Handle nested response structure
+      if (response.data) {
+        return response.data;
+      }
+      // Fallback to direct response if not nested
+      return response as unknown as Package;
+    } catch (error) {
+      console.error(`Failed to fetch package with ID ${id}:`, error);
+      return null;
     }
   },
 };

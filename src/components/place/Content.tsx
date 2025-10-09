@@ -9,49 +9,18 @@ export default function PlaceContent({ destination }: PlaceContentProps) {
   // Extract coordinates for Google Maps
   const latitude = destination.coordinates?.latitude;
   const longitude = destination.coordinates?.longitude;
-  const mapUrl = destination.maps_url || 
-    (latitude && longitude 
+  const mapUrl =
+    destination.maps_url ||
+    (latitude && longitude
       ? `https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15000!2d${longitude}!3d${latitude}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sid`
       : "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63821.84753026603!2d118.61294940870013!3d1.2522236876905486!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32734cb76f07da33%3A0x5e898623450bccae!2sLabuan%20Cermin!5e0!3m2!1sen!2sid!4v1753828856108!5m2!1sen!2sid");
 
   return (
     <div className="z-20 flex flex-col lg:px-56 items-center bg-white min-h-screen pb-16">
-    
-
       {/* Description */}
       <p className="mt-8 text-lg lg:text-xl text-black text-justify px-6 lg:px-0 leading-relaxed">
         {destination.description}
       </p>
-
-      {/* Facilities Section */}
-      {destination.facilities && destination.facilities.length > 0 && (
-        <div className="mt-8 w-full px-6 lg:px-0">
-          <h3 className="text-2xl font-semibold text-black mb-4">Facilities</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {destination.facilities.map((facility, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-2 bg-accent/10 rounded-lg p-3"
-              >
-                <svg
-                  className="w-5 h-5 text-accent flex-shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <span className="text-black">{facility}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       <Link
         href="/hotels"
@@ -62,13 +31,10 @@ export default function PlaceContent({ destination }: PlaceContentProps) {
       <div className="mt-10 flex flex-col lg:flex-row w-full gap-8 px-6 lg:px-0">
         {/* Destination Information */}
         <div className="flex-1 flex flex-col gap-2 bg-accent/10 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-accent mb-2">Destination Information</h2>
-          
-         
-        
+          <h2 className="text-xl font-semibold text-accent mb-2">
+            Destination Information
+          </h2>
 
-        
-          
           <p className="text-black mt-2">
             <span className="font-semibold">General Contact:</span>
           </p>
@@ -80,12 +46,15 @@ export default function PlaceContent({ destination }: PlaceContentProps) {
           </p>
           <p className="text-black">
             <span className="font-semibold">Email:</span>{" "}
-            <a href="mailto:bidukbidukpokdarwis@gmail.com" className="hover:underline">
+            <a
+              href="mailto:bidukbidukpokdarwis@gmail.com"
+              className="hover:underline"
+            >
               bidukbidukpokdarwis@gmail.com
             </a>
           </p>
         </div>
-        
+
         {/* Map */}
         <div className="flex-1 min-h-[200px]  rounded-xl overflow-hidden">
           <iframe

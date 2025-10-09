@@ -8,6 +8,19 @@ import { useEffect, useRef, useState } from 'react';
 import Lenis from 'lenis';
 import { hotelsApi, Hotel } from '@/lib/api';
 
+// Helper function to extract image URL from HotelImage object or string
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getImageUrl = (image: any): string | null => {
+  if (typeof image === 'string') {
+    return image.trim() !== "" ? image : null;
+  }
+  if (typeof image === 'object' && image !== null) {
+    const url = image.image_url || image.image || "";
+    return typeof url === 'string' && url.trim() !== "" ? url : null;
+  }
+  return null;
+};
+
 const HotelSection = () => {
   const lenisRef = useRef<Lenis | null>(null);
   const [hotels, setHotels] = useState<Hotel[]>([]);
@@ -145,7 +158,12 @@ const HotelSection = () => {
                                 <div className="group card-hotel rounded-xl h-full transition-all duration-500">
                                     <div className="overflow-hidden rounded-xl">
                                         <Image 
-                                            src={hotel.image} 
+                                            src={(() => {
+                                                // Extract first valid image
+                                                const firstImage = hotel.images && hotel.images.length > 0 ? getImageUrl(hotel.images[0]) : null;
+                                                const fallbackImage = hotel.image && hotel.image.trim() !== "" ? hotel.image : null;
+                                                return firstImage || fallbackImage || "/images/home/explore/explore.png";
+                                            })()} 
                                             alt={hotel.name} 
                                             width={400} 
                                             height={480}
@@ -157,7 +175,6 @@ const HotelSection = () => {
                                     <div className="p-2">
                                         <div className="flex flex-col justify-between items-start">
                                             <div>
-                                                <h1 className='text-primary font-plant text-lg md:text-xl mb-1'>Hotel</h1>
                                                 <h3 className="text-xl md:text-2xl font-semibold mb-1 text-black">
                                                     <Link href={`/hotels/${hotel.hotel_id}`} className="hover:text-accent transition-colors">
                                                         {hotel.name}

@@ -59,10 +59,10 @@ export default function ArticlesPage() {
             <div className="h-10 lg:h-12 bg-gray-200 rounded animate-pulse w-72 mx-auto"></div>
           </div>
           
-          {/* Desktop Grid Skeleton */}
-          <div className="hidden lg:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Desktop Flex Skeleton */}
+          <div className="hidden lg:flex flex-wrap gap-8 justify-center">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-              <div key={i} className="flex flex-col h-full shadow-xl rounded-3xl p-4 bg-[#F1FAFF] animate-pulse">
+              <div key={i} className="flex flex-col h-full shadow-xl rounded-3xl p-4 bg-[#F1FAFF] animate-pulse w-full sm:w-[calc(50%-1rem)] lg:w-[calc(25%-1.5rem)] max-w-sm">
                 <div className="w-full h-48 bg-gray-200 rounded-xl"></div>
                 <div className="flex flex-col gap-3 mt-4 flex-1">
                   <div className="h-6 bg-gray-200 rounded w-20"></div>
@@ -132,12 +132,12 @@ export default function ArticlesPage() {
 
       {/* Articles Grid */}
       <div className="container mx-auto px-6 lg:px-8 py-8 sm:py-12 lg:py-16 relative z-10">
-        {/* Desktop Version - Grid */}
-        <div className="hidden lg:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Desktop Version - Flex */}
+        <div className="hidden lg:flex flex-wrap gap-8 justify-center">
           {articles.map((article) => (
             <div
               key={article.id}
-              className="flex flex-col h-full shadow-xl rounded-3xl p-4 bg-[#F1FAFF] hover:scale-105 transition-transform duration-300"
+              className="flex flex-col h-full shadow-xl rounded-3xl p-4 bg-[#F1FAFF] hover:scale-105 transition-transform duration-300 w-full sm:w-[calc(50%-1rem)] lg:w-[calc(25%-1.5rem)] max-w-sm"
             >
               <Image
                 src={article.featured_image_url}
