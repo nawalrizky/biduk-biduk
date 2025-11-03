@@ -7,5 +7,75 @@
     "follow": "تابعنا",
     "language": "اللغة"
   },
-  "book_now": "احجز الآن →"
+  "buttons": {
+    "book_now": "احجز الآن",
+    "explore_more": "استكشف المزيد",
+    "read_more": "اقرأ المزيد",
+    "contact_us": "اتصل بنا",
+    "view_details": "عرض التفاصيل",
+    "learn_more": "تعلم المزيد",
+    "get_started": "ابدأ الآن",
+    "submit": "إرسال",
+    "cancel": "إلغاء",
+    "close": "إغلاق",
+    "save": "حفظ",
+    "next": "التالي",
+    "previous": "السابق",
+    "back": "رجوع",
+    "contact_to_book": "اتصل بنا للحجز"
+  },
+  "hotel": {
+    "beachside_escape": "ملاذك على شاطئ البحر",
+    "stay_swim_relax": "الإقامة، السباحة، الاسترخاء",
+    "hotel_accommodation": "فندق وإقامة",
+    "hotel_information": "معلومات الفندق",
+    "price_per_night": "السعر لكل ليلة",
+    "rating": "التقييم",
+    "total_reviews": "إجمالي المراجعات",
+    "booking": "الحجز",
+    "book_online": "احجز عبر الإنترنت",
+    "contact_us": "اتصل بنا",
+    "phone": "الهاتف",
+    "email": "البريد الإلكتروني",
+    "reviews": "مراجعات",
+    "photo_gallery": "معرض الصور",
+    "view_location": "عرض الموقع",
+    "open_in_google_maps": "افتح في خرائط جوجل"
+  },
+  "place": {
+    "place_information": "معلومات المكان",
+    "category": "الفئة",
+    "location": "الموقع",
+    "description": "الوصف",
+    "photo_gallery": "معرض الصور",
+    "view_location": "عرض الموقع",
+    "open_in_google_maps": "افتح في خرائط جوجل"
+  },
+  "article": {
+    "article_content": "محتوى المقال",
+    "published_date": "تاريخ النشر",
+    "author": "المؤلف",
+    "photo_gallery": "معرض الصور"
+  },
+  "package": {
+    "package_information": "معلومات الباقة",
+    "package_details": "تفاصيل الباقة",
+    "price": "السعر",
+    "duration": "المدة",
+    "includes": "يتضمن",
+    "photo_gallery": "معرض الصور"
+  },
+  "home": {
+    "hero_title_1": "مرحبًا بك في بيدوك-بيدوك",
+    "hero_subtitle_1": "استمتع بجمال الطبيعة والثقافة المحلية الساحرة",
+    "hero_title_2": "استكشف الجمال الطبيعي",
+    "hero_subtitle_2": "اكتشف الجواهر المخفية في كل ركن من أركان القرية",
+    "hero_title_3": "تجربة لا تُنسى",
+    "hero_subtitle_3": "اصنع ذكريات جميلة مع المجتمع المحلي",
+    "discover_title": "اكتشف مكان أحلامك",
+    "discover_subtitle": "أماكن جميلة في انتظارك",
+    "latest_news": "آخر الأخبار والتحديثات",
+    "explore_destinations": "استكشف الوجهات",
+    "our_packages": "باقات الجولات لدينا"
+  }
 }

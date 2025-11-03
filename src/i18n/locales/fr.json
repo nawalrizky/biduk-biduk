@@ -7,5 +7,75 @@
     "follow": "Suivez-nous",
     "language": "Langue"
   },
-  "book_now": "Réserver maintenant →"
+  "buttons": {
+    "book_now": "Réserver ",
+    "explore_more": "Explorer plus",
+    "read_more": "Lire la suite",
+    "contact_us": "Contactez-nous",
+    "view_details": "Voir les détails",
+    "learn_more": "En savoir plus",
+    "get_started": "Commencer",
+    "submit": "Soumettre",
+    "cancel": "Annuler",
+    "close": "Fermer",
+    "save": "Enregistrer",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "back": "Retour",
+    "contact_to_book": "Contactez-nous pour réserver"
+  },
+  "hotel": {
+    "beachside_escape": "Votre évasion en bord de mer",
+    "stay_swim_relax": "Séjourner, Nager, Se détendre",
+    "hotel_accommodation": "Hôtel et Hébergement",
+    "hotel_information": "Informations sur l'hôtel",
+    "price_per_night": "Prix par nuit",
+    "rating": "Note",
+    "total_reviews": "Total des avis",
+    "booking": "Réservation",
+    "book_online": "Réserver en ligne",
+    "contact_us": "Contactez-nous",
+    "phone": "Téléphone",
+    "email": "E-mail",
+    "reviews": "avis",
+    "photo_gallery": "Galerie de photos",
+    "view_location": "Voir l'emplacement",
+    "open_in_google_maps": "Ouvrir dans Google Maps"
+  },
+  "place": {
+    "place_information": "Informations sur le lieu",
+    "category": "Catégorie",
+    "location": "Emplacement",
+    "description": "Description",
+    "photo_gallery": "Galerie de photos",
+    "view_location": "Voir l'emplacement",
+    "open_in_google_maps": "Ouvrir dans Google Maps"
+  },
+  "article": {
+    "article_content": "Contenu de l'article",
+    "published_date": "Date de publication",
+    "author": "Auteur",
+    "photo_gallery": "Galerie de photos"
+  },
+  "package": {
+    "package_information": "Informations sur le forfait",
+    "package_details": "Détails du forfait",
+    "price": "Prix",
+    "duration": "Durée",
+    "includes": "Comprend",
+    "photo_gallery": "Galerie de photos"
+  },
+  "home": {
+    "hero_title_1": "Bienvenue à Biduk-Biduk",
+    "hero_subtitle_1": "Profitez de la beauté de la nature et de la charmante culture locale",
+    "hero_title_2": "Explorez la beauté naturelle",
+    "hero_subtitle_2": "Découvrez des trésors cachés dans chaque coin du village",
+    "hero_title_3": "Expérience inoubliable",
+    "hero_subtitle_3": "Créez de beaux souvenirs avec la communauté locale",
+    "discover_title": "Découvrez votre lieu de rêve",
+    "discover_subtitle": "De beaux endroits vous attendent",
+    "latest_news": "Dernières nouvelles et mises à jour",
+    "explore_destinations": "Explorer les destinations",
+    "our_packages": "Nos forfaits touristiques"
+  }
 }

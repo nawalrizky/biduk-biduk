@@ -2,19 +2,18 @@
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { destinationsApi, Destination } from "@/lib/api";
+import { useTranslation } from 'react-i18next';
 
 export default function DiscoverSection() {
-  const [currentSlide, setCurrentSlide] = useState<number>(4);
+  const { t } = useTranslation();
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [touchStart, setTouchStart] = useState<number>(0);
   const [touchEnd, setTouchEnd] = useState<number>(0);
-  const [mouseStart, setMouseStart] = useState<number>(0);
-  const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [dragOffset, setDragOffset] = useState<number>(0);
-  const [isAutoPlay, setIsAutoPlay] = useState<boolean>(true);
   const [destinations, setDestinations] = useState<Destination[]>([]);
-  
-  const containerRef = useRef<HTMLDivElement>(null);
-  const animationRef = useRef<number | null>(null);
+  const [centerIndex, setCenterIndex] = useState<number>(0);
+  const [isAutoScrolling, setIsAutoScrolling] = useState<boolean>(true);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const autoScrollRef = useRef<NodeJS.Timeout | null>(null);
 
   // Fetch destinations from API
   useEffect(() => {
@@ -32,103 +31,13 @@ export default function DiscoverSection() {
     fetchDestinations();
   }, []);
 
-  // Auto slide setiap 4 detik (pause saat dragging)
-  useEffect(() => {
-    if (!isAutoPlay || destinations.length === 0) return;
-    
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % destinations.length);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, [destinations.length, isAutoPlay]);
-
-
-
-  // Enhanced Mouse handlers untuk drag yang lebih responsif
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>): void => {
-    e.preventDefault();
-    setIsDragging(true);
-    setIsAutoPlay(false);
-    setMouseStart(e.clientX);
-    setDragOffset(0);
-    
-    if (containerRef.current) {
-      containerRef.current.style.cursor = 'grabbing';
-      containerRef.current.style.userSelect = 'none';
-    }
-  };
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>): void => {
-    if (!isDragging) return;
-    
-    e.preventDefault();
-    const currentX = e.clientX;
-    const diff = currentX - mouseStart;
-    setDragOffset(diff);
-    
-    // Cancel animation frame untuk performa yang lebih baik
-    if (animationRef.current) {
-      cancelAnimationFrame(animationRef.current);
-    }
-  };
-
-  const handleMouseUp = (e: React.MouseEvent<HTMLDivElement>): void => {
-    if (!isDragging) return;
-    
-    const currentX = e.clientX;
-    const distance = mouseStart - currentX;
-    const minDragDistance = 80; // Threshold minimum
-    const cardWidth = 340; // Lebar satu card + gap
-    
-    if (Math.abs(distance) > minDragDistance) {
-      // Hitung berapa card yang harus dipindah (maksimal 2)
-      const cardsMoved = Math.min(Math.ceil(Math.abs(distance) / cardWidth), 2);
-      
-      if (distance > 0) {
-        // Drag kiri -> next (pindah 1-2 cards)
-        setCurrentSlide((prev) => (prev + cardsMoved) % destinations.length);
-      } else {
-        // Drag kanan -> prev (pindah 1-2 cards)
-        setCurrentSlide((prev) => (prev - cardsMoved + destinations.length) % destinations.length);
-      }
-    }
-    
-    // Reset state
-    setIsDragging(false);
-    setDragOffset(0);
-    setMouseStart(0);
-    
-    if (containerRef.current) {
-      containerRef.current.style.cursor = 'grab';
-      containerRef.current.style.userSelect = 'auto';
-    }
-    
-    // Resume autoplay setelah 2 detik
-    setTimeout(() => {
-      setIsAutoPlay(true);
-    }, 2000);
-  };
-
-  const handleMouseLeave = (): void => {
-    if (isDragging) {
-      handleMouseUp({} as React.MouseEvent<HTMLDivElement>);
-    }
-  };
-
-  // Enhanced Touch handlers
+  // Touch handlers for mobile
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>): void => {
     setTouchStart(e.targetTouches[0].clientX);
-    setIsAutoPlay(false);
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>): void => {
-    const currentTouch = e.targetTouches[0].clientX;
-    setTouchEnd(currentTouch);
-    
-    if (touchStart) {
-      const diff = currentTouch - touchStart;
-      setDragOffset(diff);
-    }
+    setTouchEnd(e.targetTouches[0].clientX);
   };
 
   const handleTouchEnd = (): void => {
@@ -136,117 +45,163 @@ export default function DiscoverSection() {
     
     const distance = touchStart - touchEnd;
     const minSwipeDistance = 50;
-    const cardWidth = 340; // Lebar satu card + gap (estimasi untuk mobile)
 
     if (Math.abs(distance) > minSwipeDistance) {
-      // Hitung berapa card yang harus dipindah (maksimal 2)
-      const cardsMoved = Math.min(Math.ceil(Math.abs(distance) / cardWidth), 2);
-      
       if (distance > 0) {
-        // Swipe kiri -> next (pindah 1-2 cards)
-        setCurrentSlide((prev) => (prev + cardsMoved) % destinations.length);
+        // Swipe left -> next
+        setCurrentSlide((prev) => (prev + 1) % destinations.length);
       } else {
-        // Swipe kanan -> prev (pindah 1-2 cards)
-        setCurrentSlide((prev) => (prev - cardsMoved + destinations.length) % destinations.length);
+        // Swipe right -> prev
+        setCurrentSlide((prev) => (prev - 1 + destinations.length) % destinations.length);
       }
     }
 
-    // Reset state
     setTouchStart(0);
     setTouchEnd(0);
-    setDragOffset(0);
-    
-    // Resume autoplay setelah 2 detik
-    setTimeout(() => {
-      setIsAutoPlay(true);
-    }, 2000);
   };
 
-  // Calculate transform dengan drag offset
-  const calculateTransform = () => {
-    const baseTransform = -currentSlide * 340 + 4 * 340;
-    const dragTransform = isDragging || touchEnd ? dragOffset * 0.8 : 0; // Damping factor
-    return baseTransform + dragTransform;
-  };
+  // Set initial scroll position to center (start at second set)
+  useEffect(() => {
+    if (scrollContainerRef.current && destinations.length > 0) {
+      const container = scrollContainerRef.current;
+      const cardWidth = 360; // 320px + 40px gap
+      // Start at the beginning of the second set (index 1 of tripled array)
+      container.scrollLeft = destinations.length * cardWidth;
+    }
+  }, [destinations]);
+
+  // Auto scroll effect with seamless infinite loop (only left direction)
+  useEffect(() => {
+    if (!isAutoScrolling || !scrollContainerRef.current || destinations.length === 0) return;
+
+    const container = scrollContainerRef.current;
+    const cardWidth = 360; // 320px + 40px gap
+    
+    autoScrollRef.current = setInterval(() => {
+      if (container && isAutoScrolling) {
+        container.scrollLeft += 2; // Smooth continuous scroll to the left (right direction)
+        
+        // Seamlessly loop: when reaching end of second set, jump back to start of second set
+        // This makes the loop invisible since content is identical
+        const secondSetEnd = destinations.length * 2 * cardWidth;
+        if (container.scrollLeft >= secondSetEnd) {
+          // Jump back to start of second set
+          container.scrollLeft = destinations.length * cardWidth;
+        }
+      }
+    }, 16); // 60fps smooth scroll
+
+    return () => {
+      if (autoScrollRef.current) {
+        clearInterval(autoScrollRef.current);
+      }
+    };
+  }, [isAutoScrolling, destinations.length]);
+
+  // Handle scroll to detect center card with precise center detection
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!scrollContainerRef.current) return;
+      
+      const container = scrollContainerRef.current;
+      const containerCenter = container.scrollLeft + container.offsetWidth / 2;
+      const cardWidth = 360; // 320px + 40px gap
+      
+      // Calculate which card is at the center (more precise)
+      const index = Math.floor(containerCenter / cardWidth);
+      
+      // Keep index within bounds
+      const actualIndex = index % destinations.length;
+      setCenterIndex(actualIndex);
+    };
+
+    const container = scrollContainerRef.current;
+    if (container) {
+      container.addEventListener('scroll', handleScroll);
+      // Initial center calculation
+      handleScroll();
+      return () => container.removeEventListener('scroll', handleScroll);
+    }
+  }, [destinations.length]);
 
   return (
     <section>
       {/* Desktop Version */}
       <div className="hidden lg:flex bg-white flex-col justify-center items-center min-h-screen py-48">
-        <div className="flex flex-col items-center">
-          <h1 className="text-xl text-primary font-plant">Wonders to Discover</h1>
-          <h1 className="text-5xl text-black font-semibold mt-2">Beautiful Places Await</h1>
+        <div className="flex flex-col items-center mb-12">
+          <h1 className="text-xl text-primary font-plant">{t('home.discover_title')}</h1>
+          <h1 className="text-5xl text-black font-semibold mt-2">{t('home.discover_subtitle')}</h1>
         </div>
 
-        {/* Slider Container */}
-        <div
-          ref={containerRef}
-          className="relative w-full mt-12 pb-14 overflow-hidden cursor-grab active:cursor-grabbing select-none"
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseLeave}
-          style={{ 
-            cursor: isDragging ? 'grabbing' : 'grab',
-            userSelect: isDragging ? 'none' : 'auto'
-          }}
-        >
-          <div
-            className="flex gap-10 h-[50vh] justify-center"
-            style={{
-              transform: `translateX(${calculateTransform()}px)`,
-              transition: isDragging || touchEnd 
-                ? 'none' 
-                : 'transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-              perspective: "1000px",
-              willChange: 'transform'
-            }}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
-            {destinations.map((destination, index: number) => {
-              const position = index - currentSlide;
-              const isMainVisible = Math.abs(position) <= 4;
+        {/* Horizontal Scroll Carousel with Center Focus */}
+        <div className="w-full relative">
+          <style jsx>{`
+            .scroll-container {
+              display: flex;
+              gap: 40px;
+              padding: 60px 0;
+              overflow-x: auto;
+              scroll-behavior: smooth;
+              scrollbar-width: none;
+              -ms-overflow-style: none;
+              cursor: grab;
+            }
 
+            .scroll-container::-webkit-scrollbar {
+              display: none;
+            }
+
+            .scroll-container:active {
+              cursor: grabbing;
+            }
+
+            .destination-card {
+              flex-shrink: 0;
+              width: 320px;
+              transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            }
+
+            .destination-card.center {
+              width: 400px;
+            }
+
+            .destination-card img {
+              transition: transform 0.5s ease;
+            }
+          `}</style>
+
+          <div 
+            ref={scrollContainerRef} 
+            className="scroll-container"
+            onMouseEnter={() => setIsAutoScrolling(false)}
+            onMouseLeave={() => setIsAutoScrolling(true)}
+            style={{ paddingLeft: 'calc(50v - 160px)', paddingRight: 'calc(50vw - 160px)' }}
+          >
+            {/* Triple the destinations for infinite loop */}
+            {[...destinations, ...destinations, ...destinations].map((destination, index: number) => {
+              // Calculate which card should be centered based on actual position in array
+              const actualIndex = index % destinations.length;
+              const isCenter = actualIndex === centerIndex;
+              
               return (
                 <div
-                  key={index}
-                  className={`flex flex-col items-center transition-all duration-700 ${
-                    isMainVisible ? "opacity-100" : "opacity-40"
-                  }`}
-                  style={{
-                    minWidth: "320px",
-                    transform: `
-                      ${position === -4 ? "rotate(-16deg) translateY(140px)" : ""}
-                      ${position === -3 ? "rotate(-12deg) translateY(130px)" : ""}
-                      ${position === -2 ? "rotate(-8deg) translateY(70px)" : ""}
-                      ${position === -1 ? "rotate(-4deg) translateY(30px)" : ""}
-                      ${position === 0 ? "rotate(0deg) translateY(15px)" : ""}
-                      ${position === 1 ? "rotate(4deg) translateY(30px)" : ""}
-                      ${position === 2 ? "rotate(8deg) translateY(70px)" : ""}
-                      ${position === 3 ? "rotate(12deg) translateY(130px)" : ""}
-                      ${position === 4 ? "rotate(16deg) translateY(140px)" : ""}
-                    `,
-                    zIndex: position === 0 ? 10 : 5 - Math.abs(position),
-                    pointerEvents: isDragging ? 'none' : 'auto'
-                  }}
+                  key={`card-${index}`}
+                  className={`destination-card ${isCenter ? 'center' : ''}`}
                 >
-                  <Image
-                    src={Array.isArray(destination.images) ? destination.images[0] : destination.images}
-                    alt={destination.name}
-                    width={500}
-                    height={500}
-                    loading="lazy"
-                    className="w-80 h-80 object-cover rounded-[20px] hover:scale-105 transition-transform duration-300 shadow-lg"
-                    draggable={false}
-                  />
-                  <div className="flex flex-col items-center w-full px-4 3xl:px-10">
-                    <h1 className="text-xl text-black font-semibold mt-4 text-center">{destination.name}</h1>
-                    <button 
-                      className="btn-border-reveal font-semibold mt-2 w-fit px-6 py-2 text-base bg-transparent border-2 border-accent text-black rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2"
-                      onMouseDown={(e) => e.stopPropagation()}
-                    >
+                  <div className={`relative ${isCenter ? 'h-[400px] -translate-y-10' : 'h-[320px]'} w-full overflow-hidden rounded-[20px] group transition-all duration-500`}>
+                    <Image
+                      src={Array.isArray(destination.images) ? destination.images[0] : destination.images}
+                      alt={destination.name}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-500 shadow-lg"
+                      draggable={false}
+                    />
+                  </div>
+                  <div className={`flex flex-col items-center px-4 ${isCenter ? '-mt-4 ' : 'mt-4'}` }>
+                    <h1 className={`text-black font-semibold text-center mb-3 transition-all duration-500 ${isCenter ? 'text-2xl ' : 'text-xl'} line-clamp-2`}>
+                      {destination.name}
+                    </h1>
+                    <button className="font-semibold w-fit px-6 py-2 text-sm bg-transparent border-2 border-accent text-black rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2">
                       Visit
                       <svg
                         width="16"
@@ -267,30 +222,13 @@ export default function DiscoverSection() {
             })}
           </div>
         </div>
-
-        {/* Slide Indicators */}
-        <div className="flex gap-2 mt-8">
-          {Array.from({ length: destinations.length }).map((_, index: number) => (
-            <button
-              key={index}
-              onClick={() => {
-                setCurrentSlide(index);
-                setIsAutoPlay(false);
-                setTimeout(() => setIsAutoPlay(true), 3000);
-              }}
-              className={`w-3 h-3 rounded-full border border-primary transition-all duration-300 ${
-                currentSlide === index ? "bg-primary scale-110" : "bg-white hover:bg-gray-400"
-              }`}
-            />
-          ))}
-        </div>
       </div>
 
       {/* Mobile Version */}
       <div className="lg:hidden bg-white flex flex-col justify-center items-center min-h-screen py-16">
         <div className="flex flex-col items-center mb-8">
-          <h1 className="text-lg text-primary font-plant">Wonders to Discover</h1>
-          <h1 className="text-3xl text-black font-semibold mt-2 text-center">Beautiful Places Await</h1>
+          <h1 className="text-lg text-primary font-plant">{t('home.discover_title')}</h1>
+          <h1 className="text-3xl text-black font-semibold mt-2 text-center">{t('home.discover_subtitle')}</h1>
         </div>
 
         {/* Mobile 3D Carousel Container */}
@@ -364,8 +302,6 @@ export default function DiscoverSection() {
               key={index}
               onClick={() => {
                 setCurrentSlide(index);
-                setIsAutoPlay(false);
-                setTimeout(() => setIsAutoPlay(true), 3000);
               }}
               className={`w-3 h-3 rounded-full border border-primary transition-all duration-300 ${
                 currentSlide === index ? "bg-primary scale-125" : "bg-white"

@@ -1,13 +1,16 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { Destination } from "@/lib/api";
+import { Destination, getDestinationTranslation } from "@/lib/api";
+import { useLanguage } from '@/hooks/useLanguage';
 
 interface PlaceCarouselProps {
   destination: Destination;
 }
 
 export default function PlaceCarousel({ destination }: PlaceCarouselProps) {
+  const currentLanguage = useLanguage();
+  const translation = getDestinationTranslation(destination, currentLanguage);
   const [currentSlide, setCurrentSlide] = useState(0);
 
   // Convert images to array if it's a string
@@ -38,7 +41,7 @@ export default function PlaceCarousel({ destination }: PlaceCarouselProps) {
           >
             <Image
               src={image}
-              alt={`${destination.name} - Image ${index + 1}`}
+              alt={`${translation.name} - Image ${index + 1}`}
               fill
               className="object-cover"
               priority={index === 0}
@@ -65,7 +68,7 @@ export default function PlaceCarousel({ destination }: PlaceCarouselProps) {
           {destination.category?.name || "Place Detail"}
         </h1>
         <h1 className="text-2xl lg:text-5xl font-semibold text-black">
-          {destination.name}
+          {translation.name}
         </h1>
       </div>
 

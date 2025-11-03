@@ -1,13 +1,16 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { Article } from "@/lib/api";
+import { Article, getArticleTranslation } from "@/lib/api";
+import { useLanguage } from '@/hooks/useLanguage';
 
 interface ArticleCarouselProps {
   article: Article;
 }
 
 export default function ArticleCarousel({ article }: ArticleCarouselProps) {
+  const currentLanguage = useLanguage();
+  const translation = getArticleTranslation(article, currentLanguage);
   const [currentSlide, setCurrentSlide] = useState(0);
   
   // For now, we only have one image per article, but this allows for future expansion
@@ -42,7 +45,7 @@ export default function ArticleCarousel({ article }: ArticleCarouselProps) {
           >
             <Image
               src={image}
-              alt={article.title}
+              alt={translation.title}
               fill
               className="object-cover"
               priority={index === 0}
@@ -69,7 +72,7 @@ export default function ArticleCarousel({ article }: ArticleCarouselProps) {
           {article.category_name}
         </h1>
         <h1 className="text-2xl lg:text-5xl font-semibold text-black text-center">
-          {article.title}
+          {translation.title}
         </h1>
       </div>
 

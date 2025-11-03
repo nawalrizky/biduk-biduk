@@ -7,5 +7,75 @@
     "follow": "Ikuti Kami",
     "language": "Bahasa"
   },
-  "book_now": "Pesan Sekarang →"
+  "buttons": {
+    "book_now": "Pesan ",
+    "explore_more": "Jelajahi Lebih Banyak",
+    "read_more": "Baca Selengkapnya",
+    "contact_us": "Hubungi Kami",
+    "view_details": "Lihat Detail",
+    "learn_more": "Pelajari Lebih Lanjut",
+    "get_started": "Mulai Sekarang",
+    "submit": "Kirim",
+    "cancel": "Batal",
+    "close": "Tutup",
+    "save": "Simpan",
+    "next": "Selanjutnya",
+    "previous": "Sebelumnya",
+    "back": "Kembali",
+    "contact_to_book": "Hubungi Kami untuk Pesan"
+  },
+  "hotel": {
+    "beachside_escape": "Pelarian Tepi Pantai Anda",
+    "stay_swim_relax": "Menginap, Berenang, Bersantai",
+    "hotel_accommodation": "Hotel & Akomodasi",
+    "hotel_information": "Informasi Hotel",
+    "price_per_night": "Harga per Malam",
+    "rating": "Rating",
+    "total_reviews": "Total Ulasan",
+    "booking": "Pemesanan",
+    "book_online": "Pesan Online",
+    "contact_us": "Hubungi Kami",
+    "phone": "Telepon",
+    "email": "Email",
+    "reviews": "ulasan",
+    "photo_gallery": "Galeri Foto",
+    "view_location": "Lihat Lokasi",
+    "open_in_google_maps": "Buka di Google Maps"
+  },
+  "place": {
+    "place_information": "Informasi Tempat",
+    "category": "Kategori",
+    "location": "Lokasi",
+    "description": "Deskripsi",
+    "photo_gallery": "Galeri Foto",
+    "view_location": "Lihat Lokasi",
+    "open_in_google_maps": "Buka di Google Maps"
+  },
+  "article": {
+    "article_content": "Konten Artikel",
+    "published_date": "Tanggal Publikasi",
+    "author": "Penulis",
+    "photo_gallery": "Galeri Foto"
+  },
+  "package": {
+    "package_information": "Informasi Paket",
+    "package_details": "Detail Paket",
+    "price": "Harga",
+    "duration": "Durasi",
+    "includes": "Termasuk",
+    "photo_gallery": "Galeri Foto"
+  },
+  "home": {
+    "hero_title_1": "Selamat Datang di Biduk-Biduk",
+    "hero_subtitle_1": "Nikmati keindahan alam dan budaya lokal yang menawan",
+    "hero_title_2": "Jelajahi Keindahan Alam",
+    "hero_subtitle_2": "Temukan pesona tersembunyi di setiap sudut desa",
+    "hero_title_3": "Pengalaman Tak Terlupakan",
+    "hero_subtitle_3": "Ciptakan kenangan indah bersama masyarakat lokal",
+    "discover_title": "Temukan Tempat Impian Anda",
+    "discover_subtitle": "Tempat Indah Menanti",
+    "latest_news": "Berita & Update Terbaru",
+    "explore_destinations": "Jelajahi Destinasi",
+    "our_packages": "Paket Tur Kami"
+  }
 }

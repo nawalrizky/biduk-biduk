@@ -7,5 +7,75 @@
     "follow": "关注我们",
     "language": "语言"
   },
-  "book_now": "立即预订 →"
+  "buttons": {
+    "book_now": "立即预订",
+    "explore_more": "探索更多",
+    "read_more": "阅读更多",
+    "contact_us": "联系我们",
+    "view_details": "查看详情",
+    "learn_more": "了解更多",
+    "get_started": "开始使用",
+    "submit": "提交",
+    "cancel": "取消",
+    "close": "关闭",
+    "save": "保存",
+    "next": "下一页",
+    "previous": "上一页",
+    "back": "返回",
+    "contact_to_book": "联系我们预订"
+  },
+  "hotel": {
+    "beachside_escape": "您的海滨度假胜地",
+    "stay_swim_relax": "住宿、游泳、放松",
+    "hotel_accommodation": "酒店与住宿",
+    "hotel_information": "酒店信息",
+    "price_per_night": "每晚价格",
+    "rating": "评分",
+    "total_reviews": "总评论数",
+    "booking": "预订",
+    "book_online": "在线预订",
+    "contact_us": "联系我们",
+    "phone": "电话",
+    "email": "电子邮件",
+    "reviews": "评论",
+    "photo_gallery": "照片库",
+    "view_location": "查看位置",
+    "open_in_google_maps": "在谷歌地图中打开"
+  },
+  "place": {
+    "place_information": "地点信息",
+    "category": "类别",
+    "location": "位置",
+    "description": "描述",
+    "photo_gallery": "照片库",
+    "view_location": "查看位置",
+    "open_in_google_maps": "在谷歌地图中打开"
+  },
+  "article": {
+    "article_content": "文章内容",
+    "published_date": "发布日期",
+    "author": "作者",
+    "photo_gallery": "照片库"
+  },
+  "package": {
+    "package_information": "套餐信息",
+    "package_details": "套餐详情",
+    "price": "价格",
+    "duration": "时长",
+    "includes": "包含",
+    "photo_gallery": "照片库"
+  },
+  "home": {
+    "hero_title_1": "欢迎来到比都克-比都克",
+    "hero_subtitle_1": "享受自然之美和迷人的当地文化",
+    "hero_title_2": "探索自然之美",
+    "hero_subtitle_2": "发现村庄每个角落的隐藏宝石",
+    "hero_title_3": "难忘的体验",
+    "hero_subtitle_3": "与当地社区创造美好回忆",
+    "discover_title": "发现您的梦想之地",
+    "discover_subtitle": "美丽的地方在等待",
+    "latest_news": "最新新闻与更新",
+    "explore_destinations": "探索目的地",
+    "our_packages": "我们的旅游套餐"
+  }
 }

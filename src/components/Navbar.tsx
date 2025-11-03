@@ -40,25 +40,45 @@ const Navbar = () => {
 
   const { t } = useTranslation();
   
+  // Get current language
+  const currentLang = typeof window !== 'undefined' ? localStorage.getItem('i18nextLng') || 'id' : 'id';
+  
+  // Function to change language globally and reload page
+  const handleLanguageChange = (langCode: string) => {
+    i18n.changeLanguage(langCode);
+    setShowLangDropdown(false);
+    // Save to localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('i18nextLng', langCode);
+      // Reload page to fetch new data with updated language
+      window.location.reload();
+    }
+  };
+  
   // Prevent hydration mismatch by only showing translated content after client-side hydration
   const navItems = [
     { name: isClient ? t('navbar.home') : 'Home', href: '/' },
     { name: isClient ? t('navbar.place') : 'Place', href: '/place' },
     { name: isClient ? t('navbar.stay') : 'Stay', href: '/hotels' },
     { name: isClient ? t('navbar.contact') : 'Contact', href: '/contact' },
-    { name: isClient ? t('navbar.follow') : 'Follow', href: '/follow' },
     { name: isClient ? t('navbar.language') : 'Language', href: '/language', isLanguage: true },
   ];
 
   const languageOptions = [
-    { label: 'English', code: 'en' },
     { label: 'Indonesia', code: 'id' },
-    { label: 'Arabic', code: 'ar' },
-    { label: 'Chinese', code: 'zh' },
-    { label: 'French', code: 'fr' },
-    { label: 'Spanish', code: 'es' },
+    { label: 'English', code: 'en' },
+    { label: 'العربية', code: 'ar' }, // Arabic
+    { label: '中文', code: 'zh' }, // Chinese
+    { label: 'Français', code: 'fr' }, // French
+    { label: 'Español', code: 'es' }, // Spanish
   ];
   const [showLangDropdown, setShowLangDropdown] = useState(false);
+  
+  // Get current language label
+  const getCurrentLangLabel = () => {
+    const current = languageOptions.find(lang => lang.code === currentLang);
+    return current ? current.label : 'Indonesia';
+  };
 
   return (
     <nav className={`
@@ -100,32 +120,43 @@ const Navbar = () => {
                   return (
                     <div
                       key={item.name}
-                      className="relative group"
-                      onMouseEnter={() => setShowLangDropdown(true)}
-                      onMouseLeave={() => setShowLangDropdown(false)}
+                      className="relative"
                     >
                       <button
                         type="button"
-                        className={`relative text-white transition-colors duration-200 text-xl group flex items-center gap-1 ${
-                          isActive ? 'text-white' : ''
-                        } ${(isActive && isVisible) ? 'font-semibold' : ''}`}
-                        onClick={() => setShowLangDropdown((v) => !v)}
+                        className={`relative text-white transition-colors duration-200 text-xl flex items-center gap-1 hover:text-accent`}
+                        onClick={() => setShowLangDropdown(!showLangDropdown)}
+                        onMouseEnter={() => setShowLangDropdown(true)}
                       >
-                        {item.name}
-                        <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                    
+                        {getCurrentLangLabel()}
+                        <svg className={`w-4 h-4 transition-transform duration-200 ${showLangDropdown ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
                       </button>
                       {/* Dropdown */}
                       <div
-                        className={`absolute left-0 mt-2 w-40 bg-white rounded shadow-lg z-50 transition-all duration-200 ${showLangDropdown ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+                        className={`absolute -left-20 mt-2 w-48 bg-white rounded-lg shadow-xl z-50 transition-all duration-200 overflow-hidden ${showLangDropdown ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}
+                        onMouseEnter={() => setShowLangDropdown(true)}
+                        onMouseLeave={() => setShowLangDropdown(false)}
                       >
-                        <ul>
+                        <ul className="">
                           {languageOptions.map((lang) => (
                             <li key={lang.code}>
                               <button
-                                className="w-full text-left px-4 py-2 text-gray-800 hover:bg-[#05A5D0] hover:text-white transition-colors duration-150"
-                                onClick={() => i18n.changeLanguage(lang.code)}
+                                className={`w-full text-left px-4 py-2.5 transition-colors duration-150 flex items-center justify-between ${
+                                  currentLang === lang.code 
+                                    ? 'bg-[#05A5D0] text-white font-semibold' 
+                                    : 'text-gray-800 hover:bg-[#05A5D0]/10 hover:text-[#05A5D0]'
+                                }`}
+                                onClick={() => handleLanguageChange(lang.code)}
                               >
-                                {lang.label}
+                                <span>{lang.label}</span>
+                                {currentLang === lang.code && (
+                                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                  </svg>
+                                )}
                               </button>
                             </li>
                           ))}
@@ -173,10 +204,53 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Navigation */}
-      <div className={`lg:hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`} id="mobile-menu">
+      <div className={`lg:hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`} id="mobile-menu">
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-black/20 backdrop-blur-md">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
+            
+            if (item.isLanguage) {
+              return (
+                <div key={item.name} className="px-3 py-2">
+                  <button
+                    type="button"
+                    className="w-full text-left text-white font-medium text-base mb-2 flex items-center gap-2"
+                    onClick={() => setShowLangDropdown(!showLangDropdown)}
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                    </svg>
+                    {getCurrentLangLabel()}
+                    <svg className={`w-4 h-4 ml-auto transition-transform duration-200 ${showLangDropdown ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  {showLangDropdown && (
+                    <div className="pl-4 space-y-1 bg-white/5 rounded-lg p-2">
+                      {languageOptions.map((lang) => (
+                        <button
+                          key={lang.code}
+                          className={`w-full text-left px-3 py-2.5 rounded transition-colors duration-150 text-sm flex items-center justify-between ${
+                            currentLang === lang.code
+                              ? 'bg-white/20 text-white font-semibold'
+                              : 'text-white/80 hover:text-white hover:bg-white/10'
+                          }`}
+                          onClick={() => handleLanguageChange(lang.code)}
+                        >
+                          <span>{lang.label}</span>
+                          {currentLang === lang.code && (
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            }
+            
             return (
               <Link
                 key={item.name}

@@ -3,7 +3,9 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { hotelsApi, Hotel } from "@/lib/api";
+import { hotelsApi, Hotel, getHotelTranslation } from "@/lib/api";
+import { useLanguage } from '@/hooks/useLanguage';
+import { useTranslation } from 'react-i18next';
 
 // Helper function to extract image URL from HotelImage object or string
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,6 +21,8 @@ const getImageUrl = (image: any): string | null => {
 };
 
 export default function HotelsPage() {
+  const currentLanguage = useLanguage();
+  const { t } = useTranslation();
   const [hotels, setHotels] = useState<Hotel[]>([]);
   const [loading, setLoading] = useState(true);
   const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
@@ -153,7 +157,9 @@ export default function HotelsPage() {
       {/* Hotels Grid */}
       <div className="container mx-auto px-6 lg:px-8 py-6 lg:py-16 relative z-10">
         <div className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-6">
-          {hotels.slice(0, 8).map((hotel) => (
+          {hotels.slice(0, 8).map((hotel) => {
+            const translation = getHotelTranslation(hotel, currentLanguage);
+            return (
             <div
               key={hotel.hotel_id}
               className="rounded-2xl overflow-hidden transition-all duration-300"
@@ -172,7 +178,7 @@ export default function HotelsPage() {
                               return firstImage || fallbackImage || "/images/home/explore/explore.png";
                             })()
                       }
-                      alt={hotel.name}
+                      alt={translation.name}
                       fill
                       loading="lazy"
                       className="rounded-2xl object-cover group-hover:scale-110 transition-transform duration-500"
@@ -189,7 +195,7 @@ export default function HotelsPage() {
                       href={`/hotels/${hotel.hotel_id}`}
                       className="hover:text-accent transition-colors"
                     >
-                      {hotel.name}
+                      {translation.name}
                     </Link>
                   </h3>
                   
@@ -221,13 +227,14 @@ export default function HotelsPage() {
                       href={hotel.book_url || `/hotels/${hotel.hotel_id}`}
                       className="btn-border-reveal border-2 border-accent text-black font-semibold px-4 lg:px-6 py-2 rounded-full hover:bg-accent hover:text-white transition-colors text-sm flex items-center gap-2 whitespace-nowrap"
                     >
-                      Book Now →
+                      {t('buttons.book_now')} →
                     </Link>
                   </div>
                 </div>
               </div>
             </div>
-          ))}
+          );
+          })}
         </div>
 
         {/* Empty State */}

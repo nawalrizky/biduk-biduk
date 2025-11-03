@@ -1,7 +1,9 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { Hotel } from "@/lib/api";
+import { Hotel, getHotelTranslation } from "@/lib/api";
+import { useLanguage } from '@/hooks/useLanguage';
+import { useTranslation } from 'react-i18next';
 
 interface HotelCarouselProps {
   hotel: Hotel;
@@ -21,6 +23,9 @@ const getImageUrl = (image: any): string | null => {
 };
 
 export default function HotelCarousel({ hotel }: HotelCarouselProps) {
+  const currentLanguage = useLanguage();
+  const { t } = useTranslation();
+  const translation = getHotelTranslation(hotel, currentLanguage);
   const [currentSlide, setCurrentSlide] = useState(0);
 
   // Use hotel images or placeholder - extract URLs from objects or strings
@@ -49,7 +54,7 @@ export default function HotelCarousel({ hotel }: HotelCarouselProps) {
           >
             <Image
               src={image}
-              alt={`${hotel.name} - Image ${index + 1}`}
+              alt={`${translation.name} - Image ${index + 1}`}
               fill
               className="object-cover"
               priority={index === 0}
@@ -73,13 +78,13 @@ export default function HotelCarousel({ hotel }: HotelCarouselProps) {
       {/* Hotel Info Overlay - Desktop */}
       <div className="hidden md:flex flex-col items-center justify-center absolute bottom-15 lg:bottom-5 3xl:bottom-20 w-full z-20 px-20 lg:px-56">
         <h1 className="text-2xl lg:text-3xl font-plant text-primary">
-          Hotel & Accommodation
+          {t('hotel.hotel_accommodation')}
         </h1>
         <h1 className="text-2xl lg:text-5xl font-semibold text-black text-center">
-          {hotel.name}
+          {translation.name}
         </h1>
         <p className="text-xl lg:text-3xl font-bold text-accent mt-4">
-          Rp {parseFloat(hotel.price).toLocaleString('id-ID')} / night
+          Rp {parseFloat(hotel.price).toLocaleString('id-ID')} 
         </p>
       </div>
 

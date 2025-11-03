@@ -1,13 +1,18 @@
 "use client";
 import Link from "next/link";
-import { Article } from "@/lib/api";
+import { Article, getArticleTranslation } from "@/lib/api";
 import { useState } from "react";
+import { useLanguage } from '@/hooks/useLanguage';
+import { useTranslation } from 'react-i18next';
 
 interface ArticleContentProps {
   article: Article;
 }
 
 export default function ArticleContent({ article }: ArticleContentProps) {
+  const currentLanguage = useLanguage();
+  const { t } = useTranslation();
+  const translation = getArticleTranslation(article, currentLanguage);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
 
@@ -81,7 +86,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
 
       {/* Article Content */}
       <p className="px-6 text-base lg:text-xl text-black text-justify leading-relaxed whitespace-pre-line">
-        {article.content}
+        {translation.content}
       </p>
 
       {/* Tags */}
@@ -184,7 +189,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
             {/* Article Info */}
             <div className="mb-6">
               <p className="text-sm text-gray-600 mb-2">Share this article:</p>
-              <p className="font-semibold text-black line-clamp-2">{article.title}</p>
+              <p className="font-semibold text-black line-clamp-2">{translation.title}</p>
             </div>
 
             {/* Link Display */}

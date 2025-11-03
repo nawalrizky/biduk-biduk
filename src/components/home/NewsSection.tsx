@@ -3,8 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import { articlesApi, Article } from "@/lib/api";
+import { useTranslation } from 'react-i18next';
 
 export default function NewsSection() {
+    const { t } = useTranslation();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [articles, setArticles] = useState<Article[]>([]);
     const [loading, setLoading] = useState(true);
@@ -80,7 +82,7 @@ export default function NewsSection() {
                 <div className="container mx-auto">
                     <div className="text-center mb-12">
                         <h1 className="text-xl text-primary font-plant mb-2">Stories from the Coast</h1>
-                        <p className="text-black text-2xl md:text-3xl lg:text-[32px] -mt-1 font-semibold">Latest News & Updates</p>
+                        <p className="text-black text-2xl md:text-3xl lg:text-[32px] -mt-1 font-semibold">{t('home.latest_news')}</p>
                     </div>
                     <div className="hidden lg:flex flex-wrap gap-8 justify-center">
                         {[1, 2, 3, 4].map((i) => (
@@ -113,7 +115,7 @@ export default function NewsSection() {
             <div className="container mx-auto">
                 <div className="text-center mb-12">
                     <h1 className="text-xl  text-primary font-plant mb-2">Stories from the Coast</h1>
-                    <p className="text-black text-2xl md:text-3xl lg:text-[32px] -mt-1 font-semibold">Latest News & Updates</p>
+                    <p className="text-black text-2xl md:text-3xl lg:text-[32px] -mt-1 font-semibold">{t('home.latest_news')}</p>
                 </div>
 
                 {/* Mobile Version - Stacked Images Side by Side */}

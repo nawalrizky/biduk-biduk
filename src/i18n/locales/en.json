@@ -7,5 +7,75 @@
     "follow": "Follow Us",
     "language": "Language"
   },
-  "book_now": "Book Now →"
+  "buttons": {
+    "book_now": "Book Now",
+    "explore_more": "Explore More",
+    "read_more": "Read More",
+    "contact_us": "Contact Us",
+    "view_details": "View Details",
+    "learn_more": "Learn More",
+    "get_started": "Get Started",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "close": "Close",
+    "save": "Save",
+    "next": "Next",
+    "previous": "Previous",
+    "back": "Back",
+    "contact_to_book": "Contact Us to Book"
+  },
+  "hotel": {
+    "beachside_escape": "Your Beachside Escape",
+    "stay_swim_relax": "Stay, Swim, Relax",
+    "hotel_accommodation": "Hotel & Accommodation",
+    "hotel_information": "Hotel Information",
+    "price_per_night": "Price per Night",
+    "rating": "Rating",
+    "total_reviews": "Total Reviews",
+    "booking": "Booking",
+    "book_online": "Book Online",
+    "contact_us": "Contact Us",
+    "phone": "Phone",
+    "email": "Email",
+    "reviews": "reviews",
+    "photo_gallery": "Photo Gallery",
+    "view_location": "View Location",
+    "open_in_google_maps": "Open in Google Maps"
+  },
+  "place": {
+    "place_information": "Place Information",
+    "category": "Category",
+    "location": "Location",
+    "description": "Description",
+    "photo_gallery": "Photo Gallery",
+    "view_location": "View Location",
+    "open_in_google_maps": "Open in Google Maps"
+  },
+  "article": {
+    "article_content": "Article Content",
+    "published_date": "Published Date",
+    "author": "Author",
+    "photo_gallery": "Photo Gallery"
+  },
+  "package": {
+    "package_information": "Package Information",
+    "package_details": "Package Details",
+    "price": "Price",
+    "duration": "Duration",
+    "includes": "Includes",
+    "photo_gallery": "Photo Gallery"
+  },
+  "home": {
+    "hero_title_1": "Welcome to Biduk-Biduk",
+    "hero_subtitle_1": "Enjoy the beauty of nature and charming local culture",
+    "hero_title_2": "Explore Natural Beauty",
+    "hero_subtitle_2": "Discover hidden gems in every corner of the village",
+    "hero_title_3": "Unforgettable Experience",
+    "hero_subtitle_3": "Create beautiful memories with the local community",
+    "discover_title": "Discover Your Dream Place",
+    "discover_subtitle": "Beautiful Places Await",
+    "latest_news": "Latest News & Updates",
+    "explore_destinations": "Explore Destinations",
+    "our_packages": "Our Tour Packages"
+  }
 }

@@ -2,34 +2,37 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { useTranslation } from 'react-i18next';
 
 interface SlideData {
   id: number;
   image: string;
-  title: string;
-  subtitle: string;
+  titleKey: string;
+  subtitleKey: string;
 }
 
 const HeroSection = () => {
+  const { t } = useTranslation();
+  
   // Data carousel - bisa disesuaikan dengan kebutuhan
   const slides: SlideData[] = [
     {
       id: 1,
       image: "/images/home/hero.png",
-      title: "Selamat Datang di Biduk-Biduk",
-      subtitle: "Nikmati keindahan alam dan budaya lokal yang menawan",
+      titleKey: "home.hero_title_1",
+      subtitleKey: "home.hero_subtitle_1",
     },
     {
       id: 2,
       image: "/images/home/destination/image4.png",
-      title: "Jelajahi Keindahan Alam",
-      subtitle: "Temukan pesona tersembunyi di setiap sudut desa",
+      titleKey: "home.hero_title_2",
+      subtitleKey: "home.hero_subtitle_2",
     },
     {
       id: 3,
       image: "/images/home/destination/image6.png",
-      title: "Pengalaman Tak Terlupakan",
-      subtitle: "Ciptakan kenangan indah bersama masyarakat lokal",
+      titleKey: "home.hero_title_3",
+      subtitleKey: "home.hero_subtitle_3",
     },
   ];
 
@@ -38,20 +41,20 @@ const HeroSection = () => {
     {
       id: 1,
       image: "/images/home/hero_mobile.png",
-      title: "Selamat Datang di Biduk-Biduk",
-      subtitle: "Nikmati keindahan alam dan budaya lokal yang menawan",
+      titleKey: "home.hero_title_1",
+      subtitleKey: "home.hero_subtitle_1",
     },
     {
       id: 2,
       image: "/images/home/destination/image4.png",
-      title: "Jelajahi Keindahan Alam",
-      subtitle: "Temukan pesona tersembunyi di setiap sudut desa",
+      titleKey: "home.hero_title_2",
+      subtitleKey: "home.hero_subtitle_2",
     },
     {
       id: 3,
       image: "/images/home/destination/image6.png",
-      title: "Pengalaman Tak Terlupakan",
-      subtitle: "Ciptakan kenangan indah bersama masyarakat lokal",
+      titleKey: "home.hero_title_3",
+      subtitleKey: "home.hero_subtitle_3",
     },
   ];
 
@@ -106,7 +109,7 @@ const HeroSection = () => {
               >
                 <Image
                   src={slide.image}
-                  alt={slide.title}
+                  alt={t(slide.titleKey)}
                   fill
                   className="object-cover"
                   priority={index === 0}
@@ -130,7 +133,7 @@ const HeroSection = () => {
               >
                 <Image
                   src={slide.image}
-                  alt={slide.title}
+                  alt={t(slide.titleKey)}
                   fill
                   className="object-cover"
                   priority={index === 0}

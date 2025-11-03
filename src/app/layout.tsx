@@ -5,6 +5,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import I18nProvider from "@/providers/I18nProvider";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -41,16 +42,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="id">
       <head>
         <link rel="preconnect" href="https://www.google.com" />
         <link rel="preconnect" href="https://www.gstatic.com" crossOrigin="" />
         <link rel="dns-prefetch" href="https://recaptchaenterprise.googleapis.com" />
       </head>
       <body className={`${openSans.variable} ${plantFont.variable} font-sans antialiased`}>
-        <Navbar />
-        {children}
-        <Footer />
+        <I18nProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </I18nProvider>
       </body>
     </html>
   );

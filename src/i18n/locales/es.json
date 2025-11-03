@@ -7,5 +7,75 @@
     "follow": "Síguenos",
     "language": "Idioma"
   },
-  "book_now": "Reservar ahora →"
+  "buttons": {
+    "book_now": "Reservar ",
+    "explore_more": "Explorar más",
+    "read_more": "Leer más",
+    "contact_us": "Contáctenos",
+    "view_details": "Ver detalles",
+    "learn_more": "Aprender más",
+    "get_started": "Comenzar",
+    "submit": "Enviar",
+    "cancel": "Cancelar",
+    "close": "Cerrar",
+    "save": "Guardar",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "back": "Volver",
+    "contact_to_book": "Contáctenos para reservar"
+  },
+  "hotel": {
+    "beachside_escape": "Tu escapada junto al mar",
+    "stay_swim_relax": "Alojarse, Nadar, Relajarse",
+    "hotel_accommodation": "Hotel y Alojamiento",
+    "hotel_information": "Información del hotel",
+    "price_per_night": "Precio por noche",
+    "rating": "Calificación",
+    "total_reviews": "Total de reseñas",
+    "booking": "Reserva",
+    "book_online": "Reservar en línea",
+    "contact_us": "Contáctenos",
+    "phone": "Teléfono",
+    "email": "Correo electrónico",
+    "reviews": "reseñas",
+    "photo_gallery": "Galería de fotos",
+    "view_location": "Ver ubicación",
+    "open_in_google_maps": "Abrir en Google Maps"
+  },
+  "place": {
+    "place_information": "Información del lugar",
+    "category": "Categoría",
+    "location": "Ubicación",
+    "description": "Descripción",
+    "photo_gallery": "Galería de fotos",
+    "view_location": "Ver ubicación",
+    "open_in_google_maps": "Abrir en Google Maps"
+  },
+  "article": {
+    "article_content": "Contenido del artículo",
+    "published_date": "Fecha de publicación",
+    "author": "Autor",
+    "photo_gallery": "Galería de fotos"
+  },
+  "package": {
+    "package_information": "Información del paquete",
+    "package_details": "Detalles del paquete",
+    "price": "Precio",
+    "duration": "Duración",
+    "includes": "Incluye",
+    "photo_gallery": "Galería de fotos"
+  },
+  "home": {
+    "hero_title_1": "Bienvenido a Biduk-Biduk",
+    "hero_subtitle_1": "Disfruta de la belleza de la naturaleza y la encantadora cultura local",
+    "hero_title_2": "Explora la belleza natural",
+    "hero_subtitle_2": "Descubre gemas ocultas en cada rincón del pueblo",
+    "hero_title_3": "Experiencia inolvidable",
+    "hero_subtitle_3": "Crea hermosos recuerdos con la comunidad local",
+    "discover_title": "Descubre tu lugar soñado",
+    "discover_subtitle": "Hermosos lugares te esperan",
+    "latest_news": "Últimas noticias y actualizaciones",
+    "explore_destinations": "Explorar destinos",
+    "our_packages": "Nuestros paquetes turísticos"
+  }
 }

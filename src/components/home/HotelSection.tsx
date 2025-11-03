@@ -6,7 +6,9 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { useEffect, useRef, useState } from 'react';
 import Lenis from 'lenis';
-import { hotelsApi, Hotel } from '@/lib/api';
+import { hotelsApi, Hotel, getHotelTranslation } from '@/lib/api';
+import { useLanguage } from '@/hooks/useLanguage';
+import { useTranslation } from 'react-i18next';
 
 // Helper function to extract image URL from HotelImage object or string
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,6 +24,8 @@ const getImageUrl = (image: any): string | null => {
 };
 
 const HotelSection = () => {
+  const currentLanguage = useLanguage();
+  const { t } = useTranslation();
   const lenisRef = useRef<Lenis | null>(null);
   const [hotels, setHotels] = useState<Hotel[]>([]);
 
@@ -127,14 +131,14 @@ const HotelSection = () => {
                 <div className="flex flex-col lg:flex-row justify-center items-center mb-8 lg:px-24">
                     <div className="mb-6 lg:mb-0 w-full lg:w-2/3 flex flex-col justify-center text-center lg:text-left">
                         <span className="text-primary font-plant text-lg lg:text-xl mb-2 block lg:pr-24">
-                            Your Beachside Escape
+                            {t('hotel.beachside_escape')}
                         </span>
                         <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-black leading-tight">
-                           Stay, Swim, Relax
+                           {t('hotel.stay_swim_relax')}
                         </h2>
                     </div>
                     <Link href="/hotels" className="hidden lg:flex text-primary font-plant text-3xl mb-2  items-center gap-2">
-                       Explore More
+                       {t('buttons.explore_more')}
                         <svg
                             width="16"
                             height="16"
@@ -153,7 +157,9 @@ const HotelSection = () => {
                 {/* Horizontal scroll layout for all devices */}
                 <div className="hotel-wrapper h-[50vh] md:h-[55vh] lg:h-[55vh]">
                     <div className="flex gap-6 md:gap-8 lg:gap-12 pl-4 md:pl-8 lg:pl-44">
-                        {hotels.map((hotel) => (
+                        {hotels.map((hotel) => {
+                            const translation = getHotelTranslation(hotel, currentLanguage);
+                            return (
                             <div key={hotel.hotel_id} className="flex-shrink-0 w-64 md:w-72 lg:w-80">
                                 <div className="group card-hotel rounded-xl h-full transition-all duration-500">
                                     <div className="overflow-hidden rounded-xl">
@@ -164,7 +170,7 @@ const HotelSection = () => {
                                                 const fallbackImage = hotel.image && hotel.image.trim() !== "" ? hotel.image : null;
                                                 return firstImage || fallbackImage || "/images/home/explore/explore.png";
                                             })()} 
-                                            alt={hotel.name} 
+                                            alt={translation.name} 
                                             width={400} 
                                             height={480}
                                             loading="lazy"
@@ -177,7 +183,7 @@ const HotelSection = () => {
                                             <div>
                                                 <h3 className="text-xl md:text-2xl font-semibold mb-1 text-black">
                                                     <Link href={`/hotels/${hotel.hotel_id}`} className="hover:text-accent transition-colors">
-                                                        {hotel.name}
+                                                        {translation.name}
                                                     </Link>
                                                 </h3>
                                             </div>
@@ -206,7 +212,7 @@ const HotelSection = () => {
                                                 href={hotel.book_url || `/hotels/${hotel.hotel_id}`}
                                                 className="btn-border-reveal bg-transparent border-2 border-accent text-black font-semibold px-3 md:px-4 lg:px-6 py-1.5 md:py-2 rounded-full hover:bg-accent transition-colors text-xs md:text-sm lg:text-[12px] flex items-center gap-1 md:gap-2 h-fit"
                                             >
-                                                Book Now
+                                                {t('buttons.book_now')}
                                                 <svg
                                                     width="12"
                                                     height="12"
@@ -226,14 +232,15 @@ const HotelSection = () => {
                                     </div>
                                 </div>
                             </div>
-                        ))}
+                        );
+                        })}
                     </div>
                     {/* Explore More link below horizontal scroll */}
                     
                 </div>
                 <div className="flex lg:hidden justify-center -mt-12">
                         <Link href="/hotels" className="text-primary font-plant text-xl flex items-center gap-2">
-                            Explore More
+                            {t('buttons.explore_more')}
                             <svg
                                 width="16"
                                 height="16"

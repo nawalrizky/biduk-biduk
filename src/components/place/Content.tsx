@@ -1,11 +1,18 @@
+"use client";
+
 import Link from "next/link";
-import { Destination } from "@/lib/api";
+import { Destination, getDestinationTranslation } from "@/lib/api";
+import { useLanguage } from '@/hooks/useLanguage';
+import { useTranslation } from 'react-i18next';
 
 interface PlaceContentProps {
   destination: Destination;
 }
 
 export default function PlaceContent({ destination }: PlaceContentProps) {
+  const currentLanguage = useLanguage();
+  const { t } = useTranslation();
+  const translation = getDestinationTranslation(destination, currentLanguage);
   // Extract coordinates for Google Maps
   const latitude = destination.coordinates?.latitude;
   const longitude = destination.coordinates?.longitude;
@@ -19,33 +26,33 @@ export default function PlaceContent({ destination }: PlaceContentProps) {
     <div className="z-20 flex flex-col lg:px-56 items-center bg-white min-h-screen pb-16">
       {/* Description */}
       <p className="mt-8 text-lg lg:text-xl text-black text-justify px-6 lg:px-0 leading-relaxed">
-        {destination.description}
+        {translation.description}
       </p>
 
       <Link
         href="/hotels"
         className="btn-border-reveal bg-transparent border-2 border-accent mx-6 lg:mx-0 my-10 text-black font-semibold px-6 py-2 lg:px-3  rounded-full hover:bg-accent transition-colors text-sm lg:text-xl flex justify-center items-center gap-2 h-fit w-full"
       >
-        Book Now →
+        {t('buttons.book_now')} →
       </Link>
       <div className="mt-10 flex flex-col lg:flex-row w-full gap-8 px-6 lg:px-0">
         {/* Destination Information */}
         <div className="flex-1 flex flex-col gap-2 bg-accent/10 rounded-xl p-6">
           <h2 className="text-xl font-semibold text-accent mb-2">
-            Destination Information
+            {t('place.place_information')}
           </h2>
 
           <p className="text-black mt-2">
-            <span className="font-semibold">General Contact:</span>
+            <span className="font-semibold">{t('hotel.contact_us')}:</span>
           </p>
           <p className="text-black">
-            <span className="font-semibold">Phone:</span>{" "}
+            <span className="font-semibold">{t('hotel.phone')}:</span>{" "}
             <a href="tel:+6285251882238" className="hover:underline">
               +62 852-5188-2238
             </a>
           </p>
           <p className="text-black">
-            <span className="font-semibold">Email:</span>{" "}
+            <span className="font-semibold">{t('hotel.email')}:</span>{" "}
             <a
               href="mailto:bidukbidukpokdarwis@gmail.com"
               className="hover:underline"
@@ -58,7 +65,7 @@ export default function PlaceContent({ destination }: PlaceContentProps) {
         {/* Map */}
         <div className="flex-1 min-h-[200px]  rounded-xl overflow-hidden">
           <iframe
-            title={`${destination.name} Google Map`}
+            title={`${translation.name} Google Map`}
             src={mapUrl}
             className="w-full h-full border-0 rounded-xl"
             allowFullScreen

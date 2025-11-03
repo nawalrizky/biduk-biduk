@@ -1,13 +1,16 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { Package } from "@/lib/api";
+import { Package, getPackageTranslation } from "@/lib/api";
+import { useLanguage } from '@/hooks/useLanguage';
 
 interface PackageCarouselProps {
   package: Package;
 }
 
 export default function PackageCarousel({ package: pkg }: PackageCarouselProps) {
+  const currentLanguage = useLanguage();
+  const translation = getPackageTranslation(pkg, currentLanguage);
   const [currentSlide] = useState(0);
 
   // Use package image or placeholder
@@ -28,7 +31,7 @@ export default function PackageCarousel({ package: pkg }: PackageCarouselProps) 
           >
             <Image
               src={image}
-              alt={`${pkg.name} - Image ${index + 1}`}
+              alt={`${translation.name} - Image ${index + 1}`}
               fill
               className="object-cover"
               priority={index === 0}
@@ -55,7 +58,7 @@ export default function PackageCarousel({ package: pkg }: PackageCarouselProps) 
           Tour Package
         </h1>
         <h1 className="text-2xl lg:text-5xl font-semibold text-black text-center">
-          {pkg.name}
+          {translation.name}
         </h1>
         <p className="text-xl lg:text-3xl font-bold text-accent mt-4">
           Rp {parseFloat(pkg.price).toLocaleString('id-ID')}

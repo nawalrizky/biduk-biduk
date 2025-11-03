@@ -1,6 +1,5 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
 
 import en from './locales/en.json';
 import id from './locales/id.json';
@@ -19,13 +18,33 @@ const resources = {
 };
 
 i18n
-  .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources,
-    fallbackLng: 'en',
-    interpolation: { escapeValue: false },
+    lng: 'id', // Default language is Indonesian
+    fallbackLng: 'id', // Fallback to Indonesian
+    interpolation: { 
+      escapeValue: false 
+    },
     debug: false,
+    react: {
+      useSuspense: false, // Disable suspense to avoid SSR issues
+    },
   });
+
+// Save language preference to localStorage
+i18n.on('languageChanged', (lng) => {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('i18nextLng', lng);
+  }
+});
+
+// Load saved language preference
+if (typeof window !== 'undefined') {
+  const savedLang = localStorage.getItem('i18nextLng');
+  if (savedLang && savedLang !== i18n.language) {
+    i18n.changeLanguage(savedLang);
+  }
+}
 
 export default i18n;
