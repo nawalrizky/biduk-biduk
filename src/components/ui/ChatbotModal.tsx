@@ -1,6 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
+import { useLanguage } from '@/hooks/useLanguage';
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://backend.bidukbiduk.com/api';
 
 interface Message {
   id: string;
@@ -15,8 +18,23 @@ interface ChatbotModalProps {
 }
 
 const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
-  // Generate new conversation ID on each component mount (page refresh)
-  const [conversationId] = useState(() => `conv_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
+  const currentLanguage = useLanguage();
+  
+  // Map i18n language codes to API language codes
+  const getApiLanguage = (lang: string): string => {
+    const mapping: { [key: string]: string } = {
+      'en': 'en',
+      'id': 'id',
+      'ar': 'ar',
+      'zh': 'zh',
+      'fr': 'fr',
+      'es': 'es'
+    };
+    return mapping[lang] || 'en';
+  };
+
+  // Generate session ID once per component mount
+  const [sessionId] = useState(() => `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
 
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -40,7 +58,6 @@ How can I assist you with your Biduk-Biduk travel plans today?
 
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [language, setLanguage] = useState<'en' | 'id' | 'ar' | 'zh' | 'fr' | 'es'>('en'); // Multi-language support
   const [showClearModal, setShowClearModal] = useState(false);
   const [userReplyCount, setUserReplyCount] = useState(0);
   const [hasReachedLimit, setHasReachedLimit] = useState(false);
@@ -110,7 +127,7 @@ How can I assist you with your Biduk-Biduk travel plans today?
   // Function to create direct contact message
   const createDirectContactMessage = (): Message => {
     const contactText = (() => {
-      switch (language) {
+      switch (currentLanguage) {
         case 'id':
           return `Sepertinya Anda membutuhkan informasi lebih detail. Untuk bantuan langsung dan informasi terkini, silakan hubungi:
 
@@ -228,16 +245,15 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
 
     try {
       // Call the chatbot API
-      const response = await fetch('https://73e1b7527fb2.ngrok-free.app/api/chatbot/message', {
+      const response = await fetch(`${API_BASE_URL}/chatbot/message`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'ngrok-skip-browser-warning': 'true', // Skip ngrok browser warning
         },
         body: JSON.stringify({
           message: currentInput,
-          language: language,
-          session_id: conversationId,
+          language: getApiLanguage(currentLanguage),
+          session_id: sessionId,
         }),
       });
 
@@ -285,7 +301,7 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
   };
 
   const quickReplies = (() => {
-    switch (language) {
+    switch (currentLanguage) {
       case 'id':
         return [
           'Ceritakan tentang destinasi',
@@ -384,16 +400,15 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
 
     try {
       // Call the chatbot API with quick reply
-      const response = await fetch('https://73e1b7527fb2.ngrok-free.app/api/chatbot/message', {
+      const response = await fetch(`${API_BASE_URL}/chatbot/message`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'ngrok-skip-browser-warning': 'true',
         },
         body: JSON.stringify({
           message: reply,
-          language: language,
-          session_id: conversationId,
+          language: getApiLanguage(currentLanguage),
+          session_id: sessionId,
         }),
       });
 
@@ -453,68 +468,16 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
         <div className="relative bg-black/20  backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl w-full max-w-md h-[600px] flex flex-col animate-in slide-in-from-bottom-4 duration-300 pointer-events-auto">
         {/* Simplified Header */}
         <div className="flex items-center justify-between p-4">
-          <div className="flex items-center gap-1">
-            {/* Language Buttons */}
-            <button
-              onClick={() => setLanguage('en')}
-              className={`text-xs px-2 py-1 rounded transition-colors ${
-                language === 'en' 
-                  ? 'bg-white/30 text-white border border-white/50' 
-                  : 'text-white/70 hover:text-white hover:bg-white/10'
-              }`}
-            >
-              🇺🇸
-            </button>
-            <button
-              onClick={() => setLanguage('id')}
-              className={`text-xs px-2 py-1 rounded transition-colors ${
-                language === 'id' 
-                  ? 'bg-white/30 text-white border border-white/50' 
-                  : 'text-white/70 hover:text-white hover:bg-white/10'
-              }`}
-            >
-              🇮🇩
-            </button>
-            <button
-              onClick={() => setLanguage('ar')}
-              className={`text-xs px-2 py-1 rounded transition-colors ${
-                language === 'ar' 
-                  ? 'bg-white/30 text-white border border-white/50' 
-                  : 'text-white/70 hover:text-white hover:bg-white/10'
-              }`}
-            >
-              🇸🇦
-            </button>
-            <button
-              onClick={() => setLanguage('zh')}
-              className={`text-xs px-2 py-1 rounded transition-colors ${
-                language === 'zh' 
-                  ? 'bg-white/30 text-white border border-white/50' 
-                  : 'text-white/70 hover:text-white hover:bg-white/10'
-              }`}
-            >
-              🇨🇳
-            </button>
-            <button
-              onClick={() => setLanguage('fr')}
-              className={`text-xs px-2 py-1 rounded transition-colors ${
-                language === 'fr' 
-                  ? 'bg-white/30 text-white border border-white/50' 
-                  : 'text-white/70 hover:text-white hover:bg-white/10'
-              }`}
-            >
-              🇫🇷
-            </button>
-            <button
-              onClick={() => setLanguage('es')}
-              className={`text-xs px-2 py-1 rounded transition-colors ${
-                language === 'es' 
-                  ? 'bg-white/30 text-white border border-white/50' 
-                  : 'text-white/70 hover:text-white hover:bg-white/10'
-              }`}
-            >
-              🇪🇸
-            </button>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-white font-semibold">Biduk-Biduk Assistant</h3>
+              <p className="text-white/60 text-xs">Ask me anything</p>
+            </div>
           </div>
           <div className="flex items-center gap-2">
             {/* Clear Conversation Button */}
@@ -611,7 +574,7 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
           <div className="px-4 pb-2">
             <p className="text-xs text-white/80 mb-2">
               {(() => {
-                switch (language) {
+                switch (currentLanguage) {
                   case 'id': return 'Pertanyaan cepat:';
                   case 'ar': return 'أسئلة سريعة:';
                   case 'zh': return '快速问题：';
@@ -643,7 +606,7 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
               {(() => {
                 const remaining = MAX_USER_REPLIES - userReplyCount;
                 const total = MAX_USER_REPLIES;
-                switch (language) {
+                switch (currentLanguage) {
                   case 'id': return `Sisa percobaan: ${remaining} dari ${total}`;
                   case 'ar': return `المحاولات المتبقية: ${remaining} من ${total}`;
                   case 'zh': return `剩余尝试次数: ${remaining} / ${total}`;
@@ -659,7 +622,7 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
           {hasReachedLimit && (
             <div className="mb-2 text-xs text-orange-200 text-center font-medium">
               {(() => {
-                switch (language) {
+                switch (currentLanguage) {
                   case 'id': return '⚠️ Batas percobaan tercapai. Pesan selanjutnya akan diarahkan ke kontak langsung.';
                   case 'ar': return '⚠️ تم الوصول إلى الحد الأقصى للمحاولات. سيتم توجيه الرسائل التالية إلى الاتصال المباشر.';
                   case 'zh': return '⚠️ 已达到最大尝试次数。下一条消息将转至直接联系。';
@@ -677,7 +640,7 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               placeholder={(() => {
-                switch (language) {
+                switch (currentLanguage) {
                   case 'id': return 'Ketik pesan Anda...';
                   case 'ar': return 'اكتب رسالتك...';
                   case 'zh': return '输入您的消息...';
