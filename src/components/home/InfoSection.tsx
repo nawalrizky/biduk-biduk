@@ -1,7 +1,11 @@
+'use client'
 
 import Image from 'next/image';
+import { useTranslation } from 'react-i18next';
 
 export default function InfoSection() {
+    const { t } = useTranslation();
+    
     return (
         <section className="md:hidden relative w-full z-40 ">
             {/* Background Image Mobile */}
@@ -30,9 +34,9 @@ export default function InfoSection() {
                         className="w-auto h-10"
                     />
                     <div className="flex flex-col text-left">
-                        <p className="text-xl font-plant text-black">Biduk-Biduk</p>
+                        <p className="text-xl font-plant text-black">{t('home.location_name')}</p>
                         <p className="text-xl font-plant text-black -mt-1">
-                            Berau, East Kalimantan
+                            {t('home.location_region')}
                         </p>
                     </div>
                 </div>
@@ -42,13 +46,13 @@ export default function InfoSection() {
                     <div className="flex flex-col items-center">
                         <p className="text-2xl font-plant text-black">14+</p>
                         <p className="text-xl font-plant text-accent -mt-1">
-                            Destination
+                            {t('home.destination')}
                         </p>
                     </div>
                     <div className="flex flex-col items-center">
                         <p className="text-2xl font-plant text-black">8200+</p>
                         <p className="text-xl font-plant text-accent -mt-1">
-                            Visitor
+                            {t('home.visitor')}
                         </p>
                     </div>
                 </div>
@@ -58,13 +62,13 @@ export default function InfoSection() {
                     <div className="flex flex-col items-center">
                         <p className="text-2xl font-plant text-black">320+</p>
                         <p className="text-xl font-plant text-accent -mt-1">
-                            Sunny Days
+                            {t('home.sunny_days')}
                         </p>
                     </div>
                     <div className="flex flex-col items-center">
                         <p className="text-2xl font-plant text-black">25+</p>
                         <p className="text-xl font-plant text-accent -mt-1">
-                            Homestay
+                            {t('home.homestay')}
                         </p>
                     </div>
                 </div>

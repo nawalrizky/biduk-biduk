@@ -146,10 +146,10 @@ export default function HotelsPage() {
       <div className="relative text-white pt-20 pb-8 lg:pt-24 lg:pb-10 z-10">
         <div className="container mx-auto px-6 lg:px-8 relative z-10 text-center">
           <h1 className="text-primary font-plant text-sm lg:text-xl mb-2 lg:mb-4">
-            Your Beachside Escape
+            {t('hotel.page_title')}
           </h1>
           <h2 className="text-2xl lg:text-5xl text-black font-semibold mb-3 lg:mb-4">
-            Choose Your Relax Place
+            {t('hotel.page_subtitle')}
           </h2>
         </div>
       </div>

@@ -40,7 +40,9 @@
     "reviews": "ulasan",
     "photo_gallery": "Galeri Foto",
     "view_location": "Lihat Lokasi",
-    "open_in_google_maps": "Buka di Google Maps"
+    "open_in_google_maps": "Buka di Google Maps",
+    "page_title": "Pelarian Tepi Pantai Anda",
+    "page_subtitle": "Temukan Penginapan Sempurna"
   },
   "place": {
     "place_information": "Informasi Tempat",
@@ -49,7 +51,10 @@
     "description": "Deskripsi",
     "photo_gallery": "Galeri Foto",
     "view_location": "Lihat Lokasi",
-    "open_in_google_maps": "Buka di Google Maps"
+    "open_in_google_maps": "Buka di Google Maps",
+    "page_title": "Jelajahi Surga",
+    "page_subtitle": "Temukan Tempat Menakjubkan",
+    "view_details": "Lihat Detail"
   },
   "article": {
     "article_content": "Konten Artikel",
@@ -63,7 +68,8 @@
     "price": "Harga",
     "duration": "Durasi",
     "includes": "Termasuk",
-    "photo_gallery": "Galeri Foto"
+    "photo_gallery": "Galeri Foto",
+    "tour_package": "Paket Wisata"
   },
   "home": {
     "hero_title_1": "Selamat Datang di Biduk-Biduk",
@@ -76,6 +82,39 @@
     "discover_subtitle": "Tempat Indah Menanti",
     "latest_news": "Berita & Update Terbaru",
     "explore_destinations": "Jelajahi Destinasi",
-    "our_packages": "Paket Tur Kami"
+    "our_packages": "Paket Tur Kami",
+    "about_us": "Tentang Kami",
+    "welcome_title": "Selamat Datang di Biduk-Biduk - Di Mana Samudra Bercerita",
+    "welcome_description": "Terletak di pesisir terpencil Kalimantan Timur, Biduk-Biduk adalah permata tersembunyi di mana air yang jernih, alam yang masih alami, dan keramahan lokal yang hangat mengundang Anda untuk mengalami keindahan pesisir Indonesia yang paling murni.",
+    "explore_package_link": "Jelajahi Paket Wisata →",
+    "destination": "Destinasi",
+    "visitor": "Pengunjung",
+    "sunny_days": "Hari Cerah",
+    "homestay": "Homestay",
+    "location_name": "Biduk-Biduk",
+    "location_region": "Berau, Kalimantan Timur",
+    "package_subtitle": "Pengalaman, Bukan Hanya Wisata",
+    "package_title": "Temukan Paket Kami",
+    "explore_title_prefix": "Ketahui Sebelum Anda Pergi",
+    "explore_title": "Jelajahi Biduk-Biduk",
+    "destination_section_title": "Destinasi Paling Populer",
+    "news_section_title": "Berita & Artikel Terbaru"
+  },
+  "footer": {
+    "latest": "Terbaru",
+    "news": "Berita",
+    "updates": "Pembaruan",
+    "about": "Tentang",
+    "about_us": "Tentang Kami",
+    "contact_us": "Hubungi Kami",
+    "contact": "Kontak",
+    "follow_us": "Ikuti Kami",
+    "copyright": "Hak Cipta © 2024 Biduk-Biduk. Semua hak dilindungi."
+  },
+  "contact": {
+    "title": "Hubungi Kami",
+    "subtitle": "Dan Mulai Perjalanan Anda",
+    "available_contacts": "Kontak yang Tersedia",
+    "follow_us": "Ikuti Kami di:"
   }
 }

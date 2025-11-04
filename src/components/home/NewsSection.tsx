@@ -82,7 +82,7 @@ export default function NewsSection() {
                 <div className="container mx-auto">
                     <div className="text-center mb-12">
                         <h1 className="text-xl text-primary font-plant mb-2">Stories from the Coast</h1>
-                        <p className="text-black text-2xl md:text-3xl lg:text-[32px] -mt-1 font-semibold">{t('home.latest_news')}</p>
+                        <p className="text-black text-2xl md:text-3xl lg:text-[32px] -mt-1 font-semibold">{t('home.news_section_title')}</p>
                     </div>
                     <div className="hidden lg:flex flex-wrap gap-8 justify-center">
                         {[1, 2, 3, 4].map((i) => (
@@ -115,7 +115,7 @@ export default function NewsSection() {
             <div className="container mx-auto">
                 <div className="text-center mb-12">
                     <h1 className="text-xl  text-primary font-plant mb-2">Stories from the Coast</h1>
-                    <p className="text-black text-2xl md:text-3xl lg:text-[32px] -mt-1 font-semibold">{t('home.latest_news')}</p>
+                    <p className="text-black text-2xl md:text-3xl lg:text-[32px] -mt-1 font-semibold">{t('home.news_section_title')}</p>
                 </div>
 
                 {/* Mobile Version - Stacked Images Side by Side */}

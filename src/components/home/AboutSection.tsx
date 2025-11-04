@@ -1,7 +1,12 @@
+'use client'
+
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 export default function AboutSection() {
+  const { t } = useTranslation();
+  
   return (
     <section
       className="h-screen md:h-[50vh] "
@@ -21,17 +26,14 @@ export default function AboutSection() {
           className="w-full md:w-[55%] lg:w-[70%] h-auto"
         />
         <div className="flex flex-col justify-center items-start text-left gap-2">
-          <h1 className="text-base md:text-lg lg:text-xl font-plant text-primary">About Us</h1>
+          <h1 className="text-base md:text-lg lg:text-xl font-plant text-primary">{t('home.about_us')}</h1>
           <p className="mt-2 text-lg md:text-xl lg:text-2xl xl:text-3xl max-w-md text-black font-semibold">
-            Welcome to Biduk-Biduk - Where the Ocean Tells Stories
+            {t('home.welcome_title')}
           </p>
           <p className="mt-2 text-xs md:text-sm lg:text-base xl:text-lg text-gray-700">
-            Nestled on the remote coastline of East Kalimantan, Biduk-Biduk is a
-            hidden gem where crystal-clear waters, untouched nature, and warm
-            local hospitality invite you to experience Indonesia&apos;s coastal
-            beauty at its purest.
+            {t('home.welcome_description')}
           </p>
-           <Link href="#package" className="text-base md:text-lg lg:text-xl font-plant text-primary mt-2">Explore  Tour Package →</Link>
+           <Link href="#package" className="text-base md:text-lg lg:text-xl font-plant text-primary mt-2">{t('home.explore_package_link')}</Link>
         </div>
       </div>
     </section>

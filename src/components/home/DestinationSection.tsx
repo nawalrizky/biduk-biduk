@@ -3,8 +3,10 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { galleryApi, GalleryImage } from "@/lib/api";
+import { useTranslation } from "react-i18next";
 
 export default function DestinationSection() {
+  const { t } = useTranslation();
   const [destinationImages, setDestinationImages] = useState<GalleryImage[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -80,7 +82,7 @@ export default function DestinationSection() {
         <div className="flex flex-col items-center">
           <h1 className="text-xl text-primary font-plant">Biduk-Biduk</h1>
           <h1 className="text-5xl text-black font-semibold mt-2 mb-10">
-            Most Popular Destinations
+            {t('home.destination_section_title')}
           </h1>
           <div className="text-gray-500 text-center">
             <p>{error || 'No destination images available at the moment.'}</p>
@@ -97,7 +99,7 @@ export default function DestinationSection() {
         <div className="flex flex-col items-center">
           <h1 className="text-xl text-primary font-plant">Biduk-Biduk</h1>
           <h1 className="text-5xl text-black font-semibold mt-2">
-            Most Popular Destinations
+            {t('home.destination_section_title')}
           </h1>
         </div>
         <div className="flex mt-10 gap-6">
@@ -198,7 +200,7 @@ export default function DestinationSection() {
         <div className="flex flex-col items-center mb-6">
           <h1 className="text-lg text-primary font-plant">Biduk-Biduk</h1>
           <h1 className="text-2xl md:text-3xl text-black font-semibold mt-1 text-center">
-            Most Popular Destinations
+            {t('home.destination_section_title')}
           </h1>
         </div>
 

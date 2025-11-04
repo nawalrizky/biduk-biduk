@@ -1,15 +1,18 @@
 "use client";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
 export default function ContactPage() {
+  const { t } = useTranslation();
+  
   return (
     <main className="min-h-screen bg-[#E8F4F8]">
       {/* Hero Section */}
       <section className="pt-32 pb-16 px-4">
         <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-primary text-xl mb-2 font-plant">Contact Us</h2>
+          <h2 className="text-primary text-xl mb-2 font-plant">{t('contact.title')}</h2>
           <h1 className="text-4xl md:text-5xl font-semibold text-gray-900">
-            And Start Your Journey
+            {t('contact.subtitle')}
           </h1>
         </div>
       </section>
@@ -56,7 +59,7 @@ export default function ContactPage() {
               {/* Available Contacts */}
               <div>
                 <h3 className="text-2xl font-semibold text-primary mb-6">
-                  Available Contacts
+                  {t('contact.available_contacts')}
                 </h3>
                 <div className="space-y-4 ">
                   {/* Phone */}
@@ -113,7 +116,7 @@ export default function ContactPage() {
               {/* Follow Us */}
               <div>
                 <h3 className="text-2xl font-semibold font-plant text-primary mb-6">
-                  Follow Us on:
+                  {t('contact.follow_us')}
                 </h3>
                 <div className="space-y-4">
                   {/* Facebook */}

@@ -3,9 +3,13 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { destinationsApi, Destination } from "@/lib/api";
+import { destinationsApi, Destination, getDestinationTranslation } from "@/lib/api";
+import { useLanguage } from "@/hooks/useLanguage";
+import { useTranslation } from "react-i18next";
 
 export default function PlacePage() {
+  const currentLanguage = useLanguage();
+  const { t } = useTranslation();
   const [destinations, setDestinations] = useState<Destination[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -116,10 +120,10 @@ export default function PlacePage() {
       <div className="relative text-white pt-20 pb-8 lg:pt-24 lg:pb-10 z-10">
         <div className="container mx-auto px-6 lg:px-8 relative z-10 text-center">
           <h1 className="text-primary font-plant text-sm lg:text-xl mb-2 lg:mb-4">
-            Explore Paradise
+            {t('place.page_title')}
           </h1>
           <h2 className="text-2xl lg:text-5xl text-black font-semibold mb-3 lg:mb-4">
-            Discover Amazing Places
+            {t('place.page_subtitle')}
           </h2>
         </div>
       </div>
@@ -127,7 +131,9 @@ export default function PlacePage() {
       {/* Destinations Grid */}
       <div className="container mx-auto px-6 lg:px-8 py-8 sm:py-12 lg:py-16 relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8">
-          {destinations.map((destination) => (
+          {destinations.map((destination) => {
+            const translation = getDestinationTranslation(destination, currentLanguage);
+            return (
             <div
               key={destination.id}
               className="flex flex-col items-center group"
@@ -136,7 +142,7 @@ export default function PlacePage() {
               <div className="relative w-full aspect-square overflow-hidden rounded-[20px] shadow-lg">
                 <Image
                   src={Array.isArray(destination.images) ? destination.images[0] : destination.images}
-                  alt={destination.name}
+                  alt={translation.name}
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-500"
                   loading="lazy"
@@ -146,13 +152,13 @@ export default function PlacePage() {
               {/* Destination Info */}
               <div className="flex flex-col items-center w-full px-4 mt-4">
                 <h3 className="text-lg lg:text-xl text-black font-semibold text-center line-clamp-2">
-                  {destination.name}
+                  {translation.name}
                 </h3>
                 <Link 
                   href={`/place/${destination.id}`}
                   className="btn-border-reveal font-semibold mt-2 w-fit px-6 py-2 text-sm lg:text-base bg-transparent border-2 border-accent text-black rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2"
                 >
-                  Visit
+                  {t('place.view_details')}
                   <svg
                     width="16"
                     height="16"
@@ -168,7 +174,8 @@ export default function PlacePage() {
                 </Link>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Empty State */}

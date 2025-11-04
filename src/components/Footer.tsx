@@ -2,25 +2,28 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
+    const { t } = useTranslation();
+    
     const navigationLinks = [
         {
-            title: "Latest",
+            title: t('footer.latest'),
             links: [
-                { name: "News", href: "/destinations/berau" },
-                { name: "Updates", href: "/destinations/derawan" },
+                { name: t('footer.news'), href: "/destinations/berau" },
+                { name: t('footer.updates'), href: "/destinations/derawan" },
             ]
         },
         {
-            title: "About",
+            title: t('footer.about'),
             links: [
-                { name: "About us", href: "/experiences/diving" },
-                { name: "Contact us", href: "/experiences/island-hopping" },
+                { name: t('footer.about_us'), href: "/experiences/diving" },
+                { name: t('footer.contact_us'), href: "/experiences/island-hopping" },
             ]
         },
         {
-            title: "Contact",
+            title: t('footer.contact'),
             links: [
                 { name: "+62 85251882238", href: "/experiences/diving" },
                 { name: "bidukbidukpokdarwis@gmail.com", href: "/experiences/island-hopping" },

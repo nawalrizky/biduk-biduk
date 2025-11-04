@@ -5,6 +5,7 @@ import { geoMercator, geoPath } from 'd3-geo'
 import { Group } from '@visx/group'
 import Image from 'next/image'
 import { destinationsApi, Destination } from '@/lib/api'
+import { useTranslation } from 'react-i18next'
 
 interface Feature {
   type: 'Feature'
@@ -39,6 +40,7 @@ interface BidukBidukData {
 }
 
 const ExploreSection: React.FC = () => {
+  const { t } = useTranslation();
   const [mapData, setMapData] = useState<BidukBidukData | null>(null)
   const [destinations, setDestinations] = useState<Destination[]>([])
   const [loading, setLoading] = useState(true)
@@ -202,10 +204,10 @@ const ExploreSection: React.FC = () => {
       <div className="relative flex flex-col z-10 container mx-auto px-4 py-8 lg:py-16">
         <div className="text-center mb-8 lg:mb-12">
           <h2 className="text-lg sm:text-xl lg:text-2xl font-plant text-white mb-2 lg:mb-4">
-            Know Before You Go
+            {t('home.explore_title_prefix')}
           </h2>
           <p className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
-            Explore Biduk-Biduk
+            {t('home.explore_title')}
           </p>
         </div>
         <div className='flex flex-col lg:flex-row items-center justify-center gap-8 lg:-mt-20  lg:gap-10 w-full'>

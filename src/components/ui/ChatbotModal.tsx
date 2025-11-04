@@ -64,7 +64,7 @@ How can I assist you with your Biduk-Biduk travel plans today?
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const MAX_USER_REPLIES = 3;
+  const MAX_USER_REPLIES = 10;
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });

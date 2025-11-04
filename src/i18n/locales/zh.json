@@ -40,7 +40,9 @@
     "reviews": "评论",
     "photo_gallery": "照片库",
     "view_location": "查看位置",
-    "open_in_google_maps": "在谷歌地图中打开"
+    "open_in_google_maps": "在谷歌地图中打开",
+    "page_title": "您的海滨度假胜地",
+    "page_subtitle": "找到您的完美住宿"
   },
   "place": {
     "place_information": "地点信息",
@@ -49,7 +51,10 @@
     "description": "描述",
     "photo_gallery": "照片库",
     "view_location": "查看位置",
-    "open_in_google_maps": "在谷歌地图中打开"
+    "open_in_google_maps": "在谷歌地图中打开",
+    "page_title": "探索天堂",
+    "page_subtitle": "发现令人惊叹的地方",
+    "view_details": "查看详情"
   },
   "article": {
     "article_content": "文章内容",
@@ -61,9 +66,10 @@
     "package_information": "套餐信息",
     "package_details": "套餐详情",
     "price": "价格",
-    "duration": "时长",
-    "includes": "包含",
-    "photo_gallery": "照片库"
+    "duration": "持续时间",
+    "includes": "包括",
+    "photo_gallery": "照片库",
+    "tour_package": "旅游套餐"
   },
   "home": {
     "hero_title_1": "欢迎来到比都克-比都克",
@@ -76,6 +82,39 @@
     "discover_subtitle": "美丽的地方在等待",
     "latest_news": "最新新闻与更新",
     "explore_destinations": "探索目的地",
-    "our_packages": "我们的旅游套餐"
+    "our_packages": "我们的旅游套餐",
+    "about_us": "关于我们",
+    "welcome_title": "欢迎来到比都克-比都克 - 海洋讲述故事的地方",
+    "welcome_description": "坐落在东加里曼丹偏远的海岸线上，比都克-比都克是一颗隐藏的宝石，清澈的海水、原始的自然和温暖的当地热情邀请您体验印度尼西亚最纯净的海岸之美。",
+    "explore_package_link": "探索旅游套餐 →",
+    "destination": "目的地",
+    "visitor": "访客",
+    "sunny_days": "晴天",
+    "homestay": "民宿",
+    "location_name": "比都克-比都克",
+    "location_region": "东加里曼丹伯劳",
+    "package_subtitle": "体验，不仅仅是旅游",
+    "package_title": "发现我们的套餐",
+    "explore_title_prefix": "出发前须知",
+    "explore_title": "探索比都克-比都克",
+    "destination_section_title": "最受欢迎的目的地",
+    "news_section_title": "最新新闻与文章"
+  },
+  "footer": {
+    "latest": "最新",
+    "news": "新闻",
+    "updates": "更新",
+    "about": "关于",
+    "about_us": "关于我们",
+    "contact_us": "联系我们",
+    "contact": "联系",
+    "follow_us": "关注我们",
+    "copyright": "版权所有 © 2024 比都克-比都克。保留所有权利。"
+  },
+  "contact": {
+    "title": "联系我们",
+    "subtitle": "开始您的旅程",
+    "available_contacts": "可用联系方式",
+    "follow_us": "关注我们："
   }
 }

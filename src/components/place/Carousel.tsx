@@ -62,6 +62,17 @@ export default function PlaceCarousel({ destination }: PlaceCarouselProps) {
         />
       </div>
 
+      {/* Background Image Bottom - Mobile */}
+      <div className="md:hidden flex flex-col items-center justify-center absolute bottom-0 w-full z-10">
+        <Image
+          src="/images/place/bg.png"
+          alt="Background decoration"
+          width={1920}
+          height={400}
+          className="w-full object-cover"
+        />
+      </div>
+
       {/* Location Info Overlay - Desktop */}
       <div className="hidden md:flex flex-col items-center justify-center absolute bottom-15 lg:bottom-5 3xl:bottom-35 w-full  z-20 px-20 lg:px-56 ">
         <h1 className="text-2xl lg:text-3xl font-plant text-primary">
@@ -72,24 +83,34 @@ export default function PlaceCarousel({ destination }: PlaceCarouselProps) {
         </h1>
       </div>
 
+      {/* Location Info Overlay - Mobile */}
+      <div className="md:hidden flex flex-col items-center justify-center absolute -bottom-1 w-full z-20 px-4">
+        <h1 className="text-lg font-plant text-primary text-center">
+          {destination.category?.name || "Place Detail"}
+        </h1>
+        <h1 className="text-xl font-semibold text-black text-center drop-shadow-lg">
+          {translation.name}
+        </h1>
+      </div>
+
       {/* Navigation Arrows - Only show if multiple images */}
       {slideImages.length > 1 && (
         <>
           <button
             onClick={prevSlide}
-            className="hidden lg:block absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/10 hover:bg-black/40 text-white px-3 rounded-xl transition-all duration-300 backdrop-blur-sm"
+            className="absolute left-2 lg:left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/10 hover:bg-black/40 text-white px-2 lg:px-3 rounded-xl transition-all duration-300 backdrop-blur-sm"
             aria-label="Previous slide"
           >
-            <svg className="w-6 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 64">
+            <svg className="w-4 h-8 lg:w-6 lg:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 64">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 48l-7-16 7-16" />
             </svg>
           </button>
           <button
             onClick={nextSlide}
-            className="hidden lg:block absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/10 hover:bg-black/40 text-white px-3 rounded-xl transition-all duration-300 backdrop-blur-sm"
+            className="absolute right-2 lg:right-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/10 hover:bg-black/40 text-white px-2 lg:px-3 rounded-xl transition-all duration-300 backdrop-blur-sm"
             aria-label="Next slide"
           >
-            <svg className="w-6 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 64">
+            <svg className="w-4 h-8 lg:w-6 lg:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 64">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 16l7 16-7 16" />
             </svg>
           </button>

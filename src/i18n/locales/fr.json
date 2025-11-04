@@ -26,21 +26,23 @@
   },
   "hotel": {
     "beachside_escape": "Votre évasion en bord de mer",
-    "stay_swim_relax": "Séjourner, Nager, Se détendre",
-    "hotel_accommodation": "Hôtel et Hébergement",
+    "stay_swim_relax": "Séjour, baignade, détente",
+    "hotel_accommodation": "Hôtels et hébergement",
     "hotel_information": "Informations sur l'hôtel",
     "price_per_night": "Prix par nuit",
-    "rating": "Note",
+    "rating": "Évaluation",
     "total_reviews": "Total des avis",
     "booking": "Réservation",
     "book_online": "Réserver en ligne",
     "contact_us": "Contactez-nous",
     "phone": "Téléphone",
-    "email": "E-mail",
+    "email": "Email",
     "reviews": "avis",
     "photo_gallery": "Galerie de photos",
     "view_location": "Voir l'emplacement",
-    "open_in_google_maps": "Ouvrir dans Google Maps"
+    "open_in_google_maps": "Ouvrir dans Google Maps",
+    "page_title": "Votre évasion en bord de mer",
+    "page_subtitle": "Trouvez votre séjour parfait"
   },
   "place": {
     "place_information": "Informations sur le lieu",
@@ -49,7 +51,10 @@
     "description": "Description",
     "photo_gallery": "Galerie de photos",
     "view_location": "Voir l'emplacement",
-    "open_in_google_maps": "Ouvrir dans Google Maps"
+    "open_in_google_maps": "Ouvrir dans Google Maps",
+    "page_title": "Explorer le paradis",
+    "page_subtitle": "Découvrez des endroits incroyables",
+    "view_details": "Voir les détails"
   },
   "article": {
     "article_content": "Contenu de l'article",
@@ -63,7 +68,8 @@
     "price": "Prix",
     "duration": "Durée",
     "includes": "Comprend",
-    "photo_gallery": "Galerie de photos"
+    "photo_gallery": "Galerie de photos",
+    "tour_package": "Forfait touristique"
   },
   "home": {
     "hero_title_1": "Bienvenue à Biduk-Biduk",
@@ -76,6 +82,39 @@
     "discover_subtitle": "De beaux endroits vous attendent",
     "latest_news": "Dernières nouvelles et mises à jour",
     "explore_destinations": "Explorer les destinations",
-    "our_packages": "Nos forfaits touristiques"
+    "our_packages": "Nos forfaits touristiques",
+    "about_us": "À propos de nous",
+    "welcome_title": "Bienvenue à Biduk-Biduk - Où l'océan raconte des histoires",
+    "welcome_description": "Niché sur la côte isolée du Kalimantan oriental, Biduk-Biduk est un joyau caché où les eaux cristallines, la nature intacte et la chaleureuse hospitalité locale vous invitent à découvrir la beauté côtière de l'Indonésie dans sa forme la plus pure.",
+        "explore_package_link": "Explorer les forfaits de voyage →",
+    "destination": "Destinations",
+    "visitor": "Visiteurs",
+    "sunny_days": "Jours ensoleillés",
+    "homestay": "Séjours chez l'habitant",
+    "location_name": "Biduk-Biduk",
+    "location_region": "Berau, Kalimantan oriental",
+    "package_subtitle": "Des expériences, pas seulement des visites",
+    "package_title": "Découvrez nos forfaits",
+    "explore_title_prefix": "À savoir avant de partir",
+    "explore_title": "Explorer Biduk-Biduk",
+    "destination_section_title": "Destinations les plus populaires",
+    "news_section_title": "Dernières nouvelles et articles"
+  },
+  "footer": {
+    "latest": "Dernières",
+    "news": "Nouvelles",
+    "updates": "Mises à jour",
+    "about": "À propos",
+    "about_us": "À propos de nous",
+    "contact_us": "Contactez-nous",
+    "contact": "Contact",
+    "follow_us": "Suivez-nous",
+    "copyright": "Droits d'auteur © 2024 Biduk-Biduk. Tous droits réservés."
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "subtitle": "Et commencez votre voyage",
+    "available_contacts": "Contacts disponibles",
+    "follow_us": "Suivez-nous sur :"
   }
 }

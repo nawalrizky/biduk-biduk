@@ -25,33 +25,33 @@ export default function PlaceContent({ destination }: PlaceContentProps) {
   return (
     <div className="z-20 flex flex-col lg:px-56 items-center bg-white min-h-screen pb-16">
       {/* Description */}
-      <p className="mt-8 text-lg lg:text-xl text-black text-justify px-6 lg:px-0 leading-relaxed">
+      <p className="mt-8 text-base sm:text-lg lg:text-xl text-black text-justify px-3 sm:px-6 lg:px-0 leading-relaxed max-w-full">
         {translation.description}
       </p>
 
       <Link
         href="/hotels"
-        className="btn-border-reveal bg-transparent border-2 border-accent mx-6 lg:mx-0 my-10 text-black font-semibold px-6 py-2 lg:px-3  rounded-full hover:bg-accent transition-colors text-sm lg:text-xl flex justify-center items-center gap-2 h-fit w-full"
+        className="btn-border-reveal bg-transparent border-2 border-accent mx-3 sm:mx-6 lg:mx-0 my-10 text-black font-semibold px-4 sm:px-6 py-2 lg:px-3 rounded-full hover:bg-accent transition-colors text-xs sm:text-sm lg:text-xl flex justify-center items-center gap-2 h-fit w-auto max-w-full"
       >
         {t('buttons.book_now')} →
       </Link>
-      <div className="mt-10 flex flex-col lg:flex-row w-full gap-8 px-6 lg:px-0">
+      <div className="mt-10 flex flex-col lg:flex-row w-full gap-4 sm:gap-8 px-3 sm:px-6 lg:px-0">
         {/* Destination Information */}
-        <div className="flex-1 flex flex-col gap-2 bg-accent/10 rounded-xl p-6">
-          <h2 className="text-xl font-semibold text-accent mb-2">
+        <div className="flex-1 flex flex-col gap-2 bg-accent/10 rounded-xl p-4 sm:p-6">
+          <h2 className="text-lg sm:text-xl font-semibold text-accent mb-2">
             {t('place.place_information')}
           </h2>
 
-          <p className="text-black mt-2">
+          <p className="text-black mt-2 text-sm sm:text-base">
             <span className="font-semibold">{t('hotel.contact_us')}:</span>
           </p>
-          <p className="text-black">
+          <p className="text-black text-sm sm:text-base break-words">
             <span className="font-semibold">{t('hotel.phone')}:</span>{" "}
             <a href="tel:+6285251882238" className="hover:underline">
               +62 852-5188-2238
             </a>
           </p>
-          <p className="text-black">
+          <p className="text-black text-sm sm:text-base break-words">
             <span className="font-semibold">{t('hotel.email')}:</span>{" "}
             <a
               href="mailto:bidukbidukpokdarwis@gmail.com"
@@ -63,7 +63,7 @@ export default function PlaceContent({ destination }: PlaceContentProps) {
         </div>
 
         {/* Map */}
-        <div className="flex-1 min-h-[200px]  rounded-xl overflow-hidden">
+        <div className="flex-1 min-h-[200px] sm:min-h-[250px] rounded-xl overflow-hidden">
           <iframe
             title={`${translation.name} Google Map`}
             src={mapUrl}

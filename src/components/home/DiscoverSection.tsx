@@ -60,17 +60,17 @@ export default function DiscoverSection() {
     setTouchEnd(0);
   };
 
-  // Set initial scroll position to center (start at second set)
+  // Set initial scroll position to center (start at middle set for infinite scroll)
   useEffect(() => {
     if (scrollContainerRef.current && destinations.length > 0) {
       const container = scrollContainerRef.current;
       const cardWidth = 360; // 320px + 40px gap
-      // Start at the beginning of the second set (index 1 of tripled array)
-      container.scrollLeft = destinations.length * cardWidth;
+      // Start at the middle (set 2 or 3 out of 5 sets) for smooth infinite scrolling
+      container.scrollLeft = destinations.length * cardWidth * 2;
     }
   }, [destinations]);
 
-  // Auto scroll effect with seamless infinite loop (only left direction)
+  // Auto scroll effect with truly infinite loop
   useEffect(() => {
     if (!isAutoScrolling || !scrollContainerRef.current || destinations.length === 0) return;
 
@@ -79,14 +79,18 @@ export default function DiscoverSection() {
     
     autoScrollRef.current = setInterval(() => {
       if (container && isAutoScrolling) {
-        container.scrollLeft += 2; // Smooth continuous scroll to the left (right direction)
+        container.scrollLeft += 2; // Smooth continuous scroll
         
-        // Seamlessly loop: when reaching end of second set, jump back to start of second set
-        // This makes the loop invisible since content is identical
-        const secondSetEnd = destinations.length * 2 * cardWidth;
-        if (container.scrollLeft >= secondSetEnd) {
-          // Jump back to start of second set
-          container.scrollLeft = destinations.length * cardWidth;
+        // Create truly infinite scroll with seamless looping
+        // When we pass the 3rd set, jump back to the 2nd set
+        // This keeps us always in the middle range with content before and after
+        const oneSetWidth = destinations.length * cardWidth;
+        const jumpBackThreshold = oneSetWidth * 3.5; // Middle of 4th set
+        const jumpBackTarget = oneSetWidth * 1.5; // Middle of 2nd set
+        
+        if (container.scrollLeft >= jumpBackThreshold) {
+          // Seamlessly jump back - user won't notice because content is identical
+          container.scrollLeft = jumpBackTarget;
         }
       }
     }, 16); // 60fps smooth scroll
@@ -177,8 +181,8 @@ export default function DiscoverSection() {
             onMouseLeave={() => setIsAutoScrolling(true)}
             style={{ paddingLeft: 'calc(50v - 160px)', paddingRight: 'calc(50vw - 160px)' }}
           >
-            {/* Triple the destinations for infinite loop */}
-            {[...destinations, ...destinations, ...destinations].map((destination, index: number) => {
+            {/* Create many copies for truly infinite scroll - 5 sets */}
+            {[...destinations, ...destinations, ...destinations, ...destinations, ...destinations].map((destination, index: number) => {
               // Calculate which card should be centered based on actual position in array
               const actualIndex = index % destinations.length;
               const isCenter = actualIndex === centerIndex;

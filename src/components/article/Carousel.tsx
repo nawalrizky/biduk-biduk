@@ -81,19 +81,19 @@ export default function ArticleCarousel({ article }: ArticleCarouselProps) {
         <>
           <button
             onClick={prevSlide}
-            className="hidden lg:block absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/10 hover:bg-black/40 text-white px-3 rounded-xl transition-all duration-300 backdrop-blur-sm"
+            className="absolute left-2 lg:left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/10 hover:bg-black/40 text-white px-2 lg:px-3 rounded-xl transition-all duration-300 backdrop-blur-sm"
             aria-label="Previous slide"
           >
-            <svg className="w-6 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 64">
+            <svg className="w-4 h-8 lg:w-6 lg:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 64">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 48l-7-16 7-16" />
             </svg>
           </button>
           <button
             onClick={nextSlide}
-            className="hidden lg:block absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/10 hover:bg-black/40 text-white px-3 rounded-xl transition-all duration-300 backdrop-blur-sm"
+            className="absolute right-2 lg:right-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/10 hover:bg-black/40 text-white px-2 lg:px-3 rounded-xl transition-all duration-300 backdrop-blur-sm"
             aria-label="Next slide"
           >
-            <svg className="w-6 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 64">
+            <svg className="w-4 h-8 lg:w-6 lg:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 64">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 16l7 16-7 16" />
             </svg>
           </button>

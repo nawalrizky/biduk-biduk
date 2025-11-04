@@ -3,6 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Package, getPackageTranslation } from "@/lib/api";
 import { useLanguage } from '@/hooks/useLanguage';
+import { useTranslation } from 'react-i18next';
 
 interface PackageCarouselProps {
   package: Package;
@@ -10,6 +11,7 @@ interface PackageCarouselProps {
 
 export default function PackageCarousel({ package: pkg }: PackageCarouselProps) {
   const currentLanguage = useLanguage();
+  const { t } = useTranslation();
   const translation = getPackageTranslation(pkg, currentLanguage);
   const [currentSlide] = useState(0);
 
@@ -52,15 +54,39 @@ export default function PackageCarousel({ package: pkg }: PackageCarouselProps) 
         />
       </div>
 
+      {/* Background Image Bottom - Mobile */}
+      <div className="md:hidden flex flex-col items-center justify-center absolute bottom-0 w-full z-10">
+        <Image
+          src="/images/place/bg.png"
+          alt="Background decoration"
+          width={1920}
+          height={400}
+          className="w-full object-cover"
+        />
+      </div>
+
       {/* Package Info Overlay - Desktop */}
       <div className="hidden md:flex flex-col items-center justify-center absolute bottom-15 lg:bottom-5 3xl:bottom-14 w-full z-20 px-20 lg:px-56">
         <h1 className="text-2xl lg:text-3xl font-plant text-primary">
-          Tour Package
+          {t('package.tour_package')}
         </h1>
         <h1 className="text-2xl lg:text-5xl font-semibold text-black text-center">
           {translation.name}
         </h1>
         <p className="text-xl lg:text-3xl font-bold text-accent mt-4">
+          Rp {parseFloat(pkg.price).toLocaleString('id-ID')}
+        </p>
+      </div>
+
+      {/* Package Info Overlay - Mobile */}
+      <div className="md:hidden flex flex-col items-center justify-center absolute -bottom-1 w-full z-20 px-4">
+        <h1 className="text-lg font-plant text-primary text-center">
+          {t('package.tour_package')}
+        </h1>
+        <h1 className="text-xl font-semibold text-black text-center drop-shadow-lg">
+          {translation.name}
+        </h1>
+        <p className="text-lg font-bold text-accent mt-2 drop-shadow-lg">
           Rp {parseFloat(pkg.price).toLocaleString('id-ID')}
         </p>
       </div>

@@ -25,11 +25,11 @@
     "contact_to_book": "اتصل بنا للحجز"
   },
   "hotel": {
-    "beachside_escape": "ملاذك على شاطئ البحر",
+    "beachside_escape": "ملاذك على الشاطئ",
     "stay_swim_relax": "الإقامة، السباحة، الاسترخاء",
-    "hotel_accommodation": "فندق وإقامة",
+    "hotel_accommodation": "الفنادق والإقامة",
     "hotel_information": "معلومات الفندق",
-    "price_per_night": "السعر لكل ليلة",
+    "price_per_night": "السعر لليلة",
     "rating": "التقييم",
     "total_reviews": "إجمالي المراجعات",
     "booking": "الحجز",
@@ -40,7 +40,9 @@
     "reviews": "مراجعات",
     "photo_gallery": "معرض الصور",
     "view_location": "عرض الموقع",
-    "open_in_google_maps": "افتح في خرائط جوجل"
+    "open_in_google_maps": "افتح في خرائط جوجل",
+    "page_title": "ملاذك على الشاطئ",
+    "page_subtitle": "اعثر على إقامتك المثالية"
   },
   "place": {
     "place_information": "معلومات المكان",
@@ -49,7 +51,10 @@
     "description": "الوصف",
     "photo_gallery": "معرض الصور",
     "view_location": "عرض الموقع",
-    "open_in_google_maps": "افتح في خرائط جوجل"
+    "open_in_google_maps": "افتح في خرائط جوجل",
+    "page_title": "استكشف الجنة",
+    "page_subtitle": "اكتشف أماكن مذهلة",
+    "view_details": "عرض التفاصيل"
   },
   "article": {
     "article_content": "محتوى المقال",
@@ -62,8 +67,9 @@
     "package_details": "تفاصيل الباقة",
     "price": "السعر",
     "duration": "المدة",
-    "includes": "يتضمن",
-    "photo_gallery": "معرض الصور"
+    "includes": "يشمل",
+    "photo_gallery": "معرض الصور",
+    "tour_package": "باقة سياحية"
   },
   "home": {
     "hero_title_1": "مرحبًا بك في بيدوك-بيدوك",
@@ -76,6 +82,39 @@
     "discover_subtitle": "أماكن جميلة في انتظارك",
     "latest_news": "آخر الأخبار والتحديثات",
     "explore_destinations": "استكشف الوجهات",
-    "our_packages": "باقات الجولات لدينا"
+    "our_packages": "باقات الجولات لدينا",
+    "about_us": "معلومات عنا",
+    "welcome_title": "مرحبًا بك في بيدوك-بيدوك - حيث يحكي المحيط القصص",
+    "welcome_description": "يقع بيدوك-بيدوك على الساحل النائي لشرق كاليمانتان، وهو جوهرة مخفية حيث تدعوك المياه الصافية والطبيعة البكر والضيافة المحلية الدافئة لتجربة جمال الساحل الإندونيسي في أنقى صوره.",
+    "explore_package_link": "استكشف باقات السفر ←",
+    "destination": "الوجهات",
+    "visitor": "الزوار",
+    "sunny_days": "أيام مشمسة",
+    "homestay": "نزل منزلي",
+    "location_name": "بيدوك-بيدوك",
+    "location_region": "بيراو، كاليمانتان الشرقية",
+    "package_subtitle": "تجارب، وليس مجرد جولات",
+    "package_title": "اكتشف باقاتنا",
+    "explore_title_prefix": "اعرف قبل أن تذهب",
+    "explore_title": "استكشف بيدوك-بيدوك",
+    "destination_section_title": "الوجهات الأكثر شعبية",
+    "news_section_title": "آخر الأخبار والمقالات"
+  },
+  "footer": {
+    "latest": "الأحدث",
+    "news": "الأخبار",
+    "updates": "التحديثات",
+    "about": "حول",
+    "about_us": "معلومات عنا",
+    "contact_us": "اتصل بنا",
+    "contact": "اتصال",
+    "follow_us": "تابعنا",
+    "copyright": "حقوق النشر © 2024 بيدوك-بيدوك. كل الحقوق محفوظة."
+  },
+  "contact": {
+    "title": "اتصل بنا",
+    "subtitle": "وابدأ رحلتك",
+    "available_contacts": "جهات الاتصال المتاحة",
+    "follow_us": "تابعنا على:"
   }
 }

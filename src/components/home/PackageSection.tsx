@@ -3,9 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
-import { packagesApi, Package } from "@/lib/api";
+import { packagesApi, Package, getPackageTranslation } from "@/lib/api";
+import { useLanguage } from "@/hooks/useLanguage";
+import { useTranslation } from "react-i18next";
 
 const PackageSection = () => {
+  const currentLanguage = useLanguage();
+  const { t } = useTranslation();
   const [packages, setPackages] = useState<Package[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -123,10 +127,10 @@ const PackageSection = () => {
         <div className="flex flex-col justify-center mb-8 items-center text-center lg:mb-12 ">
           <div className="mb-6 lg:mb-0">
             <span className="text-primary font-plant text-xl mb-2 block">
-              Experience, Not Just Sightseeing
+              {t('home.package_subtitle')}
             </span>
             <h2 className="text-4xl lg:text-5xl font-semibold text-black leading-tight">
-              Discover Our Packages
+              {t('home.package_title')}
             </h2>
           </div>
         </div>
@@ -148,14 +152,16 @@ const PackageSection = () => {
                 </div>
               ))
             ) : packages.length > 0 ? (
-              packages.map((pkg) => (
+              packages.map((pkg) => {
+                const translation = getPackageTranslation(pkg, currentLanguage);
+                return (
                 <div key={pkg.package_id} className="px-3">
                   <div className="group relative overflow-hidden rounded-xl transition-all duration-500 flex flex-col h-full">
                     <div className="relative overflow-hidden rounded-xl">
                       {pkg.image_url ? (
                         <Image
                           src={pkg.image_url}
-                          alt={pkg.name}
+                          alt={translation.name}
                           width={400}
                           height={480}
                           loading="lazy"
@@ -191,7 +197,7 @@ const PackageSection = () => {
                               href={`/packages/${pkg.package_id}`}
                               className="hover:text-accent transition-colors"
                             >
-                              {pkg.name}
+                              {translation.name}
                             </Link>
                           </h3>
                         </div>
@@ -263,7 +269,8 @@ const PackageSection = () => {
                     </div>
                   </div>
                 </div>
-              ))
+                );
+              })
             ) : (
               // No packages available
               <div className="px-3">
