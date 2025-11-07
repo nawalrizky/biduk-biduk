@@ -22,7 +22,8 @@
     "next": "Suivant",
     "previous": "Précédent",
     "back": "Retour",
-    "contact_to_book": "Contactez-nous pour réserver"
+    "contact_to_book": "Contactez-nous pour Réserver",
+    "visit": "Visiter"
   },
   "hotel": {
     "beachside_escape": "Votre évasion en bord de mer",
@@ -60,7 +61,10 @@
     "article_content": "Contenu de l'article",
     "published_date": "Date de publication",
     "author": "Auteur",
-    "photo_gallery": "Galerie de photos"
+    "photo_gallery": "Galerie de photos",
+    "page_title": "Actualités et Articles",
+    "page_subtitle": "Découvrez les Dernières Histoires",
+    "back_to_articles": "Retour aux Articles"
   },
   "package": {
     "package_information": "Informations sur le forfait",

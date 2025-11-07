@@ -124,7 +124,7 @@ const HotelSection = () => {
   }, [hotels]); // Add hotels as dependency
 
     return (
-        <section className="horizontal-scroll relative bg-white overflow-hidden py-40 lg:py-40">
+        <section className="horizontal-scroll min-h-[110vh] md:relative bg-white overflow-hidden py-40 lg:py-40">
             <div className="absolute inset-0 bg-secondary opacity-15"></div>
             <div className="container mx-auto px-4 lg:px-0 relative z-10">
 

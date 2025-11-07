@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef } from "react";
 import { destinationsApi, Destination } from "@/lib/api";
 import { useTranslation } from 'react-i18next';
 
@@ -11,33 +11,10 @@ export default function DiscoverSection() {
   const [touchStart, setTouchStart] = useState<number>(0);
   const [touchEnd, setTouchEnd] = useState<number>(0);
   const [destinations, setDestinations] = useState<Destination[]>([]);
+  const [centerIndex, setCenterIndex] = useState<number>(0);
   const [isAutoScrolling, setIsAutoScrolling] = useState<boolean>(true);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const autoScrollRef = useRef<NodeJS.Timeout | null>(null);
-
-  // Calculate how many copies needed for truly infinite scroll (memoized)
-  const infiniteDestinations = useMemo(() => {
-    if (destinations.length === 0) return [];
-    
-    // For small number of destinations, we need more copies to fill viewport
-    const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 1920;
-    const avgCardWidth = 380; // 320-400px + gap
-    const minCardsToFillScreen = Math.ceil(viewportWidth / avgCardWidth);
-    
-    // We want at least 3x the screen width for smooth infinite scroll
-    const totalCardsNeeded = minCardsToFillScreen * 3;
-    const copiesNeeded = Math.ceil(totalCardsNeeded / destinations.length);
-    
-    // Minimum 5 copies for smooth loop, maximum 20 to avoid performance issues
-    const finalCopies = Math.max(5, Math.min(20, copiesNeeded));
-    
-    // Create array with multiple copies
-    const result = [];
-    for (let i = 0; i < finalCopies; i++) {
-      result.push(...destinations);
-    }
-    return result;
-  }, [destinations]);
 
   // Fetch destinations from API
   useEffect(() => {
@@ -88,48 +65,69 @@ export default function DiscoverSection() {
   useEffect(() => {
     if (scrollContainerRef.current && destinations.length > 0) {
       const container = scrollContainerRef.current;
-      const cardWidth = 380;
-      // Start at middle position
-      const middlePosition = Math.floor(infiniteDestinations.length / 2);
-      container.scrollLeft = middlePosition * cardWidth;
+      const cardWidth = 360; // 320px + 40px gap
+      // Start at the middle (set 2 or 3 out of 5 sets) for smooth infinite scrolling
+      container.scrollLeft = destinations.length * cardWidth * 2;
     }
-  }, [destinations, infiniteDestinations]);
+  }, [destinations]);
 
-  // Auto scroll with seamless infinite loop
+  // Auto scroll effect with truly infinite loop
   useEffect(() => {
     if (!isAutoScrolling || !scrollContainerRef.current || destinations.length === 0) return;
 
     const container = scrollContainerRef.current;
-    const cardWidth = 380;
-    const oneSetWidth = destinations.length * cardWidth;
+    const cardWidth = 360; // 320px + 40px gap
     
     autoScrollRef.current = setInterval(() => {
       if (container && isAutoScrolling) {
-        container.scrollLeft += 1.5;
+        container.scrollLeft += 2; // Smooth continuous scroll
         
-        // Calculate positions for seamless loop
-        const maxPosition = infiniteDestinations.length * cardWidth;
-        const quarterPosition = maxPosition * 0.25;
-        const threeQuarterPosition = maxPosition * 0.75;
+        // Create truly infinite scroll with seamless looping
+        // When we pass the 3rd set, jump back to the 2nd set
+        // This keeps us always in the middle range with content before and after
+        const oneSetWidth = destinations.length * cardWidth;
+        const jumpBackThreshold = oneSetWidth * 3.5; // Middle of 4th set
+        const jumpBackTarget = oneSetWidth * 1.5; // Middle of 2nd set
         
-        // When reaching 75%, jump back to 25% (seamless because content repeats)
-        if (container.scrollLeft >= threeQuarterPosition) {
-          container.scrollLeft = quarterPosition;
-        }
-        
-        // If somehow scrolled too far left, jump forward
-        if (container.scrollLeft < quarterPosition - oneSetWidth) {
-          container.scrollLeft = quarterPosition;
+        if (container.scrollLeft >= jumpBackThreshold) {
+          // Seamlessly jump back - user won't notice because content is identical
+          container.scrollLeft = jumpBackTarget;
         }
       }
-    }, 16);
+    }, 16); // 60fps smooth scroll
 
     return () => {
       if (autoScrollRef.current) {
         clearInterval(autoScrollRef.current);
       }
     };
-  }, [isAutoScrolling, destinations.length, infiniteDestinations]);
+  }, [isAutoScrolling, destinations.length]);
+
+  // Handle scroll to detect center card with precise center detection
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!scrollContainerRef.current) return;
+      
+      const container = scrollContainerRef.current;
+      const containerCenter = container.scrollLeft + container.offsetWidth / 2;
+      const cardWidth = 360; // 320px + 40px gap
+      
+      // Calculate which card is at the center (more precise)
+      const index = Math.floor(containerCenter / cardWidth);
+      
+      // Keep index within bounds
+      const actualIndex = index % destinations.length;
+      setCenterIndex(actualIndex);
+    };
+
+    const container = scrollContainerRef.current;
+    if (container) {
+      container.addEventListener('scroll', handleScroll);
+      // Initial center calculation
+      handleScroll();
+      return () => container.removeEventListener('scroll', handleScroll);
+    }
+  }, [destinations.length]);
 
   return (
     <section>
@@ -140,7 +138,7 @@ export default function DiscoverSection() {
           <h1 className="text-5xl text-black font-semibold mt-2">{t('home.discover_subtitle')}</h1>
         </div>
 
-        {/* Horizontal Scroll Carousel with Alternating Sizes */}
+        {/* Horizontal Scroll Carousel with Center Focus */}
         <div className="w-full relative">
           <style jsx>{`
             .scroll-container {
@@ -164,15 +162,12 @@ export default function DiscoverSection() {
 
             .destination-card {
               flex-shrink: 0;
+              width: 320px;
               transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             }
 
-            .destination-card.large {
+            .destination-card.center {
               width: 400px;
-            }
-
-            .destination-card.small {
-              width: 320px;
             }
 
             .destination-card img {
@@ -185,19 +180,20 @@ export default function DiscoverSection() {
             className="scroll-container"
             onMouseEnter={() => setIsAutoScrolling(false)}
             onMouseLeave={() => setIsAutoScrolling(true)}
-            style={{ paddingLeft: 'calc(50vw - 200px)', paddingRight: 'calc(50vw - 200px)' }}
+            style={{ paddingLeft: 'calc(50vw - 160px)', paddingRight: 'calc(50vw - 160px)' }}
           >
-            {/* Dynamic copies based on viewport and destination count */}
-            {infiniteDestinations.map((destination, index: number) => {
-              // Alternating pattern: large, small, large, small
-              const isLarge = index % 2 === 0;
+            {/* Create many copies for truly infinite scroll - 5 sets */}
+            {[...destinations, ...destinations, ...destinations, ...destinations, ...destinations].map((destination, index: number) => {
+              // Calculate which card should be centered based on actual position in array
+              const actualIndex = index % destinations.length;
+              const isCenter = actualIndex === centerIndex;
               
               return (
                 <div
                   key={`card-${index}`}
-                  className={`destination-card ${isLarge ? 'large' : 'small'}`}
+                  className={`destination-card ${isCenter ? 'center' : ''}`}
                 >
-                  <div className={`relative ${isLarge ? 'h-[400px] -translate-y-10' : 'h-[320px]'} w-full overflow-hidden rounded-[20px] group transition-all duration-500`}>
+                  <div className={`relative ${isCenter ? 'h-[400px] -translate-y-10' : 'h-[320px]'} w-full overflow-hidden rounded-[20px] group transition-all duration-500`}>
                     <Image
                       src={Array.isArray(destination.images) ? destination.images[0] : destination.images}
                       alt={destination.name}
@@ -206,8 +202,8 @@ export default function DiscoverSection() {
                       draggable={false}
                     />
                   </div>
-                  <div className={`flex flex-col items-center px-4 ${isLarge ? '-mt-4' : 'mt-4'}`}>
-                    <h1 className={`text-black font-semibold text-center mb-3 transition-all duration-500 ${isLarge ? 'text-2xl' : 'text-xl'} line-clamp-2`}>
+                  <div className={`flex flex-col items-center px-4 ${isCenter ? '-mt-4' : 'mt-4'}`}>
+                    <h1 className={`text-black font-semibold text-center mb-3 transition-all duration-500 ${isCenter ? 'text-2xl' : 'text-xl'} line-clamp-2`}>
                       {destination.name}
                     </h1>
                     <Link 
@@ -252,42 +248,50 @@ export default function DiscoverSection() {
         >
           <div className="overflow-hidden">
             <div
-              className="flex transition-transform duration-300 ease-out"
-              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+              className="flex transition-transform duration-500 ease-out"
+              style={{
+                transform: `translateX(-${currentSlide * 100}%)`
+              }}
             >
               {destinations.map((destination, index: number) => (
-                <div key={index} className="w-full flex-shrink-0 px-2">
-                  <div className="relative w-full h-[400px] overflow-hidden rounded-[20px]">
-                    <Image
-                      src={Array.isArray(destination.images) ? destination.images[0] : destination.images}
-                      alt={destination.name}
-                      fill
-                      className="object-cover"
-                      draggable={false}
-                    />
-                  </div>
-                  <div className="flex flex-col items-center mt-6">
-                    <h1 className="text-2xl text-black font-semibold text-center mb-4 line-clamp-2">
-                      {destination.name}
-                    </h1>
-                    <Link 
-                      href={`/place/${destination.id}`}
-                      className="font-semibold w-fit px-6 py-2 text-sm bg-transparent border-2 border-accent text-black rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2"
-                    >
-                      {t('buttons.visit')}
-                      <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
+                <div
+                  key={index}
+                  className="w-full flex-shrink-0 px-2"
+                >
+                  <div className="r overflow-hidden max-w-sm mx-auto">
+                    <div className="relative h-[280px] w-full">
+                      <Image
+                        src={Array.isArray(destination.images) ? destination.images[0] : destination.images}
+                        alt={destination.name}
+                        fill
+                        className="object-cover rounded-xl"
+                        loading="lazy"
+                        sizes="(max-width: 640px) 100vw, 384px"
+                      />
+                    </div>
+                    <div className="p-6 flex flex-col items-center">
+                      <h3 className="text-xl font-semibold text-black text-center mb-4 min-h-[3.5rem] flex items-center">
+                        {destination.name}
+                      </h3>
+                      <Link 
+                        href={`/place/${destination.id}`}
+                        className="w-full max-w-[200px] px-6 py-3 text-sm font-semibold bg-transparent border-2 border-accent text-accent rounded-full hover:bg-accent hover:text-white transition-colors flex items-center justify-center gap-2"
                       >
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                      </svg>
-                    </Link>
+                        Visit
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -295,33 +299,42 @@ export default function DiscoverSection() {
           </div>
 
           {/* Navigation Arrows */}
-          <button
-            onClick={() => setCurrentSlide((prev) => (prev - 1 + destinations.length) % destinations.length)}
-            className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full shadow-lg transition-all z-10"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M15 18l-6-6 6-6" />
-            </svg>
-          </button>
-          <button
-            onClick={() => setCurrentSlide((prev) => (prev + 1) % destinations.length)}
-            className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full shadow-lg transition-all z-10"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M9 18l6-6-6-6" />
-            </svg>
-          </button>
+          {destinations.length > 1 && (
+            <>
+              <button
+                onClick={() => setCurrentSlide((prev) => (prev - 1 + destinations.length) % destinations.length)}
+                className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-accent p-3 rounded-full shadow-lg transition-all z-10"
+                aria-label="Previous"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+              </button>
+              <button
+                onClick={() => setCurrentSlide((prev) => (prev + 1) % destinations.length)}
+                className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-accent p-3 rounded-full shadow-lg transition-all z-10"
+                aria-label="Next"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </button>
+            </>
+          )}
         </div>
 
         {/* Navigation Dots */}
         <div className="flex gap-3 mt-8">
-          {destinations.map((_, index: number) => (
+          {Array.from({ length: destinations.length }).map((_, index: number) => (
             <button
               key={index}
-              onClick={() => setCurrentSlide(index)}
+              onClick={() => {
+                setCurrentSlide(index);
+              }}
               className={`w-3 h-3 rounded-full border border-primary transition-all duration-300 ${
                 currentSlide === index ? "bg-primary scale-125" : "bg-white"
               }`}
+              aria-label={`Go to slide ${index + 1}`}
             />
           ))}
         </div>

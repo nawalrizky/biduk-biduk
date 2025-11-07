@@ -22,7 +22,8 @@
     "next": "التالي",
     "previous": "السابق",
     "back": "رجوع",
-    "contact_to_book": "اتصل بنا للحجز"
+    "contact_to_book": "اتصل بنا للحجز",
+    "visit": "زيارة"
   },
   "hotel": {
     "beachside_escape": "ملاذك على الشاطئ",
@@ -60,7 +61,10 @@
     "article_content": "محتوى المقال",
     "published_date": "تاريخ النشر",
     "author": "المؤلف",
-    "photo_gallery": "معرض الصور"
+    "photo_gallery": "معرض الصور",
+    "page_title": "الأخبار والمقالات",
+    "page_subtitle": "اكتشف أحدث القصص",
+    "back_to_articles": "العودة إلى المقالات"
   },
   "package": {
     "package_information": "معلومات الباقة",

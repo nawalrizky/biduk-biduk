@@ -251,7 +251,7 @@ const PackageSection = () => {
                           href={`/packages/${pkg.package_id}`}
                           className="btn-border-reveal mt-4 bg-transparent border-2 border-accent text-black font-semibold px-6 py-2 lg:px-3 w-full rounded-full hover:bg-accent transition-colors text-sm lg:text-[12px] flex justify-center items-center gap-2 h-fit"
                         >
-                          Book Now
+                          {t('buttons.book_now')}
                           <svg
                             width="14"
                             height="14"

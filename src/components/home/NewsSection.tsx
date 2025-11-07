@@ -165,7 +165,7 @@ export default function NewsSection() {
 
                         {/* News Content */}
                         {articles[currentIndex] && (
-                            <div className="flex flex-col gap-3 h-40">
+                            <div className="flex flex-col gap-3 h-40 items-center text-center px-4">
                                 <h2 className="text-xl font-plant text-primary">{articles[currentIndex].category_name}</h2>
                                 <h2 className="text-xl font-semibold text-black line-clamp-2 leading-tight">
                                     {articles[currentIndex].title}
@@ -175,7 +175,7 @@ export default function NewsSection() {
                                 </p>
                                 <Link href={`/articles/${articles[currentIndex].id}`}>
                                     <button className="btn-border-reveal w-fit px-6 py-2 text-base bg-transparent border-2 border-accent text-black font-semibold rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2">
-                                        Read More
+                                        {t('buttons.read_more')}
                                         <svg
                                             width="16"
                                             height="16"
@@ -238,7 +238,7 @@ export default function NewsSection() {
                                                 </p>
                                                 <Link href={`/articles/${article.id}`}>
                                                     <button className="btn-border-reveal w-fit px-5 py-2 text-sm bg-transparent border-2 border-accent text-black font-semibold rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2 mt-auto">
-                                                        Read More
+                                                        {t('buttons.read_more')}
                                                         <svg
                                                             width="14"
                                                             height="14"
@@ -298,8 +298,8 @@ export default function NewsSection() {
                                     {article.content}
                                 </p>
                                 <Link href={`/articles/${article.id}`}>
-                                    <button className="btn-border-reveal w-fit px-6 py-2 text-base bg-transparent border-2 border-accent text-black font-semibold rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2 mt-auto">
-                                        Read More
+                                    <button className="btn-border-reveal w-full justify-between px-6 py-2 text-base bg-transparent border-2 border-accent text-black font-semibold rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2 mt-auto">
+                                        {t('buttons.read_more')}
                                         <svg
                                             width="16"
                                             height="16"

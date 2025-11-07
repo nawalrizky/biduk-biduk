@@ -4,8 +4,10 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { articlesApi, Article } from "@/lib/api";
+import { useTranslation } from "react-i18next";
 
 export default function ArticlesPage() {
+  const { t } = useTranslation();
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -122,10 +124,10 @@ export default function ArticlesPage() {
       <div className="relative text-white pt-20 pb-8 lg:pt-24 lg:pb-10 z-10">
         <div className="container mx-auto px-6 lg:px-8 relative z-10 text-center">
           <h1 className="text-primary font-plant text-sm lg:text-xl mb-2 lg:mb-4">
-            Stories from the Coast
+            {t('article.page_subtitle')}
           </h1>
           <h2 className="text-2xl lg:text-5xl text-black font-semibold mb-3 lg:mb-4">
-            Latest News & Updates
+            {t('article.page_title')}
           </h2>
         </div>
       </div>
@@ -159,7 +161,7 @@ export default function ArticlesPage() {
                 </p>
                 <Link href={`/articles/${article.id}`}>
                   <button className="btn-border-reveal w-fit px-6 py-2 text-base bg-transparent border-2 border-accent text-black font-semibold rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2 mt-auto">
-                    Read More →
+                    {t('buttons.read_more')} →
                   </button>
                 </Link>
               </div>
@@ -194,7 +196,7 @@ export default function ArticlesPage() {
                 </p>
                 <Link href={`/articles/${article.id}`}>
                   <button className="w-fit px-6 py-2 text-sm bg-transparent border-2 border-accent text-black font-semibold rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2">
-                    Read More →
+                    {t('buttons.read_more')} →
                   </button>
                 </Link>
               </div>

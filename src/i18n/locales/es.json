@@ -22,7 +22,8 @@
     "next": "Siguiente",
     "previous": "Anterior",
     "back": "Volver",
-    "contact_to_book": "Contáctenos para reservar"
+    "contact_to_book": "Contáctenos para Reservar",
+    "visit": "Visitar"
   },
   "hotel": {
     "beachside_escape": "Tu escape junto a la playa",
@@ -60,7 +61,10 @@
     "article_content": "Contenido del artículo",
     "published_date": "Fecha de publicación",
     "author": "Autor",
-    "photo_gallery": "Galería de fotos"
+    "photo_gallery": "Galería de fotos",
+    "page_title": "Noticias y Artículos",
+    "page_subtitle": "Descubra las Últimas Historias",
+    "back_to_articles": "Volver a Artículos"
   },
   "package": {
     "package_information": "Información del paquete",

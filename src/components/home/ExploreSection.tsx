@@ -130,7 +130,7 @@ const ExploreSection: React.FC = () => {
       <section 
         className="flex justify-center items-center min-h-screen relative bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: "url('/images/home/explore.png')"
+          backgroundImage: "url('/images/home/explore/explore.png')"
         }}
       >
         <div className="absolute inset-0 bg-black opacity-50"></div>

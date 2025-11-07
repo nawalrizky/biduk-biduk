@@ -22,7 +22,8 @@
     "next": "Next",
     "previous": "Previous",
     "back": "Back",
-    "contact_to_book": "Contact Us to Book"
+    "contact_to_book": "Contact Us to Book",
+    "visit": "Visit"
   },
   "hotel": {
     "beachside_escape": "Your Beachside Escape",
@@ -60,7 +61,10 @@
     "article_content": "Article Content",
     "published_date": "Published Date",
     "author": "Author",
-    "photo_gallery": "Photo Gallery"
+    "photo_gallery": "Photo Gallery",
+    "page_title": "News & Articles",
+    "page_subtitle": "Discover Latest Stories",
+    "back_to_articles": "Back to Articles"
   },
   "package": {
     "package_information": "Package Information",

@@ -23,7 +23,7 @@ export default function AboutSection() {
           width={500}
           height={500}
           loading="lazy"
-          className="w-full md:w-[55%] lg:w-[70%] h-auto"
+          className="w-full md:w-[55%] lg:w-[60%] h-auto"
         />
         <div className="flex flex-col justify-center items-start text-left gap-2">
           <h1 className="text-base md:text-lg lg:text-xl font-plant text-primary">{t('home.about_us')}</h1>

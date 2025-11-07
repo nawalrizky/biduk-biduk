@@ -10,7 +10,7 @@
   "buttons": {
     "book_now": "Pesan ",
     "explore_more": "Jelajahi Lebih Banyak",
-    "read_more": "Baca Selengkapnya",
+    "read_more": "Selengkapnya",
     "contact_us": "Hubungi Kami",
     "view_details": "Lihat Detail",
     "learn_more": "Pelajari Lebih Lanjut",
@@ -22,7 +22,8 @@
     "next": "Selanjutnya",
     "previous": "Sebelumnya",
     "back": "Kembali",
-    "contact_to_book": "Hubungi Kami untuk Pesan"
+    "contact_to_book": "Hubungi Kami untuk Pesan",
+    "visit": "Kunjungi"
   },
   "hotel": {
     "beachside_escape": "Pelarian Tepi Pantai Anda",
@@ -60,7 +61,10 @@
     "article_content": "Konten Artikel",
     "published_date": "Tanggal Publikasi",
     "author": "Penulis",
-    "photo_gallery": "Galeri Foto"
+    "photo_gallery": "Galeri Foto",
+    "page_title": "Berita & Artikel",
+    "page_subtitle": "Temukan Cerita Terbaru",
+    "back_to_articles": "Kembali ke Artikel"
   },
   "package": {
     "package_information": "Informasi Paket",

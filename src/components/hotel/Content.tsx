@@ -23,6 +23,14 @@ const getImageUrl = (image: any): string | null => {
   return null;
 };
 
+// Helper function to check if URL is embeddable
+const isEmbeddableMapUrl = (url: string): boolean => {
+  return url.includes('google.com/maps/embed') || url.includes('iframe');
+};
+
+// Default fallback map for Biduk-Biduk area
+const DEFAULT_MAP_EMBED = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63821.84753026603!2d118.61294940870013!3d1.2522236876905486!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32734cb76f07da33%3A0x5e898623450bccae!2sBiduk-Biduk!5e0!3m2!1sen!2sid!4v1753828856108!5m2!1sen!2sid";
+
 export default function HotelContent({ hotel }: HotelContentProps) {
   const currentLanguage = useLanguage();
   const { t } = useTranslation();
@@ -109,15 +117,49 @@ export default function HotelContent({ hotel }: HotelContentProps) {
         </div>
         
         {/* Map */}
-        <div className="flex-1 min-h-[200px] sm:min-h-[250px] rounded-xl overflow-hidden">
-          <iframe
-            title={`${translation.name} Google Map`}
-            src={hotel.maps_url || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63821.84753026603!2d118.61294940870013!3d1.2522236876905486!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32734cb76f07da33%3A0x5e898623450bccae!2sBiduk-Biduk!5e0!3m2!1sen!2sid!4v1753828856108!5m2!1sen!2sid"}
-            className="w-full h-full border-0 rounded-xl"
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
+        <div className="flex-1 flex flex-col">
+          <div className="min-h-[200px] sm:min-h-[250px] rounded-xl overflow-hidden bg-gray-100 relative">
+            {hotel.maps_url && isEmbeddableMapUrl(hotel.maps_url) ? (
+              <iframe
+                title={`${translation.name} Google Map`}
+                src={hotel.maps_url}
+                className="w-full h-full border-0 rounded-xl"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            ) : (
+              <div className="relative w-full h-full">
+                <iframe
+                  title={`${translation.name} Area Map`}
+                  src={DEFAULT_MAP_EMBED}
+                  className="w-full h-full border-0 rounded-xl"
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+                {hotel.maps_url && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/10 backdrop-blur-[1px]">
+                    <div className="bg-white rounded-lg p-4 shadow-lg text-center">
+                      <p className="text-sm text-gray-600 mb-3">{t('hotel.view_location')}</p>
+                      <a
+                        href={hotel.maps_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 bg-accent text-white px-4 py-2 rounded-full hover:bg-accent/90 transition-colors text-sm font-semibold"
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                          <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        {t('hotel.open_in_google_maps')}
+                      </a>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
