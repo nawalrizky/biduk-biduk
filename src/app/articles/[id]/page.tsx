@@ -6,6 +6,8 @@ import Link from "next/link";
 import { articlesApi, Article } from "@/lib/api";
 import ArticleCarousel from "@/components/article/Carousel";
 import ArticleContent from "@/components/article/Content";
+import JsonLd from "@/components/JsonLd";
+import { generateArticleSchema, generateBreadcrumbSchema } from "@/lib/seo";
 
 export default function ArticleDetailPage() {
   const params = useParams();
@@ -73,14 +75,35 @@ export default function ArticleDetailPage() {
     );
   }
 
+  // Generate structured data
+  const articleSchema = generateArticleSchema({
+    headline: article.title,
+    description: article.content.substring(0, 160),
+    image: article.featured_image_url || '/images/home/hero/bg.png',
+    datePublished: article.publish_date || article.created_at,
+    dateModified: article.updated_at || article.created_at,
+    url: `https://bidukbiduk.com/articles/${id}`
+  });
+
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', url: 'https://bidukbiduk.com' },
+    { name: 'Articles', url: 'https://bidukbiduk.com/articles' },
+    { name: article.title, url: `https://bidukbiduk.com/articles/${id}` }
+  ]);
+
   return (
-    <div className="w-full">
-      <div className="relative w-full h-screen lg:h-[110vh]">
-        <ArticleCarousel article={article} />
+    <>
+      <JsonLd data={articleSchema} />
+      <JsonLd data={breadcrumbSchema} />
+      
+      <div className="w-full">
+        <div className="relative w-full h-screen lg:h-[110vh]">
+          <ArticleCarousel article={article} />
+        </div>
+        <div className="relative z-20">
+          <ArticleContent article={article} />
+        </div>
       </div>
-      <div className="relative z-20">
-        <ArticleContent article={article} />
-      </div>
-    </div>
+    </>
   );
 }

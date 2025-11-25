@@ -43,15 +43,13 @@ const Navbar = () => {
   // Get current language
   const currentLang = typeof window !== 'undefined' ? localStorage.getItem('i18nextLng') || 'id' : 'id';
   
-  // Function to change language globally and reload page
+  // Function to change language globally without reload
   const handleLanguageChange = (langCode: string) => {
     i18n.changeLanguage(langCode);
     setShowLangDropdown(false);
     // Save to localStorage
     if (typeof window !== 'undefined') {
       localStorage.setItem('i18nextLng', langCode);
-      // Reload page to fetch new data with updated language
-      window.location.reload();
     }
   };
   

@@ -6,6 +6,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import I18nProvider from "@/providers/I18nProvider";
+import LanguageDetectionModal from "@/components/ui/LanguageDetectionModal";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -32,8 +33,76 @@ const plantFont = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Biduk-Biduk",
-  description: "Explore the beauty of Biduk-Biduk village",
+  metadataBase: new URL('https://bidukbiduk.com'),
+  title: {
+    default: 'Biduk-Biduk | Destinasi Wisata Berau Kalimantan Timur',
+    template: '%s | Biduk-Biduk'
+  },
+  description: 'Jelajahi keindahan Desa Biduk-Biduk, surga tersembunyi di Berau, Kalimantan Timur. Nikmati wisata alam, pantai eksotis, hotel nyaman, dan paket wisata terbaik.',
+  keywords: [
+    'Biduk-Biduk',
+    'Berau',
+    'Kalimantan Timur',
+    'wisata Berau',
+    'destinasi wisata Indonesia',
+    'pantai Kalimantan',
+    'Labuan Cermin',
+    'Danau Labuan Cermin',
+    'wisata alam',
+    'hotel Berau',
+    'paket wisata Berau',
+    'travelling Indonesia',
+    'hidden paradise',
+    'eco tourism',
+    'East Kalimantan tourism'
+  ],
+  authors: [{ name: 'Biduk-Biduk Tourism' }],
+  creator: 'Biduk-Biduk Tourism',
+  publisher: 'Biduk-Biduk Tourism',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'id_ID',
+    alternateLocale: ['en_US', 'ar_SA', 'zh_CN', 'fr_FR', 'es_ES'],
+    url: 'https://bidukbiduk.com',
+    siteName: 'Biduk-Biduk Tourism',
+    title: 'Biduk-Biduk | Destinasi Wisata Berau Kalimantan Timur',
+    description: 'Jelajahi keindahan Desa Biduk-Biduk, surga tersembunyi di Berau, Kalimantan Timur. Nikmati wisata alam, pantai eksotis, hotel nyaman, dan paket wisata terbaik.',
+    images: [
+      {
+        url: '/images/home/hero/bg.png',
+        width: 1200,
+        height: 630,
+        alt: 'Biduk-Biduk Village - Beautiful Tourism Destination in Berau, East Kalimantan',
+      }
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Biduk-Biduk | Destinasi Wisata Berau Kalimantan Timur',
+    description: 'Jelajahi keindahan Desa Biduk-Biduk, surga tersembunyi di Berau, Kalimantan Timur.',
+    images: ['/images/home/hero/bg.png'],
+    creator: '@bidukbiduk',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: 'your-google-verification-code',
+    yandex: 'your-yandex-verification-code',
+  },
 };
 
 export default function RootLayout({
@@ -47,12 +116,80 @@ export default function RootLayout({
         <link rel="preconnect" href="https://www.google.com" />
         <link rel="preconnect" href="https://www.gstatic.com" crossOrigin="" />
         <link rel="dns-prefetch" href="https://recaptchaenterprise.googleapis.com" />
+        <link rel="canonical" href="https://bidukbiduk.com" />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#05A5D0" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Biduk-Biduk" />
+        <link rel="apple-touch-icon" href="/images/logo.png" />
+        <link rel="icon" type="image/png" href="/images/logo.png" />
+        
+        {/* Alternate languages for SEO */}
+        <link rel="alternate" hrefLang="id" href="https://bidukbiduk.com" />
+        <link rel="alternate" hrefLang="en" href="https://bidukbiduk.com?lang=en" />
+        <link rel="alternate" hrefLang="ar" href="https://bidukbiduk.com?lang=ar" />
+        <link rel="alternate" hrefLang="zh" href="https://bidukbiduk.com?lang=zh" />
+        <link rel="alternate" hrefLang="fr" href="https://bidukbiduk.com?lang=fr" />
+        <link rel="alternate" hrefLang="es" href="https://bidukbiduk.com?lang=es" />
+        <link rel="alternate" hrefLang="x-default" href="https://bidukbiduk.com" />
+        
+        {/* Structured Data - Organization */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'Biduk-Biduk Tourism',
+              url: 'https://bidukbiduk.com',
+              logo: 'https://bidukbiduk.com/images/logo.png',
+              description: 'Official tourism information for Biduk-Biduk village in Berau, East Kalimantan, Indonesia',
+              address: {
+                '@type': 'PostalAddress',
+                addressLocality: 'Biduk-Biduk',
+                addressRegion: 'Berau, Kalimantan Timur',
+                addressCountry: 'ID'
+              },
+              sameAs: [
+                'https://www.instagram.com/bidukbiduk',
+                'https://www.facebook.com/bidukbiduk',
+                'https://twitter.com/bidukbiduk'
+              ]
+            })
+          }}
+        />
+        
+        {/* Structured Data - Tourist Destination */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'TouristDestination',
+              name: 'Biduk-Biduk',
+              description: 'A hidden paradise in Berau, East Kalimantan, featuring pristine beaches, crystal-clear lakes, and untouched natural beauty',
+              image: 'https://bidukbiduk.com/images/home/hero/bg.png',
+              url: 'https://bidukbiduk.com',
+              geo: {
+                '@type': 'GeoCoordinates',
+                latitude: '2.2167',
+                longitude: '118.5000'
+              },
+              touristType: ['Nature Lovers', 'Adventure Seekers', 'Beach Enthusiasts', 'Eco Tourists'],
+              isAccessibleForFree: false,
+              publicAccess: true
+            })
+          }}
+        />
       </head>
       <body className={`${openSans.variable} ${plantFont.variable} font-sans antialiased`}>
         <I18nProvider>
           <Navbar />
           {children}
           <Footer />
+          <LanguageDetectionModal />
         </I18nProvider>
       </body>
     </html>

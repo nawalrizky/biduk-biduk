@@ -120,5 +120,11 @@
     "subtitle": "开始您的旅程",
     "available_contacts": "可用联系方式",
     "follow_us": "关注我们："
+  },
+  "language_detection": {
+    "title": "语言检测",
+    "message": "我们检测到您在{{country}}。您想以{{language}}显示网站吗？",
+    "accept": "是的，切换",
+    "decline": "不用了，谢谢"
   }
 }

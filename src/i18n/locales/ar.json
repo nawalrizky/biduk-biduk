@@ -120,5 +120,11 @@
     "subtitle": "وابدأ رحلتك",
     "available_contacts": "جهات الاتصال المتاحة",
     "follow_us": "تابعنا على:"
+  },
+  "language_detection": {
+    "title": "كشف اللغة",
+    "message": "اكتشفنا أنك في {{country}}. هل تريد عرض الموقع باللغة {{language}}؟",
+    "accept": "نعم، التبديل",
+    "decline": "لا، شكرًا"
   }
 }

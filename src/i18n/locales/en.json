@@ -120,5 +120,11 @@
     "subtitle": "And Start Your Journey",
     "available_contacts": "Available Contacts",
     "follow_us": "Follow Us on:"
+  },
+  "language_detection": {
+    "title": "Language Detection",
+    "message": "We detected you are in {{country}}. Would you like to display the site in {{language}}?",
+    "accept": "Yes, switch",
+    "decline": "No, thanks"
   }
 }

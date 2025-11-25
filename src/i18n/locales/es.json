@@ -116,9 +116,15 @@
     "copyright": "Derechos de autor © 2024 Biduk-Biduk. Todos los derechos reservados."
   },
   "contact": {
-    "title": "Contáctanos",
-    "subtitle": "Y comienza tu viaje",
+    "title": "Contáctenos",
+    "subtitle": "Y comience su viaje",
     "available_contacts": "Contactos disponibles",
     "follow_us": "Síguenos en:"
+  },
+  "language_detection": {
+    "title": "Detección de idioma",
+    "message": "Detectamos que está en {{country}}. ¿Le gustaría mostrar el sitio en {{language}}?",
+    "accept": "Sí, cambiar",
+    "decline": "No, gracias"
   }
 }

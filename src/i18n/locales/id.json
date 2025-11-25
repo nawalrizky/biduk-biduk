@@ -120,5 +120,11 @@
     "subtitle": "Dan Mulai Perjalanan Anda",
     "available_contacts": "Kontak yang Tersedia",
     "follow_us": "Ikuti Kami di:"
+  },
+  "language_detection": {
+    "title": "Deteksi Bahasa",
+    "message": "Kami mendeteksi Anda di {{country}}. Apakah ingin menampilkan situs dalam {{language}}?",
+    "accept": "Ya, ubah bahasa",
+    "decline": "Tidak, terima kasih"
   }
 }

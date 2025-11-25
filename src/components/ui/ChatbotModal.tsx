@@ -41,7 +41,7 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
       id: '1',
       text: `🌍 Welcome to Biduk-Biduk Travel Assistant! / Selamat datang di Asisten Perjalanan Biduk-Biduk!
 
-I can help you in multiple languages. Please select your preferred language using the language button in the top-right corner:
+I can help you in multiple languages. Please use your preferred language such as :
 • 🇺🇸 English
 • 🇮🇩 Bahasa Indonesia  
 • 🇸🇦 العربية (Arabic)
