@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import I18nProvider from "@/providers/I18nProvider";
 import LanguageDetectionModal from "@/components/ui/LanguageDetectionModal";
+import Script from 'next/script';
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -135,7 +136,13 @@ export default function RootLayout({
         <link rel="alternate" hrefLang="fr" href="https://bidukbiduk.com?lang=fr" />
         <link rel="alternate" hrefLang="es" href="https://bidukbiduk.com?lang=es" />
         <link rel="alternate" hrefLang="x-default" href="https://bidukbiduk.com" />
-        
+        {/* Umami analytics - configurable via env vars */}
+        <Script
+          src={process.env.NEXT_PUBLIC_UMAMI_SRC || 'https://umami-sigma-ashen.vercel.app/script.js'}
+          data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID || '39e87117-6e63-4f7d-b5c5-c7ac71667519'}
+          strategy="afterInteractive"
+        />
+
         {/* Structured Data - Organization */}
         <script
           type="application/ld+json"
