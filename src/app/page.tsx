@@ -1,4 +1,3 @@
-import dynamic from "next/dynamic";
 import HeroSection from "@/components/home/HeroSection";
 import InfoSection from "@/components/home/InfoSection";
 import DestinationSection from "@/components/home/DestinationSection";
@@ -12,35 +11,54 @@ import ChatbotButton from "@/components/ui/ChatbotButton";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Biduk-Biduk | Destinasi Wisata Berau Kalimantan Timur',
-  description: 'Jelajahi keindahan Desa Biduk-Biduk, surga tersembunyi di Berau, Kalimantan Timur. Nikmati wisata alam, pantai eksotis, Labuan Cermin, hotel nyaman, dan paket wisata terbaik.',
+  title:
+    "Biduk-Biduk, Berau | Desa Wisata, Pantai & Panduan Liburan Kalimantan Timur",
+  description:
+    "Informasi lengkap tentang Biduk-Biduk di Kabupaten Berau, Kalimantan Timur: sejarah singkat kecamatan, desa wisata, pantai, Danau/Labuan Cermin, penginapan, rute perjalanan, dan paket liburan ke Biduk-Biduk.",
   keywords: [
-    'Biduk-Biduk',
-    'Berau',
-    'Kalimantan Timur',
-    'wisata Berau',
-    'Labuan Cermin',
-    'Danau Labuan Cermin',
-    'pantai Kalimantan',
-    'destinasi wisata Indonesia',
-    'hidden paradise Indonesia',
-    'eco tourism Kalimantan'
+    "Biduk Biduk",
+    "Biduk-Biduk",
+    "Kecamatan Biduk-Biduk",
+    "Desa Wisata Biduk-Biduk",
+    "kampung Biduk-Biduk",
+    "Kabupaten Berau",
+    "Kalimantan Timur",
+    "wisata Berau",
+    "Labuan Cermin",
+    "Danau Labuan Cermin",
+    "pantai Biduk-Biduk",
+    "pantai Kalimantan Timur",
+    "destinasi wisata Indonesia",
+    "eco tourism Kalimantan",
   ],
+  alternates: {
+    canonical: "https://bidukbiduk.com/",
+  },
   openGraph: {
-    title: 'Biduk-Biduk | Destinasi Wisata Berau Kalimantan Timur',
-    description: 'Jelajahi keindahan Desa Biduk-Biduk, surga tersembunyi di Berau, Kalimantan Timur.',
-    url: 'https://bidukbiduk.com',
-    siteName: 'Biduk-Biduk Tourism',
+    title:
+      "Biduk-Biduk, Berau | Desa Wisata, Pantai & Panduan Liburan Kalimantan Timur",
+    description:
+      "Portal informasi resmi wisata Biduk-Biduk di Berau, Kalimantan Timur: jelajahi pantai, Labuan Cermin, aktivitas laut, penginapan, serta tips dan panduan perjalanan ke Biduk-Biduk.",
+    url: "https://bidukbiduk.com/",
+    siteName: "Biduk-Biduk, Berau",
     images: [
       {
-        url: '/images/home/hero/bg.png',
+        url: "/images/home/hero/bg.png",
         width: 1200,
         height: 630,
-        alt: 'Biduk-Biduk Village - Beautiful Tourism Destination',
-      }
+        alt: "Panorama pantai dan desa wisata Biduk-Biduk di Berau, Kalimantan Timur",
+      },
     ],
-    locale: 'id_ID',
-    type: 'website',
+    locale: "id_ID",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title:
+      "Biduk-Biduk, Berau | Desa Wisata, Pantai & Panduan Liburan Kalimantan Timur",
+    description:
+      "Kenali Biduk-Biduk di Berau, Kalimantan Timur: desa wisata, pantai, Labuan Cermin, penginapan, dan panduan perjalanan untuk liburan yang berkesan.",
+    images: ["/images/home/hero/bg.png"],
   },
 };
 
