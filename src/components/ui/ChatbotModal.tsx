@@ -20,7 +20,7 @@ interface ChatbotModalProps {
 const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
   const currentLanguage = useLanguage();
   
-  // Map i18n language codes to API language codes
+
   const getApiLanguage = (lang: string): string => {
     const mapping: { [key: string]: string } = {
       'en': 'en',
@@ -33,7 +33,7 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
     return mapping[lang] || 'en';
   };
 
-  // Generate session ID once per component mount
+
   const [sessionId] = useState(() => `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
 
   const [messages, setMessages] = useState<Message[]>([
@@ -190,9 +190,8 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
     e.preventDefault();
     if (!inputText.trim()) return;
 
-    // Check if user has reached the reply limit
+
     if (hasReachedLimit) {
-      // Show direct contact message instead of making API call
       const userMessage: Message = {
         id: Date.now().toString(),
         text: inputText,
@@ -204,7 +203,7 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
       setInputText('');
       setIsTyping(true);
 
-      // Simulate typing delay
+
       setTimeout(() => {
         const contactMessage = createDirectContactMessage();
         setMessages(prev => [...prev, contactMessage]);
@@ -214,7 +213,7 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
       return;
     }
 
-    // Add user message
+
     const userMessage: Message = {
       id: Date.now().toString(),
       text: inputText,
@@ -227,14 +226,13 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
     setInputText('');
     setIsTyping(true);
 
-    // Increment user reply count
+
     const newReplyCount = userReplyCount + 1;
     setUserReplyCount(newReplyCount);
 
-    // Check if this is the 4th attempt or higher
+
     if (newReplyCount > MAX_USER_REPLIES) {
       setHasReachedLimit(true);
-      // Show direct contact message instead of API response
       setTimeout(() => {
         const contactMessage = createDirectContactMessage();
         setMessages(prev => [...prev, contactMessage]);
@@ -244,7 +242,7 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
     }
 
     try {
-      // Call the chatbot API
+  
       const response = await fetch(`${API_BASE_URL}/chatbot/message`, {
         method: 'POST',
         headers: {
@@ -264,10 +262,10 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
 
       const data = await response.json();
       
-      // Get the response text (no truncation for bot replies)
+
       const responseText = data.reply || data.response || data.message || 'Sorry, I couldn\'t process your request right now.';
       
-      // Create bot message with full API response
+  
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
         text: responseText,
@@ -348,9 +346,7 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
   })();
 
   const handleQuickReply = async (reply: string) => {
-    // Check if user has reached the reply limit
     if (hasReachedLimit) {
-      // Show direct contact message instead of making API call
       const userMessage: Message = {
         id: Date.now().toString(),
         text: reply,
@@ -361,7 +357,7 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
       setMessages(prev => [...prev, userMessage]);
       setIsTyping(true);
 
-      // Simulate typing delay
+
       setTimeout(() => {
         const contactMessage = createDirectContactMessage();
         setMessages(prev => [...prev, contactMessage]);
@@ -371,7 +367,6 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
       return;
     }
 
-    // Add user message for quick reply
     const userMessage: Message = {
       id: Date.now().toString(),
       text: reply,
@@ -381,15 +376,10 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
 
     setMessages(prev => [...prev, userMessage]);
     setIsTyping(true);
-
-    // Increment user reply count
     const newReplyCount = userReplyCount + 1;
     setUserReplyCount(newReplyCount);
-
-    // Check if this is the 4th attempt or higher
     if (newReplyCount > MAX_USER_REPLIES) {
       setHasReachedLimit(true);
-      // Show direct contact message instead of API response
       setTimeout(() => {
         const contactMessage = createDirectContactMessage();
         setMessages(prev => [...prev, contactMessage]);
@@ -399,7 +389,6 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
     }
 
     try {
-      // Call the chatbot API with quick reply
       const response = await fetch(`${API_BASE_URL}/chatbot/message`, {
         method: 'POST',
         headers: {
@@ -419,7 +408,7 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
 
       const data = await response.json();
       
-      // Get the response text (no truncation for bot replies)
+      
       const responseText = data.reply || data.response || data.message || 'Sorry, I couldn\'t process your request right now.';
       
       const botMessage: Message = {
@@ -433,7 +422,7 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
     } catch (error) {
       
       if (error instanceof Error) {
-        // Handle error silently or log to external service
+    
       }
       
       const errorMessage: Message = {

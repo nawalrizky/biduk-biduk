@@ -13,7 +13,6 @@ export interface GalleryImage {
   file_url?: string;
 }
 
-// Destination types
 export interface DestinationCategory {
   id: number;
   name: string;
@@ -41,7 +40,6 @@ export interface Destination {
   is_active: boolean;
   created_at: string;
   updated_at: string;
-  // Translation fields
   name_en?: string;
   name_ar?: string;
   name_cn?: string;
@@ -68,7 +66,7 @@ export interface DestinationListResponse {
   };
 }
 
-// Article types
+
 export interface Article {
   id: number;
   title: string;
@@ -85,7 +83,6 @@ export interface Article {
   author_name: string;
   created_at: string;
   updated_at: string;
-  // Translation fields
   title_en?: string;
   title_ar?: string;
   title_cn?: string;
@@ -138,7 +135,6 @@ export interface Hotel {
   updated_at: string;
   total_rating: number;
   total_rating_users: number;
-  // Translation fields
   name_en?: string;
   name_ar?: string;
   name_cn?: string;
@@ -165,7 +161,7 @@ export interface HotelListResponse {
   };
 }
 
-// Package types
+
 export interface PackageDestination {
   id: number;
   name: string;
@@ -184,10 +180,9 @@ export interface Package {
   total_rating: number;
   total_rating_users: number;
   destinations?: PackageDestination[];
-  destination_details?: PackageDestination[]; // API returns this field
+  destination_details?: PackageDestination[]; 
   created_at?: string;
   updated_at?: string;
-  // Translation fields
   name_en?: string;
   name_ar?: string;
   name_cn?: string;
@@ -220,7 +215,6 @@ export interface ApiResponse<T> {
   message?: string;
 }
 
-// Generic API fetch function
 async function apiCall<T>(endpoint: string, options?: RequestInit): Promise<T> {
   try {
     const url = `${API_BASE_URL}${endpoint}`;
@@ -247,9 +241,7 @@ async function apiCall<T>(endpoint: string, options?: RequestInit): Promise<T> {
   }
 }
 
-// Gallery API functions
 export const galleryApi = {
-  // Get all gallery images
   getAll: async (): Promise<GalleryImage[]> => {
     try {
       const response = await apiCall<ApiResponse<GalleryImage[]>>('/gallery');
@@ -260,19 +252,16 @@ export const galleryApi = {
     }
   },
 
-  // Get featured/destination images
   getDestinations: async (): Promise<GalleryImage[]> => {
     try {
       const response = await apiCall<ApiResponse<GalleryImage[]>>('/gallery?featured=true');
       return response.data || [];
     } catch (error) {
       console.error('Failed to fetch destination images:', error);
-      // Fallback to all images if featured endpoint doesn't work
       return galleryApi.getAll();
     }
   },
 
-  // Get images by category
   getByCategory: async (category: string): Promise<GalleryImage[]> => {
     try {
       const response = await apiCall<ApiResponse<GalleryImage[]>>(`/gallery?category=${category}`);
@@ -284,9 +273,9 @@ export const galleryApi = {
   },
 };
 
-// Destinations API functions
+
 export const destinationsApi = {
-  // Get all destinations with pagination
+
   getAll: async (page: number = 1, pageSize: number = 12): Promise<DestinationListResponse> => {
     try {
       const response = await apiCall<DestinationListResponse>(`/destinations/?page=${page}&page_size=${pageSize}`);
@@ -302,7 +291,7 @@ export const destinationsApi = {
     }
   },
 
-  // Get active destinations only with pagination
+ 
   getActive: async (page: number = 1, pageSize: number = 12): Promise<DestinationListResponse> => {
     try {
       const response = await apiCall<DestinationListResponse>(`/destinations/?is_active=true&page=${page}&page_size=${pageSize}`);
@@ -318,16 +307,14 @@ export const destinationsApi = {
     }
   },
 
-  // Get destination by ID
+
   getById: async (id: number): Promise<Destination | null> => {
     try {
       const response = await apiCall<{ success: boolean; message: string; data: Destination }>(`/destinations/${id}/`);
       console.log('📦 Raw API response for destination:', response);
-      // Handle nested response structure
       if (response.data) {
         return response.data;
       }
-      // Fallback to direct response if not nested
       return response as unknown as Destination;
     } catch (error) {
       console.error(`Failed to fetch destination with ID ${id}:`, error);
@@ -335,7 +322,6 @@ export const destinationsApi = {
     }
   },
 
-  // Get destinations by category
   getByCategory: async (categoryId: number, page: number = 1, pageSize: number = 12): Promise<DestinationListResponse> => {
     try {
       const response = await apiCall<DestinationListResponse>(`/destinations/?category=${categoryId}&page=${page}&page_size=${pageSize}`);
@@ -416,23 +402,14 @@ export const hotelsApi = {
   },
 };
 
-// Articles API functions
+
 export const articlesApi = {
-  // Get all articles with pagination (including drafts for testing)
+ 
   getAll: async (page: number = 1, pageSize: number = 10): Promise<ArticleListResponse> => {
     try {
-      // Try without status filter to get all articles including drafts
-      console.log(`📡 API Call: /articles?page=${page}&page_size=${pageSize}`);
-      const response = await apiCall<ArticleListResponse>(`/articles?page=${page}&page_size=${pageSize}`);
+      // Default to published articles only
+      const response = await apiCall<ArticleListResponse>(`/articles?status=published&page=${page}&page_size=${pageSize}`);
       console.log("📥 Articles API raw response:", response);
-      
-      // If no data, try with explicit status filter
-      if (!response.data || response.data.length === 0) {
-        console.log("📡 Trying with status=all...");
-        const allResponse = await apiCall<ArticleListResponse>(`/articles?status=all&page=${page}&page_size=${pageSize}`);
-        console.log("📥 All articles response:", allResponse);
-        return allResponse;
-      }
       
       return response;
     } catch (error) {
@@ -502,7 +479,7 @@ export const articlesApi = {
   },
 };
 
-// Packages API functions
+
 export const packagesApi = {
   // Get all packages with pagination
   getAll: async (page: number = 1, pageSize: number = 12): Promise<PackageListResponse> => {
@@ -574,51 +551,32 @@ export const packagesApi = {
   },
 };
 
-// Translation helper functions
+
 export const getTranslatedField = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   item: any,
   fieldName: string,
   language: string
 ): string => {
-  // Map i18n language codes to backend language codes
   const langMap: Record<string, string> = {
     'en': 'en',
-    'id': '', // Use default (no suffix)
+    'id': '', 
     'ar': 'ar',
-    'zh': 'cn', // Chinese uses 'cn' in backend
+    'zh': 'cn', 
     'fr': 'fr',
     'es': 'es',
   };
 
   const backendLang = langMap[language] || '';
   
-  console.log(`🌐 Translation Debug:`, {
-    language,
-    backendLang,
-    fieldName,
-    hasItem: !!item,
-    itemKeys: item ? Object.keys(item).filter(k => k.includes(fieldName)) : []
-  });
-  
-  // If Indonesian or default language, return the base field
   if (!backendLang || language === 'id') {
     const value = (item[fieldName] as string) || '';
-    console.log(`📝 Using base field "${fieldName}":`, value.substring(0, 50) + '...');
     return value;
   }
 
-  // Try to get translated field
+
   const translatedFieldName = `${fieldName}_${backendLang}`;
   const translatedValue = item[translatedFieldName];
-  
-  console.log(`📝 Translation field "${translatedFieldName}":`, {
-    exists: !!translatedValue,
-    value: translatedValue ? String(translatedValue).substring(0, 50) + '...' : 'N/A',
-    fallback: !translatedValue ? `Using base "${fieldName}"` : 'N/A'
-  });
-  
-  // Return translated value if exists, otherwise fallback to base field
   return (translatedValue as string) || (item[fieldName] as string) || '';
 };
 

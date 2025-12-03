@@ -20,15 +20,14 @@ export default function DestinationSection() {
         const response = await galleryApi.getDestinations();
         
         if (response && Array.isArray(response)) {
-          // Map the API response to our expected format
           const mappedImages = response
-            .filter(img => img.file_url || img.file) // Only include images with valid URLs
+            .filter(img => img.file_url || img.file) 
             .map(img => ({
               ...img,
-              image_url: img.file_url || img.file || '', // Use file_url or file as the image URL
+              image_url: img.file_url || img.file || '', 
               alt_text: img.alt_text || img.description || img.title || 'Destination image'
             }))
-            .reverse(); // Reverse the order to get correct lineup
+            .reverse(); 
           
           if (mappedImages.length > 0) {
             setDestinationImages(mappedImages);
@@ -39,7 +38,6 @@ export default function DestinationSection() {
           setError('No destination images available');
         }
       } catch (err) {
-        console.error('❌ Failed to fetch destination images:', err);
         setError('Failed to load destination images');
       } finally {
         setLoading(false);

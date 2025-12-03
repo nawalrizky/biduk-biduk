@@ -23,7 +23,7 @@ export default function PlaceCarousel({ destination }: PlaceCarouselProps) {
   // Use placeholder if no images
   const slideImages = images.length > 0 
     ? images 
-    : ["/images/home/explore/explore.png"];
+    : ["/images/home/hero/bg.png"];
 
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slideImages.length);
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slideImages.length) % slideImages.length);
@@ -46,6 +46,7 @@ export default function PlaceCarousel({ destination }: PlaceCarouselProps) {
               className="object-cover"
               priority={index === 0}
               quality={100}
+              sizes="100vw"
             />
           </div>
         ))}

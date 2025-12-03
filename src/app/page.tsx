@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import HeroSection from "@/components/home/HeroSection";
 import InfoSection from "@/components/home/InfoSection";
 import DestinationSection from "@/components/home/DestinationSection";

@@ -75,15 +75,8 @@ export default function HotelsPage() {
           />
           <div className="absolute inset-0 bg-white/80"></div>
         </div>
-        {/* Background Image - Desktop */}
-        <div className="absolute inset-0 z-0 hidden lg:block">
-          <Image
-            src="/images/home/explore/explore.png"
-            alt="Background"
-            fill
-            className="object-cover"
-            priority
-          />
+        {/* Background - Desktop */}
+        <div className="absolute inset-0 z-0 hidden lg:block bg-gradient-to-b from-[#F1FAFF] to-white">
           <div className="absolute inset-0 bg-white/80"></div>
         </div>
         <div className="container mx-auto px-6 lg:px-8 py-12 lg:py-20 relative z-10">
@@ -130,15 +123,8 @@ export default function HotelsPage() {
         />
         <div className="absolute inset-0 bg-white/80"></div>
       </div>
-      {/* Background Image - Desktop */}
-      <div className="absolute inset-0 z-0 hidden lg:block">
-        <Image
-          src="/images/home/explore/explore.png"
-          alt="Background"
-          fill
-          className="object-cover"
-          priority
-        />
+      {/* Background - Desktop */}
+      <div className="absolute inset-0 z-0 hidden lg:block bg-gradient-to-b from-[#F1FAFF] to-white">
         <div className="absolute inset-0 bg-white/80"></div>
       </div>
 
@@ -170,12 +156,12 @@ export default function HotelsPage() {
                     <Image
                       src={
                         imageErrors[hotel.hotel_id] 
-                          ? "/images/home/explore/explore.png" 
+                          ? "/images/home/hero/bg.png" 
                           : (() => {
                               // Extract first valid image
                               const firstImage = hotel.images && hotel.images.length > 0 ? getImageUrl(hotel.images[0]) : null;
                               const fallbackImage = hotel.image && hotel.image.trim() !== "" ? hotel.image : null;
-                              return firstImage || fallbackImage || "/images/home/explore/explore.png";
+                              return firstImage || fallbackImage || "/images/home/hero/bg.png";
                             })()
                       }
                       alt={translation.name}

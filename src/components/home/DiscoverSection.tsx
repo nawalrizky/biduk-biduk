@@ -204,6 +204,7 @@ export default function DiscoverSection() {
                       fill
                       className="object-cover group-hover:scale-110 transition-transform duration-500 shadow-lg"
                       draggable={false}
+                      sizes={isLarge ? "400px" : "320px"}
                     />
                   </div>
                   <div className={`flex flex-col items-center px-4 ${isLarge ? '-mt-4' : 'mt-4'}`}>
@@ -264,6 +265,7 @@ export default function DiscoverSection() {
                       fill
                       className="object-cover"
                       draggable={false}
+                      sizes="100vw"
                     />
                   </div>
                   <div className="flex flex-col items-center mt-6">

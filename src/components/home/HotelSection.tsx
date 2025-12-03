@@ -168,7 +168,7 @@ const HotelSection = () => {
                                                 // Extract first valid image
                                                 const firstImage = hotel.images && hotel.images.length > 0 ? getImageUrl(hotel.images[0]) : null;
                                                 const fallbackImage = hotel.image && hotel.image.trim() !== "" ? hotel.image : null;
-                                                return firstImage || fallbackImage || "/images/home/explore/explore.png";
+                                                return firstImage || fallbackImage || "/images/home/hero/bg.png";
                                             })()} 
                                             alt={translation.name} 
                                             width={400} 

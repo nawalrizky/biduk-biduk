@@ -33,10 +33,10 @@ export default function HotelCarousel({ hotel }: HotelCarouselProps) {
     ? hotel.images.map(getImageUrl).filter((url): url is string => url !== null)
     : hotel.image && hotel.image.trim() !== ""
       ? [hotel.image]
-      : ["/images/home/explore/explore.png"];
+      : ["/images/home/hero/bg.png"];
   
   // Fallback to default image if no valid images
-  const validSlideImages = slideImages.length > 0 ? slideImages : ["/images/home/explore/explore.png"];
+  const validSlideImages = slideImages.length > 0 ? slideImages : ["/images/home/hero/bg.png"];
 
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % validSlideImages.length);
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + validSlideImages.length) % validSlideImages.length);

@@ -40,6 +40,7 @@ export const metadata: Metadata = {
   },
   description: 'Jelajahi keindahan Desa Biduk-Biduk, surga tersembunyi di Berau, Kalimantan Timur. Nikmati wisata alam, pantai eksotis, hotel nyaman, dan paket wisata terbaik.',
   keywords: [
+    'Website Resmi Biduk-Biduk',
     'Biduk-Biduk',
     'Berau',
     'Kalimantan Timur',
@@ -123,8 +124,8 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Biduk-Biduk" />
-        <link rel="apple-touch-icon" href="/images/logo.png" />
-        <link rel="icon" type="image/png" href="/images/logo.png" />
+        <link rel="apple-touch-icon" href="/images/logo_192px.png" />
+        <link rel="icon" type="image/png" href="/images/logo_192px.png" />
         
         {/* Alternate languages for SEO */}
         <link rel="alternate" hrefLang="id" href="https://bidukbiduk.com" />

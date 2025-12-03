@@ -18,7 +18,7 @@ export default function PackageCarousel({ package: pkg }: PackageCarouselProps) 
   // Use package image or placeholder
   const slideImages = pkg.image_url 
     ? [pkg.image_url] 
-    : ["/images/home/explore/explore.png"];
+    : ["/images/home/hero/bg.png"];
 
   return (
     <div className="relative w-full h-screen lg:h-[110vh] overflow-hidden">

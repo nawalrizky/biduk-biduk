@@ -102,7 +102,9 @@
     "explore_title_prefix": "Know Before You Go",
     "explore_title": "Explore Biduk-Biduk",
     "destination_section_title": "Most Popular Destinations",
-    "news_section_title": "Latest News & Articles"
+    "news_section_title": "Latest News & Articles",
+    "news_section_subtitle": "Stories from the Coast",
+    "news_section_cta": "Watch More"
   },
   "footer": {
     "latest": "Latest",

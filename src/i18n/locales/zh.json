@@ -102,7 +102,9 @@
     "explore_title_prefix": "出发前须知",
     "explore_title": "探索比都克-比都克",
     "destination_section_title": "最受欢迎的目的地",
-    "news_section_title": "最新新闻与文章"
+    "news_section_title": "最新新闻与文章",
+    "news_section_subtitle": "来自海岸的故事",
+    "news_section_cta": "查看更多"
   },
   "footer": {
     "latest": "最新",

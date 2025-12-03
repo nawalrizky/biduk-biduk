@@ -15,7 +15,7 @@ export default function ArticlesPage() {
     const fetchArticles = async () => {
       try {
         setLoading(true);
-        const response = await articlesApi.getAll(1, 8);
+        const response = await articlesApi.getPublished(1, 8);
         if (response.success && response.data) {
           setArticles(response.data);
         }
@@ -43,15 +43,8 @@ export default function ArticlesPage() {
           />
           <div className="absolute inset-0 bg-white/80"></div>
         </div>
-        {/* Background Image - Desktop */}
-        <div className="absolute inset-0 z-0 hidden lg:block">
-          <Image
-            src="/images/home/explore/explore.png"
-            alt="Background"
-            fill
-            className="object-cover"
-            priority
-          />
+        {/* Background Background - Desktop */}
+        <div className="absolute inset-0 z-0 hidden lg:block bg-gradient-to-b from-[#F1FAFF] to-white">
           <div className="absolute inset-0 bg-white/80"></div>
         </div>
 
@@ -108,15 +101,8 @@ export default function ArticlesPage() {
         />
         <div className="absolute inset-0 bg-white/80"></div>
       </div>
-      {/* Background Image - Desktop */}
-      <div className="absolute inset-0 z-0 hidden lg:block">
-        <Image
-          src="/images/home/explore/explore.png"
-          alt="Background"
-          fill
-          className="object-cover"
-          priority
-        />
+      {/* Background Background - Desktop */}
+      <div className="absolute inset-0 z-0 hidden lg:block bg-gradient-to-b from-[#F1FAFF] to-white">
         <div className="absolute inset-0 bg-white/80"></div>
       </div>
 

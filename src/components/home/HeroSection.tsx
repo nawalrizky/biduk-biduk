@@ -113,7 +113,8 @@ const HeroSection = () => {
                   fill
                   className="object-cover"
                   priority={index === 0}
-                  quality={100}
+                  quality={75}
+                  sizes="(max-width: 1024px) 100vw, 1280px"
                 />
               </div>
             ))}
@@ -137,7 +138,8 @@ const HeroSection = () => {
                   fill
                   className="object-cover"
                   priority={index === 0}
-                  quality={100}
+                  quality={75}
+                  sizes="(max-width: 768px) 100vw"
                 />
               </div>
             ))}
@@ -253,6 +255,9 @@ const HeroSection = () => {
           width={1920}
           height={400}
           className="w-full object-cover"
+          quality={75}
+          sizes="(max-width: 1024px) 100vw, 1280px"
+          priority
         />
       </div>
 
