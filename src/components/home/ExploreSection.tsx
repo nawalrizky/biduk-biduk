@@ -1,11 +1,26 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { geoMercator, geoPath } from "d3-geo";
 import { Group } from "@visx/group";
 import Image from "next/image";
 import { destinationsApi, Destination } from "@/lib/api";
 import { useTranslation } from "react-i18next";
+import type { PerformanceMetrics } from "@/lib/performance";
+
+// Extend Window interface for performance metrics
+declare global {
+  interface Window {
+    __EXPLORE_SECTION_METRICS__?: {
+      getMetrics?: () => PerformanceMetrics;
+      getMarks?: () => PerformanceMark[];
+      getMeasures?: () => PerformanceMeasure[];
+      clear?: () => void;
+      log?: () => void;
+      totalMarkers?: number;
+    };
+  }
+}
 
 interface Feature {
   type: "Feature";
@@ -93,12 +108,21 @@ const ExploreSection: React.FC = () => {
     const loadData = async () => {
       try {
         setLoading(true);
+        
+        // Performance mark: Start loading data
+        performance.mark('explore-data-load-start');
+        
         const [mapResponse, destinationsData] = await Promise.all([
           fetch("/biduk_biduk.json"),
           destinationsApi.getActive(),
         ]);
 
         const mapData = await mapResponse.json();
+        
+        // Performance mark: Data loaded, before setting state
+        performance.mark('explore-data-load-end');
+        performance.measure('explore-data-loading', 'explore-data-load-start', 'explore-data-load-end');
+        
         setMapData(mapData);
         setDestinations(destinationsData.data || []);
         setLoading(false);
@@ -110,6 +134,61 @@ const ExploreSection: React.FC = () => {
 
     loadData();
   }, []);
+
+  // Memoize markerData to prevent re-creation on every render
+  const markerData = useMemo(
+    () =>
+      destinations?.map((destination) => ({
+        id: destination.id.toString(),
+        coordinates: [
+          destination.coordinates.longitude,
+          destination.coordinates.latitude,
+        ] as [number, number],
+        title: destination.name,
+        type: destination.category.name,
+        description: destination.description,
+        image: Array.isArray(destination.images)
+          ? destination.images[0]
+          : destination.images || "/images/placeholder.png",
+      })) || [],
+    [destinations]
+  );
+
+  // Performance monitoring for marker rendering
+  useEffect(() => {
+    if (!loading && markerData.length > 0) {
+      // Mark before rendering markers
+      performance.mark('explore-markers-render-start');
+      
+      // Use requestAnimationFrame to measure after rendering
+      requestAnimationFrame(() => {
+        performance.mark('explore-markers-render-end');
+        performance.measure('explore-markers-rendering', 'explore-markers-render-start', 'explore-markers-render-end');
+        
+        // Log performance metrics for Lighthouse custom audit
+        const measures = performance.getEntriesByType('measure');
+        const dataLoadMeasure = measures.find(m => m.name === 'explore-data-loading') as PerformanceMeasure | undefined;
+        const markersRenderMeasure = measures.find(m => m.name === 'explore-markers-rendering') as PerformanceMeasure | undefined;
+        
+        console.log('📊 [ExploreSection Performance Metrics]');
+        if (dataLoadMeasure) {
+          console.log(`  ⏱️  Data Loading: ${dataLoadMeasure.duration.toFixed(2)}ms`);
+        }
+        if (markersRenderMeasure) {
+          console.log(`  🗺️  Markers Rendering: ${markersRenderMeasure.duration.toFixed(2)}ms`);
+        }
+        console.log(`  📍 Total Markers: ${markerData.length}`);
+        
+        // Store marker count for external access
+        if (typeof window !== 'undefined') {
+          window.__EXPLORE_SECTION_METRICS__ = {
+            ...window.__EXPLORE_SECTION_METRICS__,
+            totalMarkers: markerData.length,
+          };
+        }
+      });
+    }
+  }, [loading, markerData]);
 
   useEffect(() => {
     // Hide click content on scroll or click outside
@@ -166,21 +245,6 @@ const ExploreSection: React.FC = () => {
   const pathGenerator = geoPath().projection(projection);
 
   const feature = mapData.features[0];
-
-  const markerData =
-    destinations?.map((destination) => ({
-      id: destination.id.toString(),
-      coordinates: [
-        destination.coordinates.longitude,
-        destination.coordinates.latitude,
-      ] as [number, number],
-      title: destination.name,
-      type: destination.category.name,
-      description: destination.description,
-      image: Array.isArray(destination.images)
-        ? destination.images[0]
-        : destination.images || "/images/placeholder.png", 
-    })) || [];
 
   const handleMarkerHover = (markerId: string, event: React.MouseEvent) => {
     setHoveredMarker(markerId);
