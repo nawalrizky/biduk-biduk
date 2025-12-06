@@ -205,8 +205,6 @@ const Footer = () => {
                     <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-primary/20 to-transparent"></div>
                 </div>
             </div>
-
-           
         </footer>
     );
 };
