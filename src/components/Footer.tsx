@@ -195,7 +195,7 @@ const Footer = () => {
                 {/* Image Section - Only visible on desktop */}
                 <div className="hidden lg:flex lg:w-1/4 relative min-h-64 lg:min-h-full">
                     <Image
-                        src="/images/home/hero.png"
+                        src="/images/home/hero/hero.png"
                         alt="Derawan Islands Beauty"
                         fill
                         className="object-cover"
