@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     default: 'Biduk Biduk | Destinasi Wisata Berau Kalimantan Timur',
     template: '%s | Biduk Biduk'
   },
-  description: 'Website Resmi Pariwisata Kampung Biduk Biduk, Berau, Kalimantan Timur',
+  description: 'Website Resmi Pariwisata Kampung Biduk Biduk, Berau, Kalimantan Timur. Jelajahi keindahan alam, pantai eksotis, penginapan nyaman, dan paket wisata terbaik di Biduk-Biduk.',
   keywords: [
     'Website Resmi Biduk Biduk',
     'biduk biduk',
