@@ -36,13 +36,15 @@ const plantFont = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL('https://bidukbiduk.com'),
   title: {
-    default: 'Biduk-Biduk | Destinasi Wisata Berau Kalimantan Timur',
-    template: '%s | Biduk-Biduk'
+    default: 'Biduk Biduk | Destinasi Wisata Berau Kalimantan Timur',
+    template: '%s | Biduk Biduk'
   },
-  description: 'Jelajahi keindahan Desa Biduk-Biduk, surga tersembunyi di Berau, Kalimantan Timur. Nikmati wisata alam, pantai eksotis, hotel nyaman, dan paket wisata terbaik.',
+  description: 'Website Resmi Pariwisata Kampung Biduk Biduk, Berau, Kalimantan Timur',
   keywords: [
-    'Website Resmi Biduk-Biduk',
-    'Biduk-Biduk',
+    'Website Resmi Biduk Biduk',
+    'biduk biduk',
+    'website biduk biduk',
+    'Biduk Biduk',
     'Berau',
     'Kalimantan Timur',
     'wisata Berau',
@@ -58,9 +60,9 @@ export const metadata: Metadata = {
     'eco tourism',
     'East Kalimantan tourism'
   ],
-  authors: [{ name: 'Biduk-Biduk Tourism' }],
-  creator: 'Biduk-Biduk Tourism',
-  publisher: 'Biduk-Biduk Tourism',
+  authors: [{ name: 'Biduk Biduk Tourism' }],
+  creator: 'Biduk Biduk Tourism',
+  publisher: 'Biduk Biduk Tourism',
   formatDetection: {
     email: false,
     address: false,
@@ -71,8 +73,8 @@ export const metadata: Metadata = {
     locale: 'id_ID',
     alternateLocale: ['en_US', 'ar_SA', 'zh_CN', 'fr_FR', 'es_ES'],
     url: 'https://bidukbiduk.com',
-    siteName: 'Biduk-Biduk Tourism',
-    title: 'Biduk-Biduk | Destinasi Wisata Berau Kalimantan Timur',
+    siteName: 'Biduk Biduk Tourism',
+    title: 'Biduk Biduk | Destinasi Wisata Berau Kalimantan Timur',
     description: 'Jelajahi keindahan Desa Biduk-Biduk, surga tersembunyi di Berau, Kalimantan Timur. Nikmati wisata alam, pantai eksotis, hotel nyaman, dan paket wisata terbaik.',
     images: [
       {
@@ -85,8 +87,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Biduk-Biduk | Destinasi Wisata Berau Kalimantan Timur',
-    description: 'Jelajahi keindahan Desa Biduk-Biduk, surga tersembunyi di Berau, Kalimantan Timur.',
+    title: 'Biduk Biduk | Destinasi Wisata Berau Kalimantan Timur',
+    description: 'Jelajahi keindahan Desa Biduk Biduk, surga tersembunyi di Berau, Kalimantan Timur.',
     images: ['/images/home/hero/bg.png'],
     creator: '@bidukbiduk',
   },
@@ -150,10 +152,10 @@ export default function RootLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'Organization',
-              name: 'Biduk-Biduk Tourism',
+              name: 'Biduk Biduk Tourism',
               url: 'https://bidukbiduk.com',
               logo: 'https://bidukbiduk.com/images/logo.png',
-              description: 'Official tourism information for Biduk-Biduk village in Berau, East Kalimantan, Indonesia',
+              description: 'Official tourism information for Biduk Biduk village in Berau, East Kalimantan, Indonesia',
               address: {
                 '@type': 'PostalAddress',
                 addressLocality: 'Biduk-Biduk',
