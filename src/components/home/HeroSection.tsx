@@ -18,19 +18,19 @@ const HeroSection = () => {
   const slides: SlideData[] = [
     {
       id: 1,
-      image: "/images/home/hero.png",
+      image: "/images/home/hero/hero.png",
       titleKey: "home.hero_title_1",
       subtitleKey: "home.hero_subtitle_1",
     },
     {
       id: 2,
-      image: "/images/home/destination/image4.png",
+      image: "/images/home/hero/hero2.png",
       titleKey: "home.hero_title_2",
       subtitleKey: "home.hero_subtitle_2",
     },
     {
       id: 3,
-      image: "/images/home/destination/image6.png",
+      image: "/images/home/hero/hero3.png",
       titleKey: "home.hero_title_3",
       subtitleKey: "home.hero_subtitle_3",
     },
@@ -40,19 +40,19 @@ const HeroSection = () => {
   const mobileSlides: SlideData[] = [
     {
       id: 1,
-      image: "/images/home/hero_mobile.png",
+      image: "/images/home/hero/hero_mobile.png",
       titleKey: "home.hero_title_1",
       subtitleKey: "home.hero_subtitle_1",
     },
     {
       id: 2,
-      image: "/images/home/destination/image4.png",
+      image: "/images/home/hero/hero2.png",
       titleKey: "home.hero_title_2",
       subtitleKey: "home.hero_subtitle_2",
     },
     {
       id: 3,
-      image: "/images/home/destination/image6.png",
+      image: "/images/home/hero/hero3.png",
       titleKey: "home.hero_title_3",
       subtitleKey: "home.hero_subtitle_3",
     },
@@ -264,7 +264,7 @@ const HeroSection = () => {
       
 
       {/* Location Info Overlay - Desktop */}
-      <div className="hidden md:flex absolute bottom-15 lg:bottom-5 3xl:bottom-12 w-full justify-between z-20 px-20 lg:px-56 ">
+      <div className="hidden md:flex absolute bottom-13 lg:bottom-3 3xl:bottom-12 w-full justify-between z-20 px-20 lg:px-56 ">
         <div className="flex gap-2 items-center">
           <Image
             src="/images/home/hero/icon_location.png"

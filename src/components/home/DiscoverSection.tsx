@@ -213,7 +213,7 @@ export default function DiscoverSection() {
                     </h1>
                     <Link 
                       href={`/place/${destination.id}`}
-                      className="font-semibold w-fit px-6 py-2 text-sm bg-transparent border-2 border-accent text-black rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2"
+                      className="font-semibold  btn-border-reveal w-fit px-6 py-2 text-sm bg-transparent border-2 border-accent text-black rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2"
                     >
                       {t('buttons.visit')}
                       <svg
