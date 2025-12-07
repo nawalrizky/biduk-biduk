@@ -301,7 +301,7 @@ export default function DiscoverSection() {
             onClick={() => setCurrentSlide((prev) => (prev - 1 + destinations.length) % destinations.length)}
             className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full shadow-lg transition-all z-10"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2">
               <path d="M15 18l-6-6 6-6" />
             </svg>
           </button>
@@ -309,7 +309,7 @@ export default function DiscoverSection() {
             onClick={() => setCurrentSlide((prev) => (prev + 1) % destinations.length)}
             className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full shadow-lg transition-all z-10"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2">
               <path d="M9 18l6-6-6-6" />
             </svg>
           </button>
