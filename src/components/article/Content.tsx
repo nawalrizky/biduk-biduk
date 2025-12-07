@@ -16,6 +16,13 @@ export default function ArticleContent({ article }: ArticleContentProps) {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
 
+  // Calculate additional margin based on title length for mobile
+  const getMobileMargin = () => {
+    if (translation.title.length > 100) return 'mt-25';
+    if (translation.title.length > 50) return 'mt-20';
+    return 'mt-12';
+  };
+
   const formatDate = (dateString: string | null) => {
     if (!dateString) return "Not published yet";
     const date = new Date(dateString);
@@ -49,9 +56,9 @@ export default function ArticleContent({ article }: ArticleContentProps) {
 
   return (
     <>
-    <div className="-mt-1 z-20 flex flex-col lg:px-56 items-center bg-white min-h-screen pb-16">
+    <div className="mt-10 lg:-mt-1 z-20 flex flex-col lg:px-56 items-center bg-white min-h-screen pb-16">
       {/* Meta Information */}
-      <div className="mt-12 lg:mt-24 flex flex-wrap items-center justify-center gap-4 mb-8 text-sm text-gray-600 px-6">
+      <div className={`${getMobileMargin()} lg:mt-24 flex flex-wrap items-center justify-center gap-4 mb-8 text-sm text-gray-600 px-6`}>
         
         <div className="flex items-center gap-2">
           <svg
@@ -85,7 +92,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
       </div>
 
       {/* Article Content */}
-      <p className="px-6 text-base lg:text-xl text-black text-justify leading-relaxed whitespace-pre-line">
+      <p className="px-6 mt-10 text-base lg:text-xl text-black text-justify leading-relaxed whitespace-pre-line">
         {translation.content}
       </p>
 

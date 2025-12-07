@@ -33,7 +33,7 @@ export default function ArticleCarousel({ article }: ArticleCarouselProps) {
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + images.length) % images.length);
 
   return (
-    <div className="relative w-full h-screen lg:h-[110vh] overflow-hidden">
+    <div className="relative w-full h-[120vh] lg:h-[110vh] overflow-hidden">
       {/* Background Image Carousel */}
       <div className="absolute inset-0">
         {images.map((image, index) => (
@@ -56,7 +56,7 @@ export default function ArticleCarousel({ article }: ArticleCarouselProps) {
       </div>
 
       {/* Background Image Bottom - Desktop */}
-      <div className="hidden md:block absolute bottom-0 lg:-mb-32 left-0 w-full z-10">
+      <div className="hidden lg:block absolute bottom-0 lg:-mb-32 left-0 w-full z-10">
         <Image
           src="/images/place/bg.png"
           alt="Background decoration"
@@ -66,16 +66,68 @@ export default function ArticleCarousel({ article }: ArticleCarouselProps) {
         />
       </div>
 
-      {/* Article Info Overlay - Desktop */}
-      <div className={`hidden md:flex flex-col items-center justify-center absolute w-full z-20 px-20 lg:px-56 ${
-        translation.title.length > 100 ? 'bottom-0' : 
-        translation.title.length > 50 ? 'bottom-5' : 
-        'bottom-10'
-      } 3xl:bottom-20`}>
+      {/* Background Image Bottom - iPad (md to lg) */}
+      <div className="hidden md:block lg:hidden absolute bottom-40 left-0 w-full z-0">
+        <Image
+          src="/images/place/bg.png"
+          alt="Background decoration"
+          width={1920}
+          height={400}
+          className="w-full object-cover"
+        />
+      </div>
+
+      {/* Background Image Bottom - Mobile */}
+      <div className="md:hidden flex flex-col items-center justify-center absolute bottom-40 w-full z-0">
+        <Image
+          src="/images/place/bg.png"
+          alt="Background decoration"
+          width={1920}
+          height={400}
+          className="w-full object-cover"
+        />
+      </div>
+
+      <div className="md:flex lg:hidden w-full h-[20vh] bg-white absolute bottom-0"/>
+      <div className="md:hidden flex w-full h-[20vh] bg-white absolute bottom-0"/>
+      {/* Article Info Overlay - Desktop (lg and above) */}
+      <div className={`hidden lg:flex flex-col items-center justify-center absolute w-full z-20 px-20 lg:px-56 ${
+        translation.title.length > 100 ? 'bottom-0 3xl:bottom-0' : 
+        translation.title.length > 50 ? 'bottom-5 3xl:bottom-5' : 
+        'bottom-10 3xl:bottom-10'
+      }`}>
         <h1 className="text-2xl lg:text-3xl font-plant text-primary">
           {article.category_name}
         </h1>
-        <h1 className="text-2xl lg:text-5xl font-semibold text-black text-center">
+        <h1 className="text-2xl lg:text-5xl font-semibold text-black text-center ">
+          {translation.title}
+        </h1>
+      </div>
+
+      {/* Article Info Overlay - iPad (md to lg) */}
+      <div className={`hidden md:flex lg:hidden flex-col items-center justify-center absolute w-full z-50 px-20 ${
+        translation.title.length > 100 ? 'bottom-40' : 
+        translation.title.length > 50 ? 'bottom-25' : 
+        'bottom-15'
+      }`}>
+        <h1 className="text-2xl font-plant text-primary text-center">
+          {article.category_name}
+        </h1>
+        <h1 className="text-3xl font-semibold text-black text-center drop-shadow-lg">
+          {translation.title}
+        </h1>
+      </div>
+
+      {/* Article Info Overlay - Mobile */}
+      <div className={`md:hidden flex flex-col items-center justify-center absolute w-full z-50 px-4 ${
+        translation.title.length > 100 ? 'bottom-20' : 
+        translation.title.length > 50 ? 'bottom-5' : 
+        'bottom-10'
+      }`}>
+        <h1 className="text-lg font-plant text-primary text-center">
+          {article.category_name}
+        </h1>
+        <h1 className="text-xl font-semibold text-black text-center drop-shadow-lg ">
           {translation.title}
         </h1>
       </div>
