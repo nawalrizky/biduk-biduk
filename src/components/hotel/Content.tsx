@@ -163,31 +163,6 @@ export default function HotelContent({ hotel }: HotelContentProps) {
         </div>
       </div>
 
-      {/* Image Gallery */}
-      {hotel.images && (() => {
-        const validImages = hotel.images.map(getImageUrl).filter((url): url is string => url !== null);
-        return validImages.length > 1 && (
-          <div className="mt-12 w-full px-3 sm:px-6 lg:px-0">
-            <h3 className="text-xl sm:text-2xl font-semibold text-black mb-4">{t('hotel.photo_gallery')}</h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-              {validImages.map((imageUrl, index) => (
-                <div
-                  key={index}
-                  className="relative aspect-square rounded-lg overflow-hidden group cursor-pointer"
-                >
-                  <Image
-                    src={imageUrl}
-                    alt={`${translation.name} - Photo ${index + 1}`}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-300"
-                    loading="lazy"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-      })()}
     </div>
   );
 }
