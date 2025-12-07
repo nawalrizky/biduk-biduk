@@ -75,7 +75,7 @@ export default function PlaceCarousel({ destination }: PlaceCarouselProps) {
       </div>
 
       {/* Location Info Overlay - Desktop */}
-      <div className="hidden md:flex flex-col items-center justify-center absolute bottom-15 3xl:bottom-35 w-full  z-20 px-20 lg:px-56 ">
+      <div className="hidden md:flex flex-col items-center justify-center absolute bottom-15 3xl:bottom-20 w-full  z-20 px-20 lg:px-56 ">
         <h1 className="text-2xl lg:text-3xl font-plant text-primary">
           {destination.category?.name || "Place Detail"}
         </h1>

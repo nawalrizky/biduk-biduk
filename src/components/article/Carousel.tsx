@@ -71,7 +71,7 @@ export default function ArticleCarousel({ article }: ArticleCarouselProps) {
         translation.title.length > 100 ? 'bottom-0' : 
         translation.title.length > 50 ? 'bottom-5' : 
         'bottom-10'
-      } 3xl:bottom-35`}>
+      } 3xl:bottom-20`}>
         <h1 className="text-2xl lg:text-3xl font-plant text-primary">
           {article.category_name}
         </h1>

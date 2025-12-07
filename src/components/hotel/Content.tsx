@@ -38,9 +38,7 @@ export default function HotelContent({ hotel }: HotelContentProps) {
   
   return (
     <div className="-mt-1 z-20 flex flex-col lg:px-56 items-center bg-white min-h-screen pb-16">
-    
-
-     
+  
       {/* Description */}
       <p className="mt-8 text-base sm:text-lg lg:text-xl text-black text-justify px-3 sm:px-6 lg:px-0 leading-relaxed max-w-full">
         {translation.description}
