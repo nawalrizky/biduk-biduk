@@ -36,7 +36,7 @@ const ChatbotButton = () => {
                 height={24}
                 className="w-5 h-5"
               />
-              <span className="text-white font-semibold text-base flex-shrink-0">
+              <span className="hidden md:flex text-white font-semibold text-base flex-shrink-0">
                 Ask Us Anything!
               </span>
               <Image
