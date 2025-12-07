@@ -6,7 +6,7 @@ export default function ContactPage() {
   const { t } = useTranslation();
   
   return (
-    <main className="min-h-screen bg-[#E8F4F8]">
+    <main className="min-h-screen bg-gradient-to-b from-[#C8E6F0] via-[#E8F4F8] to-[#F5F5DC] lg:bg-gradient-to-br lg:from-[#C8E6F0] lg:to-[#F5F5DC] overflow-hidden">
       {/* Hero Section */}
       <section className="pt-32 pb-16 px-4">
         <div className="max-w-7xl mx-auto text-center">
