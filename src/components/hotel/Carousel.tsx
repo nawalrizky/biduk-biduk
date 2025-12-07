@@ -93,9 +93,7 @@ export default function HotelCarousel({ hotel }: HotelCarouselProps) {
         <h1 className="text-2xl lg:text-5xl font-semibold text-black text-center">
           {translation.name}
         </h1>
-        <p className="text-xl lg:text-3xl font-bold text-accent mt-4">
-          Rp {parseFloat(hotel.price).toLocaleString('id-ID')} 
-        </p>
+       
       </div>
 
       {/* Hotel Info Overlay - Mobile */}
@@ -106,9 +104,7 @@ export default function HotelCarousel({ hotel }: HotelCarouselProps) {
         <h1 className="text-xl font-semibold text-black text-center drop-shadow-lg">
           {translation.name}
         </h1>
-        <p className="text-lg font-bold text-accent mt-2 drop-shadow-lg">
-          Rp {parseFloat(hotel.price).toLocaleString('id-ID')} 
-        </p>
+      
       </div>
 
       {/* Navigation Arrows - Only show if multiple images */}
