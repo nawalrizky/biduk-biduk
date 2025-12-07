@@ -67,7 +67,7 @@ export default function HotelsPage() {
         {/* Background Image - Mobile */}
         <div className="absolute inset-0 z-0 lg:hidden">
           <Image
-            src="/images/hotel/bg_mobile.png"
+            src="/images/home/explore/explore.png"
             alt="Background"
             fill
             className="object-cover"
@@ -76,7 +76,14 @@ export default function HotelsPage() {
           <div className="absolute inset-0 bg-white/80"></div>
         </div>
         {/* Background - Desktop */}
-        <div className="absolute inset-0 z-0 hidden lg:block bg-gradient-to-b from-[#F1FAFF] to-white">
+        <div className="absolute inset-0 z-0 hidden lg:block">
+          <Image
+            src="/images/home/explore/explore.png"
+            alt="Background"
+            fill
+            className="object-cover"
+            priority
+          />
           <div className="absolute inset-0 bg-white/80"></div>
         </div>
         <div className="container mx-auto px-6 lg:px-8 py-12 lg:py-20 relative z-10">
@@ -115,7 +122,7 @@ export default function HotelsPage() {
       {/* Background Image - Mobile */}
       <div className="absolute inset-0 z-0 lg:hidden">
         <Image
-          src="/images/hotel/bg_mobile.png"
+          src="/images/home/explore/explore.png"
           alt="Background"
           fill
           className="object-cover"
@@ -124,7 +131,14 @@ export default function HotelsPage() {
         <div className="absolute inset-0 bg-white/80"></div>
       </div>
       {/* Background - Desktop */}
-      <div className="absolute inset-0 z-0 hidden lg:block bg-gradient-to-b from-[#F1FAFF] to-white">
+      <div className="absolute inset-0 z-0 hidden lg:block">
+        <Image
+          src="/images/home/explore/explore.png"
+          alt="Background"
+          fill
+          className="object-cover"
+          priority
+        />
         <div className="absolute inset-0 bg-white/80"></div>
       </div>
 

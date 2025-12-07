@@ -48,7 +48,7 @@ export default function PlacePage() {
         {/* Background Image - Mobile */}
         <div className="absolute inset-0 z-0 lg:hidden">
           <Image
-            src="/images/hotel/bg_mobile.png"
+            src="/images/home/explore/explore.png"
             alt="Background"
             fill
             className="object-cover"
@@ -57,10 +57,17 @@ export default function PlacePage() {
           <div className="absolute inset-0 bg-white/80"></div>
         </div>
         {/* Background - Desktop */}
-        <div className="absolute inset-0 z-0 hidden lg:block bg-gradient-to-b from-[#F1FAFF] to-white">
+        <div className="absolute inset-0 z-0 hidden lg:block">
+          <Image
+            src="/images/home/explore/explore.png"
+            alt="Background"
+            fill
+            className="object-cover"
+            priority
+          />
           <div className="absolute inset-0 bg-white/80"></div>
         </div>
-        <div className="container mx-auto px-6 lg:px-8 py-12 lg:py-20 relative z-10">
+        <div className=" px-6 lg:px-8 py-12 lg:py-20 relative z-10">
           <div className="text-center mb-8 lg:mb-16">
             <div className="h-6 lg:h-8 bg-gray-200 rounded animate-pulse w-40 lg:w-48 mx-auto mb-3 lg:mb-4"></div>
             <div className="h-8 lg:h-12 bg-gray-200 rounded animate-pulse w-72 lg:w-96 mx-auto"></div>
@@ -89,7 +96,7 @@ export default function PlacePage() {
       {/* Background Image - Mobile */}
       <div className="absolute inset-0 z-0 lg:hidden">
         <Image
-          src="/images/hotel/bg_mobile.png"
+          src="/images/home/explore/explore.png"
           alt="Background"
           fill
           className="object-cover"
@@ -98,7 +105,14 @@ export default function PlacePage() {
         <div className="absolute inset-0 bg-white/80"></div>
       </div>
       {/* Background - Desktop */}
-      <div className="absolute inset-0 z-0 hidden lg:block bg-gradient-to-b from-[#F1FAFF] to-white">
+      <div className="absolute inset-0 z-0 hidden lg:block">
+        <Image
+          src="/images/home/explore/explore.png"
+          alt="Background"
+          fill
+          className="object-cover"
+          priority
+        />
         <div className="absolute inset-0 bg-white/80"></div>
       </div>
 

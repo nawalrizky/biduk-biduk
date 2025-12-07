@@ -35,7 +35,7 @@ export default function ArticlesPage() {
         {/* Background Image - Mobile */}
         <div className="absolute inset-0 z-0 lg:hidden">
           <Image
-            src="/images/hotel/bg_mobile.png"
+            src="/images/home/explore/explore.png"
             alt="Background"
             fill
             className="object-cover"
@@ -44,7 +44,14 @@ export default function ArticlesPage() {
           <div className="absolute inset-0 bg-white/80"></div>
         </div>
         {/* Background Background - Desktop */}
-        <div className="absolute inset-0 z-0 hidden lg:block bg-gradient-to-b from-[#F1FAFF] to-white">
+        <div className="absolute inset-0 z-0 hidden lg:block">
+          <Image
+            src="/images/home/explore/explore.png"
+            alt="Background"
+            fill
+            className="object-cover"
+            priority
+          />
           <div className="absolute inset-0 bg-white/80"></div>
         </div>
 
@@ -93,7 +100,7 @@ export default function ArticlesPage() {
       {/* Background Image - Mobile */}
       <div className="absolute inset-0 z-0 lg:hidden">
         <Image
-          src="/images/hotel/bg_mobile.png"
+          src="/images/home/explore/explore.png"
           alt="Background"
           fill
           className="object-cover"
@@ -102,7 +109,14 @@ export default function ArticlesPage() {
         <div className="absolute inset-0 bg-white/80"></div>
       </div>
       {/* Background Background - Desktop */}
-      <div className="absolute inset-0 z-0 hidden lg:block bg-gradient-to-b from-[#F1FAFF] to-white">
+      <div className="absolute inset-0 z-0 hidden lg:block">
+        <Image
+          src="/images/home/explore/explore.png"
+          alt="Background"
+          fill
+          className="object-cover"
+          priority
+        />
         <div className="absolute inset-0 bg-white/80"></div>
       </div>
 
