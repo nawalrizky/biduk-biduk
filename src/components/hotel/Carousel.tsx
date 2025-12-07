@@ -86,7 +86,7 @@ export default function HotelCarousel({ hotel }: HotelCarouselProps) {
       </div>
 
       {/* Hotel Info Overlay - Desktop */}
-      <div className="hidden md:flex flex-col items-center justify-center absolute bottom-15 lg:bottom-5 3xl:bottom-20 w-full z-20 px-20 lg:px-56">
+      <div className="hidden md:flex flex-col items-center justify-center absolute bottom-15 3xl:bottom-35 w-full  z-20 px-20 lg:px-56 ">
         <h1 className="text-2xl lg:text-3xl font-plant text-primary">
           {t('hotel.hotel_accommodation')}
         </h1>
@@ -97,7 +97,7 @@ export default function HotelCarousel({ hotel }: HotelCarouselProps) {
       </div>
 
       {/* Hotel Info Overlay - Mobile */}
-      <div className="md:hidden flex flex-col items-center justify-center absolute -bottom-1 w-full z-20 px-4">
+      <div className="md:hidden flex flex-col items-center justify-center absolute bottom-5 w-full z-20 px-4">
         <h1 className="text-lg font-plant text-primary text-center">
           {t('hotel.hotel_accommodation')}
         </h1>

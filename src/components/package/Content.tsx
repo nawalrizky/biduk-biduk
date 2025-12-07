@@ -18,7 +18,7 @@ export default function PackageContent({ package: pkg }: PackageContentProps) {
   const destinations = pkg.destination_details || pkg.destinations || [];
 
   return (
-    <div className="z-20 flex flex-col lg:px-56 items-center bg-white min-h-screen pb-16">
+    <div className="-mt-1 z-20 flex flex-col lg:px-56 items-center bg-white min-h-screen pb-16">
 
       {/* Destinations Section */}
       {destinations.length > 0 && (

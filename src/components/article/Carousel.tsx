@@ -67,7 +67,11 @@ export default function ArticleCarousel({ article }: ArticleCarouselProps) {
       </div>
 
       {/* Article Info Overlay - Desktop */}
-      <div className="hidden md:flex flex-col items-center justify-center absolute bottom-15 lg:bottom-5 3xl:bottom-35 w-full z-20 px-20 lg:px-56">
+      <div className={`hidden md:flex flex-col items-center justify-center absolute w-full z-20 px-20 lg:px-56 ${
+        translation.title.length > 100 ? 'bottom-0' : 
+        translation.title.length > 50 ? 'bottom-5' : 
+        'bottom-10'
+      } 3xl:bottom-35`}>
         <h1 className="text-2xl lg:text-3xl font-plant text-primary">
           {article.category_name}
         </h1>

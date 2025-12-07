@@ -49,7 +49,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
 
   return (
     <>
-    <div className="z-20 flex flex-col lg:px-56 items-center bg-white min-h-screen pb-16">
+    <div className="-mt-1 z-20 flex flex-col lg:px-56 items-center bg-white min-h-screen pb-16">
       {/* Meta Information */}
       <div className="mt-12 lg:mt-24 flex flex-wrap items-center justify-center gap-4 mb-8 text-sm text-gray-600 px-6">
         

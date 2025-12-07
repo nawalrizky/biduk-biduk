@@ -37,7 +37,7 @@ export default function HotelContent({ hotel }: HotelContentProps) {
   const translation = getHotelTranslation(hotel, currentLanguage);
   
   return (
-    <div className="z-20 flex flex-col lg:px-56 items-center bg-white min-h-screen pb-16">
+    <div className="-mt-1 z-20 flex flex-col lg:px-56 items-center bg-white min-h-screen pb-16">
     
 
      
