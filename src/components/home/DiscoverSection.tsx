@@ -136,8 +136,8 @@ export default function DiscoverSection() {
       {/* Desktop Version */}
       <div className="hidden lg:flex bg-white flex-col justify-center items-center min-h-screen py-48">
         <div className="flex flex-col items-center mb-12">
-          <h1 className="text-xl text-primary font-plant">{t('home.discover_title')}</h1>
-          <h1 className="text-5xl text-black font-semibold mt-2">{t('home.discover_subtitle')}</h1>
+          <span className="text-xl text-primary font-plant">{t('home.discover_title')}</span>
+          <h2 className="text-5xl text-black font-semibold mt-2">{t('home.discover_subtitle')}</h2>
         </div>
 
         {/* Horizontal Scroll Carousel with Alternating Sizes */}
@@ -208,9 +208,9 @@ export default function DiscoverSection() {
                     />
                   </div>
                   <div className={`flex flex-col items-center px-4 ${isLarge ? '-mt-4' : 'mt-4'}`}>
-                    <h1 className={`text-black font-semibold text-center mb-3 transition-all duration-500 ${isLarge ? 'text-2xl' : 'text-xl'} line-clamp-2`}>
+                    <h3 className={`text-black font-semibold text-center mb-3 transition-all duration-500 ${isLarge ? 'text-2xl' : 'text-xl'} line-clamp-2`}>
                       {destination.name}
-                    </h1>
+                    </h3>
                     <Link 
                       href={`/place/${destination.id}`}
                       className="font-semibold  btn-border-reveal w-fit px-6 py-2 text-sm bg-transparent border-2 border-accent text-black rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2"
@@ -240,8 +240,8 @@ export default function DiscoverSection() {
       {/* Mobile Version */}
       <div className="lg:hidden bg-white flex flex-col justify-center items-center min-h-screen py-16">
         <div className="flex flex-col items-center mb-8">
-          <h1 className="text-lg text-primary font-plant">{t('home.discover_title')}</h1>
-          <h1 className="text-3xl text-black font-semibold mt-2 text-center">{t('home.discover_subtitle')}</h1>
+          <span className="text-lg text-primary font-plant">{t('home.discover_title')}</span>
+          <h2 className="text-3xl text-black font-semibold mt-2 text-center">{t('home.discover_subtitle')}</h2>
         </div>
 
         {/* Mobile Simple Carousel Container */}
@@ -269,9 +269,9 @@ export default function DiscoverSection() {
                     />
                   </div>
                   <div className="flex flex-col items-center mt-6">
-                    <h1 className="text-2xl text-black font-semibold text-center mb-4 line-clamp-2">
+                    <h3 className="text-2xl text-black font-semibold text-center mb-4 line-clamp-2">
                       {destination.name}
-                    </h1>
+                    </h3>
                     <Link 
                       href={`/place/${destination.id}`}
                       className="font-semibold w-fit px-6 py-2 text-sm bg-transparent border-2 border-accent text-black rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2"

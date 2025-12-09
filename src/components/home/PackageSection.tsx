@@ -189,9 +189,9 @@ const PackageSection = () => {
                     <div className="p-2 flex flex-col flex-1">
                       <div className="flex flex-col justify-between h-full">
                         <div className="mb-4">
-                          <h1 className="text-primary font-plant text-xl mb-1">
+                          <span className="text-primary font-plant text-xl mb-1 block">
                             Rp {parseFloat(pkg.price).toLocaleString('id-ID')}
-                          </h1>
+                          </span>
                           <h3 className="text-2xl font-semibold mb-1 text-black line-clamp-2 h-16">
                             <Link
                               href={`/packages/${pkg.package_id}`}

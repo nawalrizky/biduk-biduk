@@ -9,6 +9,7 @@ export default function AboutSection() {
   
   return (
     <section
+      id="about"
       className="h-screen md:h-[50vh] "
       style={{
         backgroundColor: "white",
@@ -26,10 +27,10 @@ export default function AboutSection() {
           className="w-full md:w-[55%] lg:w-[60%] h-auto"
         />
         <div className="flex flex-col justify-center items-start text-left gap-2">
-          <h1 className="text-base md:text-lg lg:text-xl font-plant text-primary">{t('home.about_us')}</h1>
-          <p className="mt-2 text-lg md:text-xl lg:text-2xl xl:text-3xl max-w-md text-black font-semibold">
+          <span className="text-base md:text-lg lg:text-xl font-plant text-primary">{t('home.about_us')}</span>
+          <h2 className="mt-2 text-lg md:text-xl lg:text-2xl xl:text-3xl max-w-md text-black font-semibold">
             {t('home.welcome_title')}
-          </p>
+          </h2>
           <p className="mt-2 text-xs md:text-sm lg:text-base xl:text-lg text-gray-700">
             {t('home.welcome_description')}
           </p>

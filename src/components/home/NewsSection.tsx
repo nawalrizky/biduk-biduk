@@ -70,9 +70,9 @@ export default function NewsSection() {
       <section className="bg-white py-16 px-8 md:px-16 lg:px-56 min-h-screen flex flex-col items-center justify-center">
         <div className="container mx-auto">
           <div className="text-center mb-12">
-            <h1 className="text-xl text-primary font-plant mb-2">
-              {t("home.news_section_subtitle")}
-            </h1>
+          <span className="text-xl text-primary font-plant mb-2 block">
+            {t("home.news_section_subtitle")}
+          </span>
             <p className="text-black text-2xl md:text-3xl lg:text-[32px] -mt-1 font-semibold">
               {t("home.news_section_title")}
             </p>
@@ -110,12 +110,12 @@ export default function NewsSection() {
     <section className="bg-white py-16 px-8 md:px-16 lg:px-56 min-h-screen flex flex-col items-center justify-center">
       <div className="container mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-xl  text-primary font-plant mb-2">
+          <span className="text-xl  text-primary font-plant mb-2 block">
             {t("home.news_section_subtitle")}
-          </h1>
-          <p className="text-black text-2xl md:text-3xl lg:text-[32px] -mt-1 font-semibold">
+          </span>
+          <h2 className="text-black text-2xl md:text-3xl lg:text-[32px] -mt-1 font-semibold">
             {t("home.news_section_title")}
-          </p>
+          </h2>
         </div>
 
         {/* Mobile Version - Stacked Images Side by Side */}

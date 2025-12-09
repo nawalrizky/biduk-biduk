@@ -11,22 +11,22 @@ const Footer = () => {
         {
             title: t('footer.latest'),
             links: [
-                { name: t('footer.news'), href: "/destinations/berau" },
-                { name: t('footer.updates'), href: "/destinations/derawan" },
+                { name: t('footer.news'), href: "/articles" },
+                { name: t('footer.updates'), href: "/place" },
             ]
         },
         {
             title: t('footer.about'),
             links: [
-                { name: t('footer.about_us'), href: "/experiences/diving" },
-                { name: t('footer.contact_us'), href: "/experiences/island-hopping" },
+                { name: t('footer.about_us'), href: "/#about" },
+                { name: t('footer.contact_us'), href: "/contact" },
             ]
         },
         {
             title: t('footer.contact'),
             links: [
-                { name: "+62 85251882238", href: "/experiences/diving" },
-                { name: "bidukbidukpokdarwis@gmail.com", href: "/experiences/island-hopping" },
+                { name: "+62 85251882238", href: "tel:+6285251882238" },
+                { name: "bidukbidukpokdarwis@gmail.com", href: "mailto:bidukbidukpokdarwis@gmail.com" },
             ]
         },
     ];

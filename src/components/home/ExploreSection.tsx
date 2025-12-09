@@ -325,12 +325,12 @@ const ExploreSection: React.FC = () => {
                 className="w-10 h-10 sm:w-12 sm:h-12"
               />
               <div className="flex flex-col items-start">
-                <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-white">
+                <span className="text-lg sm:text-xl lg:text-2xl font-bold text-white">
                   14+
-                </h1>
-                <h2 className="text-xs sm:text-sm lg:text-base font-plant text-white">
+                </span>
+                <span className="text-xs sm:text-sm lg:text-base font-plant text-white">
                   Facilities
-                </h2>
+                </span>
               </div>
             </div>
             <div className="flex items-start sm:items-center gap-3 lg:gap-4 justify-start sm:justify-center lg:justify-start w-full">
@@ -343,12 +343,12 @@ const ExploreSection: React.FC = () => {
                 className="w-10 h-10 sm:w-12 sm:h-12"
               />
               <div className="flex flex-col items-start">
-                <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-white">
+                <span className="text-lg sm:text-xl lg:text-2xl font-bold text-white">
                   4+
-                </h1>
-                <h2 className="text-xs sm:text-sm lg:text-base font-plant text-white">
+                </span>
+                <span className="text-xs sm:text-sm lg:text-base font-plant text-white">
                   Destinations
-                </h2>
+                </span>
               </div>
             </div>
             <div className="flex items-start sm:items-center gap-3 lg:gap-4 justify-start sm:justify-center lg:justify-start w-full">
@@ -361,12 +361,12 @@ const ExploreSection: React.FC = () => {
                 className="w-10 h-10 sm:w-12 sm:h-12"
               />
               <div className="flex flex-col items-start">
-                <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-white">
+                <span className="text-lg sm:text-xl lg:text-2xl font-bold text-white">
                   33+
-                </h1>
-                <h2 className="text-xs sm:text-sm lg:text-base font-plant text-white">
+                </span>
+                <span className="text-xs sm:text-sm lg:text-base font-plant text-white">
                   Hotel & Resort
-                </h2>
+                </span>
               </div>
             </div>
             <div className="flex items-start sm:items-center gap-3 lg:gap-4 justify-start sm:justify-center lg:justify-start w-full">
@@ -379,12 +379,12 @@ const ExploreSection: React.FC = () => {
                 className="w-10 h-10 sm:w-12 sm:h-12"
               />
               <div className="flex flex-col items-start">
-                <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-white">
+                <span className="text-lg sm:text-xl lg:text-2xl font-bold text-white">
                   9+
-                </h1>
-                <h2 className="text-xs sm:text-sm lg:text-base font-plant text-white">
+                </span>
+                <span className="text-xs sm:text-sm lg:text-base font-plant text-white">
                   Tour Package
-                </h2>
+                </span>
               </div>
             </div>
           </div>

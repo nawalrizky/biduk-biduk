@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 import { galleryApi, GalleryImage } from "@/lib/api";
 import { useTranslation } from "react-i18next";
@@ -78,10 +79,10 @@ export default function DestinationSection() {
     return (
       <section className="bg-white py-48 px-4 lg:px-48">
         <div className="flex flex-col items-center">
-          <h1 className="text-xl text-primary font-plant">Biduk-Biduk</h1>
-          <h1 className="text-5xl text-black font-semibold mt-2 mb-10">
+          <span className="text-xl text-primary font-plant">Biduk-Biduk</span>
+          <h2 className="text-5xl text-black font-semibold mt-2 mb-10">
             {t('home.destination_section_title')}
-          </h1>
+          </h2>
           <div className="text-gray-500 text-center">
             <p>{error || 'No destination images available at the moment.'}</p>
             <p className="text-sm mt-2">Please check back later.</p>
@@ -95,10 +96,19 @@ export default function DestinationSection() {
       {/* Desktop Version */}
       <div className="hidden lg:flex -mt-1 bg-white flex-col justify-center items-center px-48 py-48">
         <div className="flex flex-col items-center">
-          <h1 className="text-xl text-primary font-plant">Biduk-Biduk</h1>
-          <h1 className="text-5xl text-black font-semibold mt-2">
+          <span className="text-xl text-primary font-plant">Biduk-Biduk</span>
+          <h2 className="text-5xl text-black font-semibold mt-2">
             {t('home.destination_section_title')}
-          </h1>
+          </h2>
+          <Link 
+            href="/place" 
+            className="mt-4 text-primary font-plant text-lg hover:text-accent transition-colors flex items-center gap-2"
+          >
+            {t('buttons.view_all_destinations', 'Lihat Semua Destinasi')}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </Link>
         </div>
         <div className="flex mt-10 gap-6">
           <div className="flex items-start gap-6">
@@ -196,10 +206,19 @@ export default function DestinationSection() {
       {/* Mobile Version */}
       <div className="lg:hidden -mt-5 bg-white pt-5 pb-32 px-4 overflow-hidden z-40">
         <div className="flex flex-col items-center mb-6">
-          <h1 className="text-lg text-primary font-plant">Biduk-Biduk</h1>
-          <h1 className="text-2xl md:text-3xl text-black font-semibold mt-1 text-center">
+          <span className="text-lg text-primary font-plant">Biduk-Biduk</span>
+          <h2 className="text-2xl md:text-3xl text-black font-semibold mt-1 text-center">
             {t('home.destination_section_title')}
-          </h1>
+          </h2>
+          <Link 
+            href="/place" 
+            className="mt-3 text-primary font-plant text-base hover:text-accent transition-colors flex items-center gap-2"
+          >
+            {t('buttons.view_all_destinations', 'Lihat Semua Destinasi')}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </Link>
         </div>
 
         <div className="flex flex-col gap-4">

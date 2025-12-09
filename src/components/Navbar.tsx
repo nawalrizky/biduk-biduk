@@ -99,12 +99,12 @@ const Navbar = () => {
               className="mr-2 w-10 h-10"
             />
             <div className='flex items-start flex-col'>
-              <h1 className="font-plant text-[16px] text-white ">
+              <span className="font-plant text-[16px] text-white ">
               Paradise of
-              </h1>
-              <h1 className="font-plant text-xl -mt-1 text-white ">
+              </span>
+              <span className="font-plant text-xl -mt-1 text-white ">
               Biduk Biduk
-              </h1>
+              </span>
            </div>
             </Link>
           </div>

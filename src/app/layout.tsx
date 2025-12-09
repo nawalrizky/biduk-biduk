@@ -61,14 +61,14 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/images/logo_192px.png" />
         <link rel="icon" type="image/png" href="/images/logo_192px.png" />
         
-        {/* Alternate languages for SEO */}
-        <link rel="alternate" hrefLang="id" href="https://bidukbiduk.com" />
-        <link rel="alternate" hrefLang="en" href="https://bidukbiduk.com?lang=en" />
-        <link rel="alternate" hrefLang="ar" href="https://bidukbiduk.com?lang=ar" />
-        <link rel="alternate" hrefLang="zh" href="https://bidukbiduk.com?lang=zh" />
-        <link rel="alternate" hrefLang="fr" href="https://bidukbiduk.com?lang=fr" />
-        <link rel="alternate" hrefLang="es" href="https://bidukbiduk.com?lang=es" />
-        <link rel="alternate" hrefLang="x-default" href="https://bidukbiduk.com" />
+        {/* Alternate languages for SEO - x-default first, then self-referencing canonical */}
+        <link rel="alternate" hrefLang="x-default" href="https://bidukbiduk.com/" />
+        <link rel="alternate" hrefLang="id" href="https://bidukbiduk.com/" />
+        <link rel="alternate" hrefLang="en" href="https://bidukbiduk.com/?lang=en" />
+        <link rel="alternate" hrefLang="ar" href="https://bidukbiduk.com/?lang=ar" />
+        <link rel="alternate" hrefLang="zh" href="https://bidukbiduk.com/?lang=zh" />
+        <link rel="alternate" hrefLang="fr" href="https://bidukbiduk.com/?lang=fr" />
+        <link rel="alternate" hrefLang="es" href="https://bidukbiduk.com/?lang=es" />
         {/* Umami analytics - configurable via env vars */}
         <Script
           src={process.env.NEXT_PUBLIC_UMAMI_SRC || 'https://umami-sigma-ashen.vercel.app/script.js'}
