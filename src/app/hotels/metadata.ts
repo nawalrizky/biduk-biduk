@@ -2,16 +2,16 @@ import { Metadata } from 'next'
 import { generateSEOMetadata } from '@/lib/seo'
 
 export const metadata: Metadata = generateSEOMetadata({
-  title: 'Hotel di Biduk-Biduk | Penginapan Nyaman di Berau',
-  description: 'Temukan hotel dan penginapan terbaik di Biduk-Biduk, Berau. Pilihan akomodasi nyaman dengan fasilitas lengkap untuk liburan Anda di Kalimantan Timur.',
+  title: 'Amenitas di Biduk-Biduk | Hotel, Resto, Cafe & Fasilitas di Berau',
+  description: 'Temukan amenitas terbaik di Biduk-Biduk, Berau. Hotel, resto, cafe, dan berbagai fasilitas lengkap untuk liburan Anda di Kalimantan Timur.',
   path: '/hotels',
   tags: [
-    'hotel Biduk-Biduk',
-    'penginapan Berau',
-    'hotel Kalimantan Timur',
+    'amenitas Biduk-Biduk',
+    'hotel Berau',
+    'resto Biduk-Biduk',
+    'cafe Berau',
+    'fasilitas Kalimantan Timur',
     'akomodasi Berau',
-    'resort Biduk-Biduk',
-    'homestay Berau',
-    'booking hotel'
+    'resort Biduk-Biduk'
   ]
 })

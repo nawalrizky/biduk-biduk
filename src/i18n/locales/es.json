@@ -2,7 +2,7 @@
   "navbar": {
     "home": "Inicio",
     "place": "Lugar",
-    "stay": "Estancia",
+    "amenity": "Comodidades",
     "contact": "Contacto",
     "follow": "Síguenos",
     "language": "Idioma"
@@ -42,8 +42,8 @@
     "photo_gallery": "Galería de fotos",
     "view_location": "Ver ubicación",
     "open_in_google_maps": "Abrir en Google Maps",
-    "page_title": "Tu escape junto a la playa",
-    "page_subtitle": "Encuentra tu estancia perfecta"
+    "page_title": "Comodidades de Biduk-Biduk",
+    "page_subtitle": "Hoteles, Restaurantes, Cafés y Servicios"
   },
   "place": {
     "place_information": "Información del lugar",

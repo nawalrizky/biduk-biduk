@@ -39,74 +39,6 @@ export const metadata: Metadata = {
     default: 'Biduk Biduk | Destinasi Wisata Berau Kalimantan Timur',
     template: '%s | Biduk Biduk'
   },
-  description: 'Website Resmi Pariwisata Kampung Biduk Biduk, Berau, Kalimantan Timur. Jelajahi keindahan alam, pantai eksotis, penginapan nyaman, dan paket wisata terbaik di Biduk-Biduk.',
-  keywords: [
-    'Website Resmi Biduk Biduk',
-    'biduk biduk',
-    'website biduk biduk',
-    'Biduk Biduk',
-    'Berau',
-    'Kalimantan Timur',
-    'wisata Berau',
-    'destinasi wisata Indonesia',
-    'pantai Kalimantan',
-    'Labuan Cermin',
-    'Danau Labuan Cermin',
-    'wisata alam',
-    'hotel Berau',
-    'paket wisata Berau',
-    'travelling Indonesia',
-    'hidden paradise',
-    'eco tourism',
-    'East Kalimantan tourism'
-  ],
-  authors: [{ name: 'Biduk Biduk Tourism' }],
-  creator: 'Biduk Biduk Tourism',
-  publisher: 'Biduk Biduk Tourism',
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  openGraph: {
-    type: 'website',
-    locale: 'id_ID',
-    alternateLocale: ['en_US', 'ar_SA', 'zh_CN', 'fr_FR', 'es_ES'],
-    url: 'https://bidukbiduk.com',
-    siteName: 'Biduk Biduk Tourism',
-    title: 'Biduk Biduk | Destinasi Wisata Berau Kalimantan Timur',
-    description: 'Jelajahi keindahan Desa Biduk-Biduk, surga tersembunyi di Berau, Kalimantan Timur. Nikmati wisata alam, pantai eksotis, hotel nyaman, dan paket wisata terbaik.',
-    images: [
-      {
-        url: '/images/home/hero/bg.png',
-        width: 1200,
-        height: 630,
-        alt: 'Biduk-Biduk Village - Beautiful Tourism Destination in Berau, East Kalimantan',
-      }
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Biduk Biduk | Destinasi Wisata Berau Kalimantan Timur',
-    description: 'Jelajahi keindahan Desa Biduk Biduk, surga tersembunyi di Berau, Kalimantan Timur.',
-    images: ['/images/home/hero/bg.png'],
-    creator: '@bidukbiduk',
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  verification: {
-    google: 'your-google-verification-code',
-    yandex: 'your-yandex-verification-code',
-  },
 };
 
 export default function RootLayout({
@@ -120,7 +52,6 @@ export default function RootLayout({
         <link rel="preconnect" href="https://www.google.com" />
         <link rel="preconnect" href="https://www.gstatic.com" crossOrigin="" />
         <link rel="dns-prefetch" href="https://recaptchaenterprise.googleapis.com" />
-        <link rel="canonical" href="https://bidukbiduk.com" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#05A5D0" />
         <meta name="mobile-web-app-capable" content="yes" />

@@ -2,7 +2,7 @@
   "navbar": {
     "home": "Home",
     "place": "Place",
-    "stay": "Stay",
+    "amenity": "Amenity",
     "contact": "Contact",
     "follow": "Follow Us",
     "language": "Language"
@@ -42,8 +42,8 @@
     "photo_gallery": "Photo Gallery",
     "view_location": "View Location",
     "open_in_google_maps": "Open in Google Maps",
-    "page_title": "Your Beachside Escape",
-    "page_subtitle": "Find Your Perfect Stay"
+    "page_title": "Biduk-Biduk Amenities",
+    "page_subtitle": "Hotels, Restaurants, Cafes & Facilities"
   },
   "place": {
     "place_information": "Place Information",

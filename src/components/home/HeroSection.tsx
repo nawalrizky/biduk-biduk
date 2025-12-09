@@ -151,7 +151,7 @@ const HeroSection = () => {
       <div className="absolute inset-0"></div>
 
       {/* Content */}
-      <div className="relative z-10 h-full">
+      <div className="relative  h-full">
         <div className="text-white">
           {/* Mobile Layout - Stacked vertically on left */}
           <div className="md:hidden absolute bottom-32 left-4 space-y-2">
@@ -248,13 +248,13 @@ const HeroSection = () => {
     
 
       {/* Background Image Bottom - Desktop */}
-      <div className="hidden md:block absolute bottom-0 lg:-mb-28 left-0 w-full z-10">
+      <div className="hidden md:block absolute bottom-0 lg:-mb-28 left-0 w-full z-0 border-none">
         <Image
           src="/images/home/hero/bg.png"
           alt="Background decoration"
           width={1920}
           height={400}
-          className="w-full object-cover"
+          className="w-full object-cover border-none"
           quality={75}
           sizes="(max-width: 1024px) 100vw, 1280px"
           priority
@@ -264,7 +264,7 @@ const HeroSection = () => {
       
 
       {/* Location Info Overlay - Desktop */}
-      <div className="hidden md:flex absolute bottom-13 lg:bottom-3 3xl:bottom-12 w-full justify-between z-20 px-20 lg:px-56 ">
+      <div className="hidden md:flex absolute bottom-13 lg:bottom-5  w-full justify-between z-20 px-20 lg:px-56 ">
         <div className="flex gap-2 items-center">
           <Image
             src="/images/home/hero/icon_location.png"

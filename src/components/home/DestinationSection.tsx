@@ -93,7 +93,7 @@ export default function DestinationSection() {
   return (
     <section>
       {/* Desktop Version */}
-      <div className="hidden lg:flex bg-white flex-col justify-center items-center px-48 py-48">
+      <div className="hidden lg:flex -mt-1 bg-white flex-col justify-center items-center px-48 py-48">
         <div className="flex flex-col items-center">
           <h1 className="text-xl text-primary font-plant">Biduk-Biduk</h1>
           <h1 className="text-5xl text-black font-semibold mt-2">
@@ -194,7 +194,7 @@ export default function DestinationSection() {
       </div>
 
       {/* Mobile Version */}
-      <div className="lg:hidden bg-white pt-5 pb-32 px-4 overflow-hidden">
+      <div className="lg:hidden -mt-5 bg-white pt-5 pb-32 px-4 overflow-hidden z-40">
         <div className="flex flex-col items-center mb-6">
           <h1 className="text-lg text-primary font-plant">Biduk-Biduk</h1>
           <h1 className="text-2xl md:text-3xl text-black font-semibold mt-1 text-center">

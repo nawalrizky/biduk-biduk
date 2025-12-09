@@ -57,7 +57,7 @@ const Navbar = () => {
   const navItems = [
     { name: isClient ? t('navbar.home') : 'Home', href: '/' },
     { name: isClient ? t('navbar.place') : 'Place', href: '/place' },
-    { name: isClient ? t('navbar.stay') : 'Stay', href: '/hotels' },
+    { name: isClient ? t('navbar.amenity') : 'Amenity', href: '/hotels' },
     { name: isClient ? t('navbar.contact') : 'Contact', href: '/contact' },
     { name: isClient ? t('navbar.language') : 'Language', href: '/language', isLanguage: true },
   ];
@@ -99,8 +99,8 @@ const Navbar = () => {
               className="mr-2 w-10 h-10"
             />
             <div className='flex items-start flex-col'>
-              <h1 className="font-plant text-[11px] text-white ">
-              Kelompok Sadar Wisata
+              <h1 className="font-plant text-[16px] text-white ">
+              Paradise of
               </h1>
               <h1 className="font-plant text-xl -mt-1 text-white ">
               Biduk Biduk

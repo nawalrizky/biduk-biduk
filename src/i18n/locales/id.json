@@ -2,7 +2,7 @@
   "navbar": {
     "home": "Beranda",
     "place": "Tempat",
-    "stay": "Penginapan",
+    "amenity": "Amenitas",
     "contact": "Kontak",
     "follow": "Ikuti Kami",
     "language": "Bahasa"
@@ -42,8 +42,8 @@
     "photo_gallery": "Galeri Foto",
     "view_location": "Lihat Lokasi",
     "open_in_google_maps": "Buka di Google Maps",
-    "page_title": "Pelarian Tepi Pantai Anda",
-    "page_subtitle": "Temukan Penginapan Sempurna"
+    "page_title": "Amenitas Biduk-Biduk",
+    "page_subtitle": "Hotel, Resto, Cafe & Fasilitas Terbaik"
   },
   "place": {
     "place_information": "Informasi Tempat",

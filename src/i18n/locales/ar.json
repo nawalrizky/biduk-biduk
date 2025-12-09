@@ -2,7 +2,7 @@
   "navbar": {
     "home": "الرئيسية",
     "place": "الأماكن",
-    "stay": "الإقامة",
+    "amenity": "المرافق",
     "contact": "اتصل بنا",
     "follow": "تابعنا",
     "language": "اللغة"
@@ -42,8 +42,8 @@
     "photo_gallery": "معرض الصور",
     "view_location": "عرض الموقع",
     "open_in_google_maps": "افتح في خرائط جوجل",
-    "page_title": "ملاذك على الشاطئ",
-    "page_subtitle": "اعثر على إقامتك المثالية"
+    "page_title": "مرافق بيدوك بيدوك",
+    "page_subtitle": "فنادق ومطاعم ومقاهي ومرافق"
   },
   "place": {
     "place_information": "معلومات المكان",

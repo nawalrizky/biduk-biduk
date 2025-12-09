@@ -7,7 +7,7 @@ export default function InfoSection() {
     const { t } = useTranslation();
     
     return (
-        <section className="md:hidden relative w-full z-40 ">
+        <section className="md:hidden relative w-full z-0 ">
             {/* Background Image Mobile */}
             <div className="relative w-full h-64 -mt-40">
                 <Image

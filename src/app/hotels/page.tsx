@@ -95,19 +95,13 @@ export default function HotelsPage() {
             {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
               <div
                 key={i}
-                className="bg-white rounded-2xl overflow-hidden shadow-lg"
+                className="flex flex-col h-full shadow-xl rounded-3xl p-4 bg-[#F1FAFF]"
               >
-                <div className="w-full h-[280px] md:h-[240px] lg:h-56 bg-gray-200 animate-pulse"></div>
-                <div className="py-3 px-1">
-                  <div className="h-3 bg-gray-200 rounded animate-pulse w-12 mb-2"></div>
-                  <div className="h-6 bg-gray-200 rounded animate-pulse mb-3"></div>
-                  <div className="flex justify-between items-center">
-                    <div className="flex-1">
-                      <div className="h-4 bg-gray-200 rounded animate-pulse w-24 mb-2"></div>
-                      <div className="h-4 bg-gray-200 rounded animate-pulse w-20"></div>
-                    </div>
-                    <div className="h-10 bg-gray-200 rounded-full animate-pulse w-28"></div>
-                  </div>
+                <div className="w-full h-48 bg-gray-200 rounded-xl animate-pulse"></div>
+                <div className="flex flex-col gap-3 mt-4 flex-1">
+                  <div className="h-6 bg-gray-200 rounded animate-pulse"></div>
+                  <div className="h-4 bg-gray-200 rounded animate-pulse w-32"></div>
+                  <div className="h-10 bg-gray-200 rounded-full animate-pulse w-full mt-auto"></div>
                 </div>
               </div>
             ))}
@@ -162,75 +156,79 @@ export default function HotelsPage() {
             return (
             <div
               key={hotel.hotel_id}
-              className="rounded-2xl overflow-hidden transition-all duration-300"
+              className="flex flex-col h-full shadow-xl rounded-3xl p-4 bg-[#F1FAFF] hover:scale-105 transition-transform duration-300"
             >
-                            <div className="group">
-                <Link href={`/hotels/${hotel.hotel_id}`} className="block overflow-hidden rounded-2xl">
-                  <div className="relative w-full h-[280px] md:h-[240px] lg:h-56">
-                    <Image
-                      src={
-                        imageErrors[hotel.hotel_id] 
-                          ? "/images/home/hero/bg.png" 
-                          : (() => {
-                              // Extract first valid image
-                              const firstImage = hotel.images && hotel.images.length > 0 ? getImageUrl(hotel.images[0]) : null;
-                              const fallbackImage = hotel.image && hotel.image.trim() !== "" ? hotel.image : null;
-                              return firstImage || fallbackImage || "/images/home/hero/bg.png";
-                            })()
-                      }
-                      alt={translation.name}
-                      fill
-                      loading="lazy"
-                      className="rounded-2xl object-cover group-hover:scale-110 transition-transform duration-500"
-                      onError={() => handleImageError(hotel.hotel_id)}
-                    />
-                  </div>
-                </Link>
-                {/* Content Below Image */}
-                <div className="py-3 px-1">
-             
-                  
-                  <h3 className="text-lg lg:text-xl font-semibold mb-3 text-black line-clamp-1">
-                    <Link 
-                      href={`/hotels/${hotel.hotel_id}`}
-                      className="hover:text-accent transition-colors"
-                    >
-                      {translation.name}
-                    </Link>
-                  </h3>
-                  
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex flex-col gap-1">
-                      <div className="flex items-center gap-2">
-                        <div className="flex">
-                          {[...Array(hotel.total_rating)].map((_, index) => (
-                            <svg
-                              key={index}
-                              className="w-4 h-4 text-accent fill-current"
-                              viewBox="0 0 20 20"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                          ))}
-                        </div>
-                        <span className="text-sm font-bold text-black">
-                          {hotel.total_rating}/5
-                        </span>
-                      </div>
-                      <p className="text-sm text-black font-semibold">
-                        {hotel.total_rating_users.toLocaleString()} Reviews
-                      </p>
-                    </div>
-                    
-                    <Link
-                      href={hotel.book_url || `/hotels/${hotel.hotel_id}`}
-                      className="btn-border-reveal border-2 border-accent text-black font-semibold px-4 lg:px-6 py-2 rounded-full hover:bg-accent hover:text-white transition-colors text-sm flex items-center gap-2 whitespace-nowrap"
-                    >
-                      {t('buttons.book_now')} →
-                    </Link>
-                  </div>
+              <Link href={`/hotels/${hotel.hotel_id}`} className="block overflow-hidden rounded-xl">
+                <div className="relative w-full h-48">
+                  <Image
+                    src={
+                      imageErrors[hotel.hotel_id] 
+                        ? "/images/home/hero/bg.png" 
+                        : (() => {
+                            // Extract first valid image
+                            const firstImage = hotel.images && hotel.images.length > 0 ? getImageUrl(hotel.images[0]) : null;
+                            const fallbackImage = hotel.image && hotel.image.trim() !== "" ? hotel.image : null;
+                            return firstImage || fallbackImage || "/images/home/hero/bg.png";
+                          })()
+                    }
+                    alt={translation.name}
+                    fill
+                    loading="lazy"
+                    className="object-cover rounded-xl"
+                    onError={() => handleImageError(hotel.hotel_id)}
+                  />
                 </div>
+              </Link>
+              {/* Content Below Image */}
+              <div className="flex flex-col gap-3 mt-4 flex-1">
+                <h3 className="text-lg lg:text-xl font-semibold text-black line-clamp-2 leading-tight">
+                  <Link 
+                    href={`/hotels/${hotel.hotel_id}`}
+                    className="hover:text-accent transition-colors"
+                  >
+                    {translation.name}
+                  </Link>
+                </h3>
+                
+                <div className="flex items-center gap-2">
+                  <div className="flex">
+                    {[...Array(hotel.total_rating)].map((_, index) => (
+                      <svg
+                        key={index}
+                        className="w-4 h-4 text-accent fill-current"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <span className="text-sm font-bold text-black">
+                    {hotel.total_rating}/5
+                  </span>
+                  <span className="text-sm text-black">
+                    ({hotel.total_rating_users.toLocaleString()} Reviews)
+                  </span>
+                </div>
+                
+                <Link
+                  href={hotel.book_url || `/hotels/${hotel.hotel_id}`}
+                  className="btn-border-reveal w-full justify-between px-6 py-2 text-base bg-transparent border-2 border-accent text-black font-semibold rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2 mt-auto"
+                >
+                  {t('buttons.book_now')}
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </Link>
               </div>
             </div>
           );

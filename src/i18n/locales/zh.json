@@ -2,7 +2,7 @@
   "navbar": {
     "home": "首页",
     "place": "景点",
-    "stay": "住宿",
+    "amenity": "设施",
     "contact": "联系",
     "follow": "关注我们",
     "language": "语言"
@@ -42,8 +42,8 @@
     "photo_gallery": "照片库",
     "view_location": "查看位置",
     "open_in_google_maps": "在谷歌地图中打开",
-    "page_title": "您的海滨度假胜地",
-    "page_subtitle": "找到您的完美住宿"
+    "page_title": "比杜克-比杜克设施",
+    "page_subtitle": "酒店、餐厅、咖啡馆和设施"
   },
   "place": {
     "place_information": "地点信息",
