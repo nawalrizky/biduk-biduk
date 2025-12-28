@@ -152,39 +152,36 @@ const HeroSection = () => {
 
       {/* Content */}
       <div className="relative  h-full">
-        {/* SEO-friendly H1 - visually integrated but semantically correct */}
-        <h1 className="sr-only">Biduk-Biduk - Destinasi Wisata Pesisir Berau, Kalimantan Timur</h1>
-        
         <div className="text-white">
           {/* Mobile Layout - Stacked vertically on left */}
           <div className="md:hidden absolute bottom-32 left-4 space-y-2">
-            <p className="font-plant text-[28px] sm:text-3xl md:text-4xl leading-tight text-left">
+            <h1 className="font-plant text-[28px] sm:text-3xl md:text-4xl leading-tight text-left">
               Taste the flavors,
-            </p>
-            <p className="font-plant text-[28px] sm:text-3xl md:text-4xl leading-tight text-left">
+            </h1>
+            <h1 className="font-plant text-[28px] sm:text-3xl md:text-4xl leading-tight text-left">
               hear the stories,
-            </p>
-            <p className="font-plant text-[28px] sm:text-3xl md:text-4xl leading-tight text-left">
+            </h1>
+            <h1 className="font-plant text-[28px] sm:text-3xl md:text-4xl leading-tight text-left">
               and feel the soul of the sea.
-            </p>
+            </h1>
           </div>
 
           {/* Desktop Layout - Original positioning */}
           <div className="hidden md:block">
             {/* First Line */}
-            <p className="font-plant md:text-4xl lg:text-6xl xl:text-[72px] absolute bottom-110 left-10 lg:bottom-100 lg:left-30 leading-tight">
+            <h1 className="font-plant md:text-4xl lg:text-6xl xl:text-[72px] absolute bottom-110 left-10 lg:bottom-100 lg:left-30 leading-tight">
               Taste the flavors, hear the stories,
-            </p>
+            </h1>
 
             {/* Second Line - Left */}
-            <p className="font-plant md:text-4xl lg:text-6xl xl:text-[72px] absolute bottom-90 left-0 lg:bottom-80 lg:left-30 leading-tight">
+            <h1 className="font-plant md:text-4xl lg:text-6xl xl:text-[72px] absolute bottom-90 left-0 lg:bottom-80 lg:left-30 leading-tight">
               and feel the
-            </p>
+            </h1>
 
             {/* Second Line - Right */}
-            <p className="font-plant md:text-4xl lg:text-6xl xl:text-[72px] absolute bottom-90 right-70 lg:bottom-80 lg:right-100 leading-tight">
+            <h1 className="font-plant md:text-4xl lg:text-6xl xl:text-[72px] absolute bottom-90 right-70 lg:bottom-80 lg:right-100 leading-tight">
               soul of the sea.
-            </p>
+            </h1>
           </div>
         </div>
       </div>

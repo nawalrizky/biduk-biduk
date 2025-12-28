@@ -100,15 +100,7 @@ export default function DestinationSection() {
           <h2 className="text-5xl text-black font-semibold mt-2">
             {t('home.destination_section_title')}
           </h2>
-          <Link 
-            href="/place" 
-            className="mt-4 text-primary font-plant text-lg hover:text-accent transition-colors flex items-center gap-2"
-          >
-            {t('buttons.view_all_destinations', 'Lihat Semua Destinasi')}
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </Link>
+          
         </div>
         <div className="flex mt-10 gap-6">
           <div className="flex items-start gap-6">
