@@ -202,15 +202,6 @@ export default function DestinationSection() {
           <h2 className="text-2xl md:text-3xl text-black font-semibold mt-1 text-center">
             {t('home.destination_section_title')}
           </h2>
-          <Link 
-            href="/place" 
-            className="mt-3 text-primary font-plant text-base hover:text-accent transition-colors flex items-center gap-2"
-          >
-            {t('buttons.view_all_destinations', 'Lihat Semua Destinasi')}
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </Link>
         </div>
 
         <div className="flex flex-col gap-4">
