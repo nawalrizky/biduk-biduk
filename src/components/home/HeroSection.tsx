@@ -18,19 +18,19 @@ const HeroSection = () => {
   const slides: SlideData[] = [
     {
       id: 1,
-      image: "/images/home/hero/hero.png",
+      image: "/images/home/hero/hero.jpg",
       titleKey: "home.hero_title_1",
       subtitleKey: "home.hero_subtitle_1",
     },
     {
       id: 2,
-      image: "/images/home/hero/hero2.png",
+      image: "/images/home/hero/hero2.jpg",
       titleKey: "home.hero_title_2",
       subtitleKey: "home.hero_subtitle_2",
     },
     {
       id: 3,
-      image: "/images/home/hero/hero3.png",
+      image: "/images/home/hero/hero3.jpg",
       titleKey: "home.hero_title_3",
       subtitleKey: "home.hero_subtitle_3",
     },
@@ -40,19 +40,19 @@ const HeroSection = () => {
   const mobileSlides: SlideData[] = [
     {
       id: 1,
-      image: "/images/home/hero/hero_mobile.png",
+      image: "/images/home/hero/hero_mobile.jpg",
       titleKey: "home.hero_title_1",
       subtitleKey: "home.hero_subtitle_1",
     },
     {
       id: 2,
-      image: "/images/home/hero/hero2.png",
+      image: "/images/home/hero/hero2.jpg",
       titleKey: "home.hero_title_2",
       subtitleKey: "home.hero_subtitle_2",
     },
     {
       id: 3,
-      image: "/images/home/hero/hero3.png",
+      image: "/images/home/hero/hero3.jpg",
       titleKey: "home.hero_title_3",
       subtitleKey: "home.hero_subtitle_3",
     },
