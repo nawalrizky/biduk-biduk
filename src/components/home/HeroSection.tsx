@@ -13,7 +13,7 @@ interface SlideData {
 
 const HeroSection = () => {
   const { t } = useTranslation();
-  
+
   // Data carousel - bisa disesuaikan dengan kebutuhan
   const slides: SlideData[] = [
     {
@@ -98,7 +98,7 @@ const HeroSection = () => {
       <div className="absolute inset-0">
         {/* Desktop Images - Sliding Carousel */}
         <div className="hidden md:block relative w-full h-full overflow-hidden">
-          <div 
+          <div
             className="flex h-full transition-transform duration-1000 ease-in-out"
             style={{ transform: `translateX(-${currentSlide * 100}%)` }}
           >
@@ -123,7 +123,7 @@ const HeroSection = () => {
 
         {/* Mobile Images - Sliding Carousel */}
         <div className="md:hidden relative w-full h-full overflow-hidden">
-          <div 
+          <div
             className="flex h-full transition-transform duration-1000 ease-in-out"
             style={{ transform: `translateX(-${currentSlide * 100}%)` }}
           >
@@ -234,18 +234,17 @@ const HeroSection = () => {
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                index === currentSlide
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentSlide
                   ? "bg-white scale-125"
                   : "bg-white/50 hover:bg-white/75"
-              }`}
+                }`}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}
         </div>
       </div>
 
-    
+
 
       {/* Background Image Bottom - Desktop */}
       <div className="hidden md:block absolute bottom-0 lg:-mb-28 left-0 w-full z-0 border-none">
@@ -261,7 +260,7 @@ const HeroSection = () => {
         />
       </div>
 
-      
+
 
       {/* Location Info Overlay - Desktop */}
       <div className="hidden md:flex absolute bottom-13 lg:bottom-5  w-full justify-between z-20 px-20 lg:px-56 ">
