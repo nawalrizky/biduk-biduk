@@ -25,7 +25,7 @@ export function generateSEOMetadata({
 }: SEOProps): Metadata {
   const baseUrl = 'https://bidukbiduk.com'
   const url = `${baseUrl}${path}`
-  
+
   return {
     title,
     description,
@@ -214,6 +214,7 @@ export function generateHotelSchema({
     url
   }
 }
+
 
 export function generateTourPackageSchema({
   name,
