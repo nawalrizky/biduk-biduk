@@ -24,37 +24,27 @@ const HeroSection = () => {
     },
     {
       id: 2,
-      image: "/images/home/hero/hero2.jpg",
+      image: "/images/home/hero/hero2.jpeg",
       titleKey: "home.hero_title_2",
       subtitleKey: "home.hero_subtitle_2",
     },
     {
       id: 3,
-      image: "/images/home/hero/hero3.jpg",
+      image: "/images/home/hero/hero3.jpeg",
       titleKey: "home.hero_title_3",
       subtitleKey: "home.hero_subtitle_3",
     },
-  ];
-
-  // Mobile slides with different images
-  const mobileSlides: SlideData[] = [
     {
-      id: 1,
-      image: "/images/home/hero/hero_mobile.jpg",
-      titleKey: "home.hero_title_1",
-      subtitleKey: "home.hero_subtitle_1",
+      id: 4,
+      image: "/images/home/hero/hero4.jpeg",
+      titleKey: "home.hero_title_4",
+      subtitleKey: "home.hero_subtitle_4",
     },
     {
-      id: 2,
-      image: "/images/home/hero/hero2.jpg",
-      titleKey: "home.hero_title_2",
-      subtitleKey: "home.hero_subtitle_2",
-    },
-    {
-      id: 3,
-      image: "/images/home/hero/hero3.jpg",
-      titleKey: "home.hero_title_3",
-      subtitleKey: "home.hero_subtitle_3",
+      id: 5,
+      image: "/images/home/hero/hero5.jpeg",
+      titleKey: "home.hero_title_5",
+      subtitleKey: "home.hero_subtitle_5",
     },
   ];
 
@@ -127,7 +117,7 @@ const HeroSection = () => {
             className="flex h-full transition-transform duration-1000 ease-in-out"
             style={{ transform: `translateX(-${currentSlide * 100}%)` }}
           >
-            {mobileSlides.map((slide, index) => (
+            {slides.map((slide, index) => (
               <div
                 key={slide.id}
                 className="relative min-w-full h-full flex-shrink-0"
@@ -235,8 +225,8 @@ const HeroSection = () => {
               key={index}
               onClick={() => goToSlide(index)}
               className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentSlide
-                  ? "bg-white scale-125"
-                  : "bg-white/50 hover:bg-white/75"
+                ? "bg-white scale-125"
+                : "bg-white/50 hover:bg-white/75"
                 }`}
               aria-label={`Go to slide ${index + 1}`}
             />

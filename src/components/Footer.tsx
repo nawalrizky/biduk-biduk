@@ -98,10 +98,10 @@ const Footer = () => {
                                 />
                                 <div>
                                     <h3 className="text-white text-2xl font-plant">
-                                        Destinasi Pesisir
+                                        Paradise of
                                     </h3>
                                     <p className="text-white font-plant text-2xl">
-                                        Kelompok Sadar Wisata Biduk Biduk
+                                        Biduk Biduk
                                     </p>
                                 </div>
                             </div>
