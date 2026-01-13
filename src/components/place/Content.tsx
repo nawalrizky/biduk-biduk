@@ -1,9 +1,19 @@
 "use client";
 
-import Link from "next/link";
+import dynamic from "next/dynamic";
 import { Destination, getDestinationTranslation } from "@/lib/api";
 import { useLanguage } from '@/hooks/useLanguage';
 import { useTranslation } from 'react-i18next';
+
+// Dynamic import for LeafletMap to avoid SSR issues
+const LeafletMap = dynamic(() => import('@/components/map/LeafletMap'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full bg-gray-200 animate-pulse rounded-xl flex items-center justify-center">
+      <span className="text-gray-500">Loading map...</span>
+    </div>
+  )
+});
 
 interface PlaceContentProps {
   destination: Destination;
@@ -21,7 +31,7 @@ export default function PlaceContent({ destination }: PlaceContentProps) {
   const currentLanguage = useLanguage();
   const { t } = useTranslation();
   const translation = getDestinationTranslation(destination, currentLanguage);
-  // Extract coordinates for Google Maps
+  // Extract coordinates for map
   const latitude = destination.coordinates?.latitude;
   const longitude = destination.coordinates?.longitude;
 
@@ -32,12 +42,7 @@ export default function PlaceContent({ destination }: PlaceContentProps) {
         {translation.description}
       </p>
 
-      <Link
-        href="/hotels"
-        className="btn-border-reveal bg-transparent border-2 border-accent mx-3 sm:mx-6 lg:mx-0 my-10 text-black font-semibold px-4 sm:px-6 py-2 lg:px-3 rounded-full hover:bg-accent transition-colors text-xs sm:text-sm lg:text-xl flex justify-center items-center gap-2 h-fit w-auto max-w-full"
-      >
-        {t('buttons.book_now')} →
-      </Link>
+
       <div className="mt-10 flex flex-col lg:flex-row w-full gap-4 sm:gap-8 px-3 sm:px-6 lg:px-0">
         {/* Destination Information */}
         <div className="flex-1 flex flex-col gap-2 bg-accent/10 rounded-xl p-4 sm:p-6">
@@ -78,13 +83,12 @@ export default function PlaceContent({ destination }: PlaceContentProps) {
                 referrerPolicy="no-referrer-when-downgrade"
               />
             ) : latitude && longitude ? (
-              <iframe
-                title={`${translation.name} Google Map`}
-                src={`https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15000!2d${longitude}!3d${latitude}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sid`}
-                className="w-full h-full border-0 rounded-xl"
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
+              // Use OpenStreetMap with Leaflet for coordinates - shows marker
+              <LeafletMap
+                latitude={latitude}
+                longitude={longitude}
+                name={translation.name}
+                className="rounded-xl"
               />
             ) : (
               <div className="relative w-full h-full">
@@ -107,8 +111,8 @@ export default function PlaceContent({ destination }: PlaceContentProps) {
                         className="inline-flex items-center gap-2 bg-accent text-white px-4 py-2 rounded-full hover:bg-accent/90 transition-colors text-sm font-semibold"
                       >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                          <circle cx="12" cy="10" r="3"/>
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                          <circle cx="12" cy="10" r="3" />
                         </svg>
                         {t('place.open_in_google_maps')}
                       </a>
@@ -123,3 +127,4 @@ export default function PlaceContent({ destination }: PlaceContentProps) {
     </div>
   );
 }
+

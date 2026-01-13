@@ -7,6 +7,13 @@ import { packagesApi, Package, getPackageTranslation } from "@/lib/api";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useTranslation } from "react-i18next";
 
+// WhatsApp booking URL generator
+const WHATSAPP_NUMBER = "6285251882238";
+const generateWhatsAppBookingUrl = (itemName: string) => {
+  const message = encodeURIComponent(`Halo, saya ingin memesan: ${itemName}`);
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+};
+
 const PackageSection = () => {
   const currentLanguage = useLanguage();
   const { t } = useTranslation();
@@ -155,120 +162,121 @@ const PackageSection = () => {
               packages.map((pkg) => {
                 const translation = getPackageTranslation(pkg, currentLanguage);
                 return (
-                <div key={pkg.package_id} className="px-3">
-                  <div className="group relative overflow-hidden rounded-xl transition-all duration-500 flex flex-col h-full">
-                    <div className="relative overflow-hidden rounded-xl">
-                      {pkg.image_url ? (
-                        <Image
-                          src={pkg.image_url}
-                          alt={translation.name}
-                          width={400}
-                          height={480}
-                          loading="lazy"
-                          className="w-full h-80 object-cover rounded-xl group-hover:scale-110 transition-transform duration-500"
-                        />
-                      ) : (
-                        <div className="w-full h-80 bg-gradient-to-br from-accent/20 to-primary/20 rounded-xl flex items-center justify-center">
-                          <svg
-                            className="w-20 h-20 text-accent/50"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                            />
-                          </svg>
-                        </div>
-                      )}
-                    </div>
-                    {/* Content Below Image */}
-                    <div className="p-2 flex flex-col flex-1">
-                      <div className="flex flex-col justify-between h-full">
-                        <div className="mb-4">
-                          <span className="text-primary font-plant text-xl mb-1 block">
-                            Rp {parseFloat(pkg.price).toLocaleString('id-ID')}
-                          </span>
-                          <h3 className="text-2xl font-semibold mb-1 text-black line-clamp-2 h-16">
-                            <Link
-                              href={`/packages/${pkg.package_id}`}
-                              className="hover:text-accent transition-colors"
+                  <div key={pkg.package_id} className="px-3">
+                    <div className="group relative overflow-hidden rounded-xl transition-all duration-500 flex flex-col h-full">
+                      <div className="relative overflow-hidden rounded-xl">
+                        {pkg.image_url ? (
+                          <Image
+                            src={pkg.image_url}
+                            alt={translation.name}
+                            width={400}
+                            height={480}
+                            loading="lazy"
+                            className="w-full h-80 object-cover rounded-xl group-hover:scale-110 transition-transform duration-500"
+                          />
+                        ) : (
+                          <div className="w-full h-80 bg-gradient-to-br from-accent/20 to-primary/20 rounded-xl flex items-center justify-center">
+                            <svg
+                              className="w-20 h-20 text-accent/50"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
                             >
-                              {translation.name}
-                            </Link>
-                          </h3>
-                        </div>
-                        <div className="flex justify-between items-end w-full">
-                          <div className="flex flex-col gap-2">
-                            {pkg.total_rating > 0 && (
-                              <>
-                                <div className="flex items-center gap-2">
-                                  {/* 5 stars icon */}
-                                  <div className="flex">
-                                    {[...Array(5)].map((_, index) => (
-                                      <svg
-                                        key={index}
-                                        className={`w-4 h-4 ${
-                                          index < Math.floor(pkg.total_rating)
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                              />
+                            </svg>
+                          </div>
+                        )}
+                      </div>
+                      {/* Content Below Image */}
+                      <div className="p-2 flex flex-col flex-1">
+                        <div className="flex flex-col justify-between h-full">
+                          <div className="mb-4">
+                            <span className="text-primary font-plant text-xl mb-1 block">
+                              Rp {parseFloat(pkg.price).toLocaleString('id-ID')}
+                            </span>
+                            <h3 className="text-2xl font-semibold mb-1 text-black line-clamp-2 h-16">
+                              <Link
+                                href={`/packages/${pkg.package_id}`}
+                                className="hover:text-accent transition-colors"
+                              >
+                                {translation.name}
+                              </Link>
+                            </h3>
+                          </div>
+                          <div className="flex justify-between items-end w-full">
+                            <div className="flex flex-col gap-2">
+                              {pkg.total_rating > 0 && (
+                                <>
+                                  <div className="flex items-center gap-2">
+                                    {/* 5 stars icon */}
+                                    <div className="flex">
+                                      {[...Array(5)].map((_, index) => (
+                                        <svg
+                                          key={index}
+                                          className={`w-4 h-4 ${index < Math.floor(pkg.total_rating)
                                             ? 'text-accent fill-current'
                                             : 'text-gray-300 fill-current'
-                                        }`}
-                                        viewBox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
-                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                      </svg>
-                                    ))}
+                                            }`}
+                                          viewBox="0 0 20 20"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                        </svg>
+                                      ))}
+                                    </div>
+                                    <p className="text-black font-bold text-sm">
+                                      {pkg.total_rating % 1 === 0 ? Math.floor(pkg.total_rating) : pkg.total_rating.toFixed(1)}/5
+                                    </p>
                                   </div>
                                   <p className="text-black font-bold text-sm">
-                                    {pkg.total_rating % 1 === 0 ? Math.floor(pkg.total_rating) : pkg.total_rating.toFixed(1)}/5
+                                    {pkg.total_rating_users} reviews
                                   </p>
-                                </div>
-                                <p className="text-black font-bold text-sm">
-                                  {pkg.total_rating_users} reviews
-                                </p>
-                              </>
-                            )}
-                            {((pkg.destination_details && pkg.destination_details.length > 0) || 
-                              (pkg.destinations && pkg.destinations.length > 0)) && (
-                              <p className="text-gray-600 text-sm">
-                                {(pkg.destination_details || pkg.destinations || []).length} Destination{(pkg.destination_details || pkg.destinations || []).length > 1 ? 's' : ''}
-                              </p>
-                            )}
+                                </>
+                              )}
+                              {((pkg.destination_details && pkg.destination_details.length > 0) ||
+                                (pkg.destinations && pkg.destinations.length > 0)) && (
+                                  <p className="text-gray-600 text-sm">
+                                    {(pkg.destination_details || pkg.destinations || []).length} Destination{(pkg.destination_details || pkg.destinations || []).length > 1 ? 's' : ''}
+                                  </p>
+                                )}
+                            </div>
+                            {/* Detail Button */}
+                            <Link
+                              href={`/packages/${pkg.package_id}`}
+                              className="btn-border-reveal-secondary bg-transparent border-2 border-secondary text-secondary font-semibold px-6 py-2 lg:px-3 3xl:px-6 rounded-full transition-colors text-sm lg:text-[12px] flex items-center gap-2 h-fit whitespace-nowrap"
+                            >
+                              Detail
+                            </Link>
                           </div>
-                          {/* Detail Button */}
-                          <Link
-                            href={`/packages/${pkg.package_id}`}
-                            className="bg-transparent border-2 border-secondary text-secondary font-semibold px-6 py-2 lg:px-3 3xl:px-6 rounded-full hover:bg-accent transition-colors text-sm lg:text-[12px] flex items-center gap-2 h-fit whitespace-nowrap"
+                          <a
+                            href={generateWhatsAppBookingUrl(translation.name)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-border-reveal mt-4 bg-transparent border-2 border-accent text-black font-semibold px-6 py-2 lg:px-3 w-full rounded-full hover:bg-accent transition-colors text-sm lg:text-[12px] flex justify-center items-center gap-2 h-fit"
                           >
-                            Detail
-                          </Link>
+                            {t('buttons.book_now')}
+                            <svg
+                              width="14"
+                              height="14"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                          </a>
                         </div>
-                        <Link
-                          href={`/packages/${pkg.package_id}`}
-                          className="btn-border-reveal mt-4 bg-transparent border-2 border-accent text-black font-semibold px-6 py-2 lg:px-3 w-full rounded-full hover:bg-accent transition-colors text-sm lg:text-[12px] flex justify-center items-center gap-2 h-fit"
-                        >
-                          {t('buttons.book_now')}
-                          <svg
-                            width="14"
-                            height="14"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="M5 12h14M12 5l7 7-7 7" />
-                          </svg>
-                        </Link>
                       </div>
                     </div>
                   </div>
-                </div>
                 );
               })
             ) : (

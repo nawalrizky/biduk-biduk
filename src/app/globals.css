@@ -30,6 +30,36 @@
 .btn-border-reveal:hover {
   color: black;
 }
+
+/* Secondary color variant for border reveal button */
+.btn-border-reveal-secondary {
+  background-color: transparent;
+  color: #1EA7CB;
+  border: 2px solid #1EA7CB;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.btn-border-reveal-secondary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 0;
+  height: 100%;
+  background-color: #1EA7CB;
+  transition: width 0.8s ease;
+  z-index: -1;
+}
+
+.btn-border-reveal-secondary:hover::after {
+  width: 100%;
+}
+
+.btn-border-reveal-secondary:hover {
+  color: white !important;
+}
+
 @import "tailwindcss";
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
@@ -89,6 +119,7 @@ body {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -154,12 +185,12 @@ body {
   .custom-3xl\:bottom-50 {
     bottom: 12.5rem !important;
   }
-  
+
   .custom-3xl\:px-72 {
     padding-left: 18rem !important;
     padding-right: 18rem !important;
   }
-  
+
   .custom-3xl\:text-8xl {
     font-size: 6rem !important;
     line-height: 1 !important;

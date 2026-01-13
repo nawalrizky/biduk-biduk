@@ -1,9 +1,15 @@
 "use client";
 
-import Link from "next/link";
 import { Package, getPackageTranslation } from "@/lib/api";
 import { useLanguage } from '@/hooks/useLanguage';
 import { useTranslation } from 'react-i18next';
+
+// WhatsApp booking URL generator
+const WHATSAPP_NUMBER = "6285251882238";
+const generateWhatsAppBookingUrl = (itemName: string) => {
+  const message = encodeURIComponent(`Halo, saya ingin memesan: ${itemName}`);
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+};
 
 interface PackageContentProps {
   package: Package;
@@ -13,7 +19,7 @@ export default function PackageContent({ package: pkg }: PackageContentProps) {
   const currentLanguage = useLanguage();
   const { t } = useTranslation();
   const translation = getPackageTranslation(pkg, currentLanguage);
-  
+
   // Use destination_details if available, fallback to destinations
   const destinations = pkg.destination_details || pkg.destinations || [];
 
@@ -72,18 +78,20 @@ export default function PackageContent({ package: pkg }: PackageContentProps) {
         </div>
       )}
 
-      <Link
-        href="/hotels"
+      <a
+        href={generateWhatsAppBookingUrl(translation.name)}
+        target="_blank"
+        rel="noopener noreferrer"
         className="btn-border-reveal bg-transparent border-2 border-accent mx-6 lg:mx-0 my-10 text-black font-semibold px-6 py-2 lg:px-3 rounded-full hover:bg-accent hover:text-white transition-colors text-sm lg:text-xl flex justify-center items-center gap-2 h-fit w-full max-w-md"
       >
         {t('buttons.book_now')} →
-      </Link>
+      </a>
 
       <div className="mt-10 flex flex-col lg:flex-row w-full gap-8 px-6 lg:px-0">
         {/* Package Information */}
         <div className="flex-1 flex flex-col gap-2 bg-accent/10 rounded-xl p-6">
           <h2 className="text-xl font-semibold text-accent mb-2">{t('package.package_information')}</h2>
-      
+
 
           {destinations.length > 0 && (
             <p className="text-black">
@@ -105,7 +113,7 @@ export default function PackageContent({ package: pkg }: PackageContentProps) {
               </p>
             </>
           )}
-          
+
           <p className="text-black mt-4">
             <span className="font-semibold">Contact Us:</span>
           </p>
@@ -122,8 +130,8 @@ export default function PackageContent({ package: pkg }: PackageContentProps) {
             </a>
           </p>
         </div>
-        
-       
+
+
       </div>
     </div>
   );

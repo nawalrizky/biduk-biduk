@@ -31,43 +31,41 @@ const isEmbeddableMapUrl = (url: string): boolean => {
 // Default fallback map for Biduk-Biduk area
 const DEFAULT_MAP_EMBED = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63821.84753026603!2d118.61294940870013!3d1.2522236876905486!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32734cb76f07da33%3A0x5e898623450bccae!2sBiduk-Biduk!5e0!3m2!1sen!2sid!4v1753828856108!5m2!1sen!2sid";
 
+// WhatsApp booking URL generator
+const WHATSAPP_NUMBER = "6285251882238";
+const generateWhatsAppBookingUrl = (itemName: string) => {
+  const message = encodeURIComponent(`Halo, saya ingin memesan: ${itemName}`);
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+};
+
 export default function HotelContent({ hotel }: HotelContentProps) {
   const currentLanguage = useLanguage();
   const { t } = useTranslation();
   const translation = getHotelTranslation(hotel, currentLanguage);
-  
+
   return (
     <div className="-mt-1 z-20 flex flex-col lg:px-56 items-center bg-white min-h-screen pb-16">
-  
+
       {/* Description */}
       <p className="mt-8 text-base sm:text-lg lg:text-xl text-black text-justify px-3 sm:px-6 lg:px-0 leading-relaxed max-w-full">
         {translation.description}
       </p>
 
       {/* Book Now Button */}
-      {hotel.book_url ? (
-        <a
-          href={hotel.book_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn-border-reveal bg-transparent border-2 border-accent mx-3 sm:mx-6 lg:mx-0 my-10 text-black font-semibold px-4 sm:px-6 py-2 lg:px-3 rounded-full hover:bg-accent hover:text-white transition-colors text-xs sm:text-sm lg:text-xl flex justify-center items-center gap-2 h-fit w-auto max-w-full"
-        >
-          {t('buttons.book_now')} →
-        </a>
-      ) : (
-        <Link
-          href="/contact"
-          className="btn-border-reveal bg-transparent border-2 border-accent mx-3 sm:mx-6 lg:mx-0 my-10 text-black font-semibold px-4 sm:px-6 py-2 lg:px-3 rounded-full hover:bg-accent hover:text-white transition-colors text-xs sm:text-sm lg:text-xl flex justify-center items-center gap-2 h-fit w-auto max-w-full"
-        >
-          {t('buttons.contact_to_book')} →
-        </Link>
-      )}
+      <a
+        href={hotel.book_url || generateWhatsAppBookingUrl(translation.name)}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="btn-border-reveal bg-transparent border-2 border-accent mx-3 sm:mx-6 lg:mx-0 my-10 text-black font-semibold px-4 sm:px-6 py-2 lg:px-3 rounded-full hover:bg-accent hover:text-white transition-colors text-xs sm:text-sm lg:text-xl flex justify-center items-center gap-2 h-fit w-auto max-w-full"
+      >
+        {t('buttons.book_now')} →
+      </a>
 
       <div className="mt-10 flex flex-col lg:flex-row w-full gap-4 sm:gap-8 px-3 sm:px-6 lg:px-0">
         {/* Hotel Information */}
         <div className="flex-1 flex flex-col gap-2 bg-accent/10 rounded-xl p-4 sm:p-6">
           <h2 className="text-lg sm:text-xl font-semibold text-accent mb-2">{t('hotel.hotel_information')}</h2>
-          
+
           <p className="text-black text-sm sm:text-base break-words">
             <span className="font-semibold">{t('hotel.price_per_night')}:</span> Rp {parseFloat(hotel.price).toLocaleString('id-ID')}
           </p>
@@ -86,9 +84,9 @@ export default function HotelContent({ hotel }: HotelContentProps) {
           {hotel.book_url && (
             <p className="text-black text-sm sm:text-base break-words">
               <span className="font-semibold">{t('hotel.booking')}:</span>{" "}
-              <a 
-                href={hotel.book_url} 
-                target="_blank" 
+              <a
+                href={hotel.book_url}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="text-accent hover:underline"
               >
@@ -96,7 +94,7 @@ export default function HotelContent({ hotel }: HotelContentProps) {
               </a>
             </p>
           )}
-          
+
           <p className="text-black mt-4 text-sm sm:text-base">
             <span className="font-semibold">{t('hotel.contact_us')}:</span>
           </p>
@@ -113,7 +111,7 @@ export default function HotelContent({ hotel }: HotelContentProps) {
             </a>
           </p>
         </div>
-        
+
         {/* Map */}
         <div className="flex-1 flex flex-col">
           <div className="min-h-[200px] sm:min-h-[250px] rounded-xl overflow-hidden bg-gray-100 relative">
@@ -147,8 +145,8 @@ export default function HotelContent({ hotel }: HotelContentProps) {
                         className="inline-flex items-center gap-2 bg-accent text-white px-4 py-2 rounded-full hover:bg-accent/90 transition-colors text-sm font-semibold"
                       >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                          <circle cx="12" cy="10" r="3"/>
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                          <circle cx="12" cy="10" r="3" />
                         </svg>
                         {t('hotel.open_in_google_maps')}
                       </a>

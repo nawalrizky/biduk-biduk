@@ -23,6 +23,13 @@ const getImageUrl = (image: any): string | null => {
   return null;
 };
 
+// WhatsApp booking URL generator
+const WHATSAPP_NUMBER = "6285251882238";
+const generateWhatsAppBookingUrl = (itemName: string) => {
+  const message = encodeURIComponent(`Halo, saya ingin memesan: ${itemName}`);
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+};
+
 const HotelSection = () => {
   const currentLanguage = useLanguage();
   const { t } = useTranslation();
@@ -71,9 +78,9 @@ const HotelSection = () => {
       gsap.ticker.remove(lenis.raf);
     };
   }, []);
-  
-   useGSAP(() => {
-    
+
+  useGSAP(() => {
+
     gsap.registerPlugin(ScrollTrigger);
     const hotelSection = document.querySelector('.hotel-wrapper') as HTMLElement;
 
@@ -109,7 +116,7 @@ const HotelSection = () => {
       });
 
       gsap.to('.hotel-wrapper', {
-         x: getScrollDistance,
+        x: getScrollDistance,
         scrollTrigger: {
           trigger: '.horizontal-scroll',
           start: 'center center',
@@ -123,141 +130,143 @@ const HotelSection = () => {
     }
   }, [hotels]); // Add hotels as dependency
 
-    return (
-        <section className="horizontal-scroll min-h-[110vh] md:relative bg-white overflow-hidden py-40 lg:py-40">
-            <div className="absolute inset-0 bg-secondary opacity-15"></div>
-            <div className="container mx-auto px-4 lg:px-0 relative z-10">
+  return (
+    <section className="horizontal-scroll min-h-[110vh] md:relative bg-white overflow-hidden py-40 lg:py-40">
+      <div className="absolute inset-0 bg-secondary opacity-15"></div>
+      <div className="container mx-auto px-4 lg:px-0 relative z-10">
 
-                <div className="flex flex-col lg:flex-row justify-center items-center mb-8 lg:px-24">
-                    <div className="mb-6 lg:mb-0 w-full lg:w-2/3 flex flex-col justify-center text-center lg:text-left">
-                        <span className="text-primary font-plant text-lg lg:text-xl mb-2 block lg:pr-24">
-                            {t('hotel.beachside_escape')}
-                        </span>
-                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-black leading-tight">
-                           {t('hotel.stay_swim_relax')}
-                        </h2>
+        <div className="flex flex-col lg:flex-row justify-center items-center mb-8 lg:px-24">
+          <div className="mb-6 lg:mb-0 w-full lg:w-2/3 flex flex-col justify-center text-center lg:text-left">
+            <span className="text-primary font-plant text-lg lg:text-xl mb-2 block lg:pr-24">
+              {t('hotel.beachside_escape')}
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-black leading-tight">
+              {t('hotel.stay_swim_relax')}
+            </h2>
+          </div>
+          <Link href="/hotels" className="hidden lg:flex text-primary font-plant text-3xl mb-2  items-center gap-2">
+            {t('buttons.explore_more')}
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </Link>
+        </div>
+
+        {/* Horizontal scroll layout for all devices */}
+        <div className="hotel-wrapper h-[50vh] md:h-[55vh] lg:h-[55vh]">
+          <div className="flex gap-6 md:gap-8 lg:gap-12 pl-4 md:pl-8 lg:pl-44">
+            {hotels.map((hotel) => {
+              const translation = getHotelTranslation(hotel, currentLanguage);
+              return (
+                <div key={hotel.hotel_id} className="flex-shrink-0 w-64 md:w-72 lg:w-80">
+                  <div className="group card-hotel rounded-xl h-full transition-all duration-500">
+                    <div className="overflow-hidden rounded-xl">
+                      <Image
+                        src={(() => {
+                          // Extract first valid image
+                          const firstImage = hotel.images && hotel.images.length > 0 ? getImageUrl(hotel.images[0]) : null;
+                          const fallbackImage = hotel.image && hotel.image.trim() !== "" ? hotel.image : null;
+                          return firstImage || fallbackImage || "/images/home/hero/bg.png";
+                        })()}
+                        alt={translation.name}
+                        width={400}
+                        height={480}
+                        loading="lazy"
+                        className="w-full h-48 md:h-64 lg:h-80 object-cover rounded-xl group-hover:scale-110 transition-transform duration-500"
+                      />
                     </div>
-                    <Link href="/hotels" className="hidden lg:flex text-primary font-plant text-3xl mb-2  items-center gap-2">
-                       {t('buttons.explore_more')}
-                        <svg
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        >
-                            <path d="M5 12h14M12 5l7 7-7 7" />
-                        </svg>
-                    </Link>
-                </div>
-
-                {/* Horizontal scroll layout for all devices */}
-                <div className="hotel-wrapper h-[50vh] md:h-[55vh] lg:h-[55vh]">
-                    <div className="flex gap-6 md:gap-8 lg:gap-12 pl-4 md:pl-8 lg:pl-44">
-                        {hotels.map((hotel) => {
-                            const translation = getHotelTranslation(hotel, currentLanguage);
-                            return (
-                            <div key={hotel.hotel_id} className="flex-shrink-0 w-64 md:w-72 lg:w-80">
-                                <div className="group card-hotel rounded-xl h-full transition-all duration-500">
-                                    <div className="overflow-hidden rounded-xl">
-                                        <Image 
-                                            src={(() => {
-                                                // Extract first valid image
-                                                const firstImage = hotel.images && hotel.images.length > 0 ? getImageUrl(hotel.images[0]) : null;
-                                                const fallbackImage = hotel.image && hotel.image.trim() !== "" ? hotel.image : null;
-                                                return firstImage || fallbackImage || "/images/home/hero/bg.png";
-                                            })()} 
-                                            alt={translation.name} 
-                                            width={400} 
-                                            height={480}
-                                            loading="lazy"
-                                            className="w-full h-48 md:h-64 lg:h-80 object-cover rounded-xl group-hover:scale-110 transition-transform duration-500"
-                                        />
-                                    </div>
-                                    {/* Content Below Image */}
-                                    <div className="p-2">
-                                        <div className="flex flex-col justify-between items-start">
-                                            <div>
-                                                <h3 className="text-xl md:text-2xl font-semibold mb-1 text-black">
-                                                    <Link href={`/hotels/${hotel.hotel_id}`} className="hover:text-accent transition-colors">
-                                                        {translation.name}
-                                                    </Link>
-                                                </h3>
-                                            </div>
-                                           <div className='flex justify-between items-center w-full mt-2 md:mt-4'>
-                                            <div className='flex flex-col gap-1 md:gap-2'>
-                                            <div className='flex items-center gap-2'>
-                                            {/* 5 stars icon */}
-                                            <div className="flex">
-                                                {[...Array(hotel.total_rating)].map((_, index) => (
-                                                    <svg
-                                                        key={index}
-                                                        className="w-3 h-3 md:w-4 md:h-4 text-accent fill-current"
-                                                        viewBox="0 0 20 20"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                    >
-                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                                    </svg>
-                                                ))}
-                                            </div>
-                                            <p className="text-black font-bold text-xs md:text-sm">{hotel.total_rating}/5</p>
-                                            </div>
-                                            <p className="text-black font-bold text-xs md:text-sm">{hotel.total_rating_users.toLocaleString()} reviews</p>
-                                            </div>
-                                            {/* Book Now button */}
-                                            <Link 
-                                                href={hotel.book_url || `/hotels/${hotel.hotel_id}`}
-                                                className="btn-border-reveal bg-transparent border-2 border-accent text-black font-semibold px-3 md:px-4 lg:px-6 py-1.5 md:py-2 rounded-full hover:bg-accent transition-colors text-xs md:text-sm lg:text-[12px] flex items-center gap-1 md:gap-2 h-fit"
-                                            >
-                                                {t('buttons.book_now')}
-                                                <svg
-                                                    width="12"
-                                                    height="12"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    strokeWidth="2"
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    className="md:w-[14px] md:h-[14px]"
-                                                >
-                                                    <path d="M5 12h14M12 5l7 7-7 7" />
-                                                </svg>
-                                            </Link>
-                                           </div>
-                                        </div>
-                                    </div>
-                                </div>
+                    {/* Content Below Image */}
+                    <div className="p-2">
+                      <div className="flex flex-col justify-between items-start">
+                        <div>
+                          <h3 className="text-xl md:text-2xl font-semibold mb-1 text-black">
+                            <Link href={`/hotels/${hotel.hotel_id}`} className="hover:text-accent transition-colors">
+                              {translation.name}
+                            </Link>
+                          </h3>
+                        </div>
+                        <div className='flex justify-between items-center w-full mt-2 md:mt-4'>
+                          <div className='flex flex-col gap-1 md:gap-2'>
+                            <div className='flex items-center gap-2'>
+                              {/* 5 stars icon */}
+                              <div className="flex">
+                                {[...Array(hotel.total_rating)].map((_, index) => (
+                                  <svg
+                                    key={index}
+                                    className="w-3 h-3 md:w-4 md:h-4 text-accent fill-current"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                  </svg>
+                                ))}
+                              </div>
+                              <p className="text-black font-bold text-xs md:text-sm">{hotel.total_rating}/5</p>
                             </div>
-                        );
-                        })}
-                    </div>
-                    {/* Explore More link below horizontal scroll */}
-                    
-                </div>
-                <div className="flex lg:hidden justify-center -mt-12">
-                        <Link href="/hotels" className="text-primary font-plant text-xl flex items-center gap-2">
-                            {t('buttons.explore_more')}
+                            <p className="text-black font-bold text-xs md:text-sm">{hotel.total_rating_users.toLocaleString()} reviews</p>
+                          </div>
+                          {/* Book Now button */}
+                          <a
+                            href={hotel.book_url || generateWhatsAppBookingUrl(translation.name)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-border-reveal bg-transparent border-2 border-accent text-black font-semibold px-3 md:px-4 lg:px-6 py-1.5 md:py-2 rounded-full hover:bg-accent transition-colors text-xs md:text-sm lg:text-[12px] flex items-center gap-1 md:gap-2 h-fit"
+                          >
+                            {t('buttons.book_now')}
                             <svg
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
+                              width="12"
+                              height="12"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              className="md:w-[14px] md:h-[14px]"
                             >
-                                <path d="M5 12h14M12 5l7 7-7 7" />
+                              <path d="M5 12h14M12 5l7 7-7 7" />
                             </svg>
-                        </Link>
+                          </a>
+                        </div>
+                      </div>
                     </div>
-            </div>
-        </section>
-    );
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          {/* Explore More link below horizontal scroll */}
+
+        </div>
+        <div className="flex lg:hidden justify-center -mt-12">
+          <Link href="/hotels" className="text-primary font-plant text-xl flex items-center gap-2">
+            {t('buttons.explore_more')}
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default HotelSection;
