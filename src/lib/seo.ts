@@ -34,7 +34,7 @@ export function generateSEOMetadata({
       title,
       description,
       url,
-      siteName: 'Biduk-Biduk Tourism',
+      siteName: 'Biduk Biduk Tourism',
       images: [
         {
           url: image.startsWith('http') ? image : `${baseUrl}${image}`,
@@ -89,7 +89,7 @@ export function generateArticleSchema({
   image,
   datePublished,
   dateModified,
-  authorName = 'Biduk-Biduk Tourism',
+  authorName = 'Biduk Biduk Tourism',
   url
 }: {
   headline: string
@@ -197,7 +197,7 @@ export function generateHotelSchema({
     image,
     address: {
       '@type': 'PostalAddress',
-      addressLocality: 'Biduk-Biduk',
+      addressLocality: 'Biduk Biduk',
       addressRegion: 'Berau, Kalimantan Timur',
       addressCountry: 'ID',
       streetAddress: address
@@ -245,7 +245,7 @@ export function generateTourPackageSchema({
     image,
     brand: {
       '@type': 'Brand',
-      name: 'Biduk-Biduk Tourism'
+      name: 'Biduk Biduk Tourism'
     },
     offers: {
       '@type': 'Offer',

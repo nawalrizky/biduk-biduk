@@ -12,8 +12,8 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://bidukbiduk.com'),
-  title: "Biduk-Biduk Berau | Desa Wisata & Pantai Kalimantan Timur",
-  description: "Jelajahi Biduk-Biduk di Berau, Kalimantan Timur: desa wisata, pantai eksotis, Labuan Cermin, penginapan, dan paket liburan terbaik.",
+  title: "Biduk Biduk Berau | Desa Wisata & Pantai Kalimantan Timur",
+  description: "Jelajahi Biduk Biduk di Berau, Kalimantan Timur: desa wisata, pantai eksotis, Labuan Cermin, penginapan, dan paket liburan terbaik.",
   keywords: [
     "Website Resmi Biduk Biduk",
     "biduk biduk",
@@ -114,10 +114,9 @@ export default function Home() {
       <NewsSection />
       <ExploreSection />
       <PackageSection />
-      
+
       {/* Floating Chatbot Button */}
       <ChatbotButton />
     </main>
   );
 }
- 
