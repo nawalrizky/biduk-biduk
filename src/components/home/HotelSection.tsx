@@ -199,10 +199,13 @@ const HotelSection = () => {
                             <div className='flex items-center gap-2'>
                               {/* 5 stars icon */}
                               <div className="flex">
-                                {[...Array(Math.max(0, Math.floor(hotel.total_rating || 0)))].map((_, index) => (
+                                {[...Array(5)].map((_, index) => (
                                   <svg
                                     key={index}
-                                    className="w-3 h-3 md:w-4 md:h-4 text-accent fill-current"
+                                    className={`w-3 h-3 md:w-4 md:h-4 fill-current ${index < Math.floor(hotel.total_rating || 0)
+                                        ? 'text-accent'
+                                        : 'text-gray-300'
+                                      }`}
                                     viewBox="0 0 20 20"
                                     xmlns="http://www.w3.org/2000/svg"
                                   >
