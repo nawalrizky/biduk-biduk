@@ -134,47 +134,47 @@ export default function PlacePage() {
           {destinations.map((destination) => {
             const translation = getDestinationTranslation(destination, currentLanguage);
             return (
-            <div
-              key={destination.id}
-              className="flex flex-col items-center group"
-            >
-              {/* Image */}
-              <div className="relative w-full aspect-square overflow-hidden rounded-[20px] shadow-lg">
-                <Image
-                  src={Array.isArray(destination.images) ? destination.images[0] : destination.images}
-                  alt={translation.name}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-500"
-                  loading="lazy"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                />
-              </div>
-              
-              {/* Destination Info */}
-              <div className="flex flex-col items-center w-full px-4 mt-4">
-                <h3 className="text-lg lg:text-xl text-black font-semibold text-center line-clamp-2">
-                  {translation.name}
-                </h3>
-                <Link 
-                  href={`/place/${destination.id}`}
-                  className="btn-border-reveal font-semibold mt-2 w-fit px-6 py-2 text-sm lg:text-base bg-transparent border-2 border-accent text-black rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2"
-                >
-                  {t('place.view_details')}
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+              <div
+                key={destination.id}
+                className="flex flex-col items-center group"
+              >
+                {/* Image */}
+                <div className="relative w-full aspect-square overflow-hidden rounded-[20px] shadow-lg">
+                  <Image
+                    src={Array.isArray(destination.images) ? destination.images[0] : destination.images}
+                    alt={translation.name}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  />
+                </div>
+
+                {/* Destination Info */}
+                <div className="flex flex-col items-center w-full px-4 mt-4">
+                  <h3 className="text-lg lg:text-xl text-black font-semibold text-center line-clamp-2">
+                    {translation.name}
+                  </h3>
+                  <Link
+                    href={`/place/${destination.id}`}
+                    className="btn-border-reveal font-semibold mt-2 w-fit px-6 py-2 text-sm lg:text-base bg-transparent border-2 border-accent text-black rounded-full hover:bg-accent hover:text-white transition-colors flex items-center gap-2"
                   >
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </Link>
+                    {t('place.view_details')}
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                </div>
               </div>
-            </div>
             );
           })}
         </div>
@@ -196,26 +196,24 @@ export default function PlacePage() {
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-                currentPage === 1
+              className={`px-4 py-2 rounded-lg font-semibold transition-colors ${currentPage === 1
                   ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                   : 'bg-accent text-white hover:bg-accent/80'
-              }`}
+                }`}
             >
               Previous
             </button>
 
             {/* Page Numbers */}
             <div className="flex gap-2">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              {Array.from({ length: Math.max(0, Math.floor(totalPages) || 0) }, (_, i) => i + 1).map((page) => (
                 <button
                   key={page}
                   onClick={() => handlePageChange(page)}
-                  className={`w-10 h-10 rounded-lg font-semibold transition-colors ${
-                    currentPage === page
+                  className={`w-10 h-10 rounded-lg font-semibold transition-colors ${currentPage === page
                       ? 'bg-accent text-white'
                       : 'bg-white text-black border-2 border-gray-300 hover:border-accent'
-                  }`}
+                    }`}
                 >
                   {page}
                 </button>
@@ -226,11 +224,10 @@ export default function PlacePage() {
             <button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-                currentPage === totalPages
+              className={`px-4 py-2 rounded-lg font-semibold transition-colors ${currentPage === totalPages
                   ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                   : 'bg-accent text-white hover:bg-accent/80'
-              }`}
+                }`}
             >
               Next
             </button>

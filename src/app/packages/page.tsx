@@ -172,7 +172,7 @@ export default function PackagesPage() {
                 <p className="text-accent font-bold text-xl mb-1">
                   Rp {parseFloat(pkg.price).toLocaleString('id-ID')}
                 </p>
-                
+
                 {/* Rating */}
                 {pkg.total_rating > 0 && (
                   <div className="flex items-center gap-1 text-sm text-gray-600 mb-3">
@@ -185,12 +185,12 @@ export default function PackagesPage() {
                 )}
 
                 {/* Destinations Count */}
-                {((pkg.destination_details && pkg.destination_details.length > 0) || 
+                {((pkg.destination_details && pkg.destination_details.length > 0) ||
                   (pkg.destinations && pkg.destinations.length > 0)) && (
-                  <p className="text-sm text-gray-600 mb-3">
-                    {(pkg.destination_details || pkg.destinations || []).length} Destination{(pkg.destination_details || pkg.destinations || []).length > 1 ? 's' : ''}
-                  </p>
-                )}
+                    <p className="text-sm text-gray-600 mb-3">
+                      {(pkg.destination_details || pkg.destinations || []).length} Destination{(pkg.destination_details || pkg.destinations || []).length > 1 ? 's' : ''}
+                    </p>
+                  )}
 
                 <Link
                   href={`/packages/${pkg.package_id}`}
@@ -232,26 +232,24 @@ export default function PackagesPage() {
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-                currentPage === 1
+              className={`px-4 py-2 rounded-lg font-semibold transition-colors ${currentPage === 1
                   ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                   : 'bg-accent text-white hover:bg-accent/80'
-              }`}
+                }`}
             >
               Previous
             </button>
 
             {/* Page Numbers */}
             <div className="flex gap-2">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              {Array.from({ length: Math.max(0, Math.floor(totalPages) || 0) }, (_, i) => i + 1).map((page) => (
                 <button
                   key={page}
                   onClick={() => handlePageChange(page)}
-                  className={`w-10 h-10 rounded-lg font-semibold transition-colors ${
-                    currentPage === page
+                  className={`w-10 h-10 rounded-lg font-semibold transition-colors ${currentPage === page
                       ? 'bg-accent text-white'
                       : 'bg-white text-black border-2 border-gray-300 hover:border-accent'
-                  }`}
+                    }`}
                 >
                   {page}
                 </button>
@@ -262,11 +260,10 @@ export default function PackagesPage() {
             <button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-                currentPage === totalPages
+              className={`px-4 py-2 rounded-lg font-semibold transition-colors ${currentPage === totalPages
                   ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                   : 'bg-accent text-white hover:bg-accent/80'
-              }`}
+                }`}
             >
               Next
             </button>

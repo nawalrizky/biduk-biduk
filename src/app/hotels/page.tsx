@@ -199,7 +199,7 @@ export default function HotelsPage() {
 
                   <div className="flex items-center gap-2">
                     <div className="flex">
-                      {[...Array(hotel.total_rating)].map((_, index) => (
+                      {[...Array(Math.max(0, Math.floor(Number(hotel.total_rating) || 0)))].map((_, index) => (
                         <svg
                           key={index}
                           className="w-4 h-4 text-accent fill-current"
