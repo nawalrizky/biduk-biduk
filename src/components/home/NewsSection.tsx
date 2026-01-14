@@ -70,9 +70,9 @@ export default function NewsSection() {
       <section className="bg-white py-16 px-8 md:px-16 lg:px-56 min-h-screen flex flex-col items-center justify-center">
         <div className="container mx-auto">
           <div className="text-center mb-12">
-          <span className="text-xl text-primary font-plant mb-2 block">
-            {t("home.news_section_subtitle")}
-          </span>
+            <span className="text-xl text-primary font-plant mb-2 block">
+              {t("home.news_section_subtitle")}
+            </span>
             <p className="text-black text-2xl md:text-3xl lg:text-[32px] -mt-1 font-semibold">
               {t("home.news_section_title")}
             </p>
@@ -205,9 +205,8 @@ export default function NewsSection() {
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
-                  className={`w-2 h-2 rounded-full transition-colors ${
-                    index === currentIndex ? "bg-primary" : "bg-gray-300"
-                  }`}
+                  className={`w-2 h-2 rounded-full transition-colors ${index === currentIndex ? "bg-primary" : "bg-gray-300"
+                    }`}
                 />
               ))}
             </div>
@@ -270,13 +269,12 @@ export default function NewsSection() {
 
             {/* Dots Indicator */}
             <div className="flex justify-center mt-8 space-x-2">
-              {Array.from({ length: articles.length - 1 }).map((_, index) => (
+              {Array.from({ length: Math.max(0, articles.length - 1) }).map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
-                  className={`w-2 h-2 rounded-full transition-colors ${
-                    index === currentIndex ? "bg-primary" : "bg-gray-300"
-                  }`}
+                  className={`w-2 h-2 rounded-full transition-colors ${index === currentIndex ? "bg-primary" : "bg-gray-300"
+                    }`}
                 />
               ))}
             </div>

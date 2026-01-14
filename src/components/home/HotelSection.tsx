@@ -199,7 +199,7 @@ const HotelSection = () => {
                             <div className='flex items-center gap-2'>
                               {/* 5 stars icon */}
                               <div className="flex">
-                                {[...Array(hotel.total_rating)].map((_, index) => (
+                                {[...Array(Math.max(0, Math.floor(hotel.total_rating || 0)))].map((_, index) => (
                                   <svg
                                     key={index}
                                     className="w-3 h-3 md:w-4 md:h-4 text-accent fill-current"
