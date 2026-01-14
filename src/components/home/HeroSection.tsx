@@ -165,13 +165,10 @@ const HeroSection = () => {
 
             {/* Second Line - Left */}
             <h1 className="font-plant md:text-4xl lg:text-6xl xl:text-[72px] absolute bottom-90 left-0 lg:bottom-80 lg:left-30 leading-tight">
-              and feel the
+              and feel the soul of the sea.
             </h1>
 
-            {/* Second Line - Right */}
-            <h1 className="font-plant md:text-4xl lg:text-6xl xl:text-[72px] absolute bottom-90 right-70 lg:bottom-80 lg:right-100 leading-tight">
-              soul of the sea.
-            </h1>
+
           </div>
         </div>
       </div>
