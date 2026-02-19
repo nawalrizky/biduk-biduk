@@ -1,6 +1,6 @@
 
 import type { Metadata } from "next";
-import { Open_Sans } from "next/font/google";
+// import { Open_Sans } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
@@ -9,11 +9,11 @@ import I18nProvider from "@/providers/I18nProvider";
 import LanguageDetectionModal from "@/components/ui/LanguageDetectionModal";
 import Script from 'next/script';
 
-const openSans = Open_Sans({
-  subsets: ["latin"],
-  variable: "--font-open-sans",
-  display: "swap",
-});
+// const openSans = Open_Sans({
+//   subsets: ["latin"],
+//   variable: "--font-open-sans",
+//   display: "swap",
+// });
 
 // Custom Plant font for headers
 const plantFont = localFont({
@@ -60,15 +60,16 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="Biduk-Biduk" />
         <link rel="apple-touch-icon" href="/images/logo_192px.png" />
         <link rel="icon" type="image/png" href="/images/logo_192px.png" />
-        
+
         {/* Alternate languages for SEO - x-default first, then self-referencing canonical */}
-        <link rel="alternate" hrefLang="x-default" href="https://bidukbiduk.com/" />
+        {/* Alternate languages for SEO - x-default first, then self-referencing canonical */}
+        {/* <link rel="alternate" hrefLang="x-default" href="https://bidukbiduk.com/" />
         <link rel="alternate" hrefLang="id" href="https://bidukbiduk.com/" />
         <link rel="alternate" hrefLang="en" href="https://bidukbiduk.com/?lang=en" />
         <link rel="alternate" hrefLang="ar" href="https://bidukbiduk.com/?lang=ar" />
         <link rel="alternate" hrefLang="zh" href="https://bidukbiduk.com/?lang=zh" />
         <link rel="alternate" hrefLang="fr" href="https://bidukbiduk.com/?lang=fr" />
-        <link rel="alternate" hrefLang="es" href="https://bidukbiduk.com/?lang=es" />
+        <link rel="alternate" hrefLang="es" href="https://bidukbiduk.com/?lang=es" /> */}
         {/* Umami analytics - configurable via env vars */}
         <Script
           src={process.env.NEXT_PUBLIC_UMAMI_SRC || 'https://umami-sigma-ashen.vercel.app/script.js'}
@@ -101,7 +102,7 @@ export default function RootLayout({
             })
           }}
         />
-        
+
         {/* Structured Data - Tourist Destination */}
         <script
           type="application/ld+json"
@@ -125,7 +126,8 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${openSans.variable} ${plantFont.variable} font-sans antialiased`}>
+      {/* Removed openSans.variable from className */}
+      <body className={`${plantFont.variable} font-sans antialiased`}>
         <I18nProvider>
           <Navbar />
           {children}
