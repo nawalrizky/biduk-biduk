@@ -36,6 +36,7 @@ interface LeafletMapProps {
   onMarkerLeave: () => void;
   onMarkerClick: (id: string) => void;
   clickedMarker?: string | null;
+  onMapClick?: () => void;
 }
 
 // Coordinate offset untuk marker (dalam derajat)
@@ -70,6 +71,8 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
   onMarkerHover,
   onMarkerLeave,
   onMarkerClick,
+  clickedMarker,
+  onMapClick,
 }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<LeafletMapType | null>(null);
@@ -221,6 +224,15 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
         });
         map.on('moveend', () => {
           hasUserInteractedRef.current = true;
+        });
+
+        // Clear clicked marker when user clicks on map background
+        map.on('click', () => {
+          try {
+            if (onMapClick) onMapClick();
+          } catch {
+            // Ignore
+          }
         });
 
         // Add tile layer
@@ -376,7 +388,8 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
             markerDataItem.coordinates[1] + MARKER_OFFSET.longitude, // Longitude offset (ke kiri)
           ];
 
-          const customIcon = createCustomIcon(hoveredMarker === markerDataItem.id);
+          const isActive = hoveredMarker === markerDataItem.id || clickedMarker === markerDataItem.id;
+          const customIcon = createCustomIcon(isActive);
           const markerInstance = marker(adjustedCoordinates, {
             icon: customIcon,
           });
@@ -420,6 +433,13 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
               interactive: false, // Prevent tooltip from interfering with zoom
             })
             .bindPopup(popupContent)
+            .on("popupclose", () => {
+              try {
+                if (onMapClick) onMapClick();
+              } catch {
+                // Ignore
+              }
+            })
             .on("mouseover", () => {
               // Prevent tooltip update during zoom
               if (mapInstanceRef.current && !isZoomingRef.current) {
@@ -437,9 +457,20 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
                 // Ignore errors during mouseout
               }
             })
-            .on("click", () => {
+            .on("click", (e: any) => {
+              // Stop event from bubbling to the map
+              if (e && e.originalEvent) {
+                e.originalEvent.stopPropagation();
+              }
               try {
                 onMarkerClick(markerDataItem.id);
+                // Zoom in to the marker location with smooth animation
+                if (mapInstanceRef.current) {
+                  mapInstanceRef.current.flyTo(adjustedCoordinates, 16, {
+                    duration: 1.2,
+                    easeLinearity: 0.25,
+                  });
+                }
               } catch {
                 // Ignore errors during click
               }
@@ -456,6 +487,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
     return () => {
       clearTimeout(updateTimer);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [markerData, hoveredMarker, isMounted, onMarkerHover, onMarkerLeave, onMarkerClick]);
 
   // Update marker icons when hoveredMarker changes
@@ -476,8 +508,10 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
           try {
             const markerDataItem = markerData[index];
             if (markerDataItem && markerInstance && map.hasLayer(markerInstance)) {
-              const isHovered = hoveredMarker === markerDataItem.id;
-              const newIcon = createCustomIcon(isHovered);
+              const isActive =
+                hoveredMarker === markerDataItem.id ||
+                clickedMarker === markerDataItem.id;
+              const newIcon = createCustomIcon(isActive);
               markerInstance.setIcon(newIcon);
             }
           } catch {
@@ -492,7 +526,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
     return () => {
       clearTimeout(iconUpdateTimer);
     };
-  }, [hoveredMarker, markerData]);
+  }, [hoveredMarker, clickedMarker, markerData]);
 
   if (!isMounted) {
     return (

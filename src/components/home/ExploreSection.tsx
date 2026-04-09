@@ -250,6 +250,10 @@ const ExploreSection: React.FC = () => {
     setHoveredMarker(null);
   };
 
+  const handleMapClick = () => {
+    setClickedMarker(null);
+  };
+
   if (!mounted) {
     return (
       <section
@@ -309,6 +313,7 @@ const ExploreSection: React.FC = () => {
                 onMarkerLeave={handleMarkerLeave}
                 onMarkerClick={handleMarkerClick}
                 clickedMarker={clickedMarker}
+                onMapClick={handleMapClick}
               />
             </div>
           </div>

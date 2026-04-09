@@ -59,12 +59,8 @@ How can I assist you with your Biduk-Biduk travel plans today?
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [showClearModal, setShowClearModal] = useState(false);
-  const [userReplyCount, setUserReplyCount] = useState(0);
-  const [hasReachedLimit, setHasReachedLimit] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  const MAX_USER_REPLIES = 10;
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -119,99 +115,14 @@ How can I assist you with your Biduk-Biduk travel plans today?
       timestamp: new Date(),
     };
     setMessages([welcomeMessage]);
-    setUserReplyCount(0);
-    setHasReachedLimit(false);
     setShowClearModal(false);
   };
 
-  // Function to create direct contact message
-  const createDirectContactMessage = (): Message => {
-    const contactText = (() => {
-      switch (currentLanguage) {
-        case 'id':
-          return `Sepertinya Anda membutuhkan informasi lebih detail. Untuk bantuan langsung dan informasi terkini, silakan hubungi:
 
-📞 Pokdarwis Desir: 0812-1000-2190
-📧 Email: bidukbidukpokdarwis@gmail.com
-
-Tim lokal kami akan dengan senang hati membantu Anda merencanakan kunjungan yang sempurna ke Biduk-Biduk!`;
-
-        case 'ar':
-          return `يبدو أنك تحتاج إلى معلومات أكثر تفصيلاً. للحصول على المساعدة المباشرة والمعلومات المحدثة، يرجى الاتصال:
-
-📞 Pokdarwis Desir: 0812-1000-2190
-📧 البريد الإلكتروني: bidukbidukpokdarwis@gmail.com
-
-سيسعد فريقنا المحلي بمساعدتك في التخطيط للزيارة المثالية إلى بيدوك-بيدوك!`;
-
-        case 'zh':
-          return `看起来您需要更详细的信息。如需直接帮助和最新信息，请联系：
-
-📞 Pokdarwis Desir: 0812-1000-2190
-📧 邮箱: bidukbidukpokdarwis@gmail.com
-
-我们的当地团队很乐意帮助您规划完美的Biduk-Biduk之旅！`;
-
-        case 'fr':
-          return `Il semble que vous ayez besoin d'informations plus détaillées. Pour une assistance directe et des informations à jour, veuillez contacter:
-
-📞 Pokdarwis Desir: 0812-1000-2190
-📧 Email: bidukbidukpokdarwis@gmail.com
-
-Notre équipe locale sera ravie de vous aider à planifier la visite parfaite à Biduk-Biduk!`;
-
-        case 'es':
-          return `Parece que necesitas información más detallada. Para asistencia directa e información actualizada, por favor contacta:
-
-📞 Pokdarwis Desir: 0812-1000-2190
-📧 Email: bidukbidukpokdarwis@gmail.com
-
-¡Nuestro equipo local estará encantado de ayudarte a planear la visita perfecta a Biduk-Biduk!`;
-
-        default: // 'en'
-          return `It looks like you need more detailed information. For direct assistance and up-to-date information, please contact:
-
-📞 Pokdarwis Desir: 0812-1000-2190
-📧 Email: bidukbidukpokdarwis@gmail.com
-
-Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`;
-      }
-    })();
-
-    return {
-      id: (Date.now() + 1).toString(),
-      text: contactText,
-      sender: 'bot',
-      timestamp: new Date(),
-    };
-  };
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputText.trim()) return;
-
-
-    if (hasReachedLimit) {
-      const userMessage: Message = {
-        id: Date.now().toString(),
-        text: inputText,
-        sender: 'user',
-        timestamp: new Date(),
-      };
-
-      setMessages(prev => [...prev, userMessage]);
-      setInputText('');
-      setIsTyping(true);
-
-
-      setTimeout(() => {
-        const contactMessage = createDirectContactMessage();
-        setMessages(prev => [...prev, contactMessage]);
-        setIsTyping(false);
-      }, 1000);
-
-      return;
-    }
 
 
     const userMessage: Message = {
@@ -225,21 +136,6 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
     const currentInput = inputText;
     setInputText('');
     setIsTyping(true);
-
-
-    const newReplyCount = userReplyCount + 1;
-    setUserReplyCount(newReplyCount);
-
-
-    if (newReplyCount > MAX_USER_REPLIES) {
-      setHasReachedLimit(true);
-      setTimeout(() => {
-        const contactMessage = createDirectContactMessage();
-        setMessages(prev => [...prev, contactMessage]);
-        setIsTyping(false);
-      }, 1000);
-      return;
-    }
 
     try {
   
@@ -346,26 +242,6 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
   })();
 
   const handleQuickReply = async (reply: string) => {
-    if (hasReachedLimit) {
-      const userMessage: Message = {
-        id: Date.now().toString(),
-        text: reply,
-        sender: 'user',
-        timestamp: new Date(),
-      };
-
-      setMessages(prev => [...prev, userMessage]);
-      setIsTyping(true);
-
-
-      setTimeout(() => {
-        const contactMessage = createDirectContactMessage();
-        setMessages(prev => [...prev, contactMessage]);
-        setIsTyping(false);
-      }, 1000);
-
-      return;
-    }
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -376,17 +252,6 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
 
     setMessages(prev => [...prev, userMessage]);
     setIsTyping(true);
-    const newReplyCount = userReplyCount + 1;
-    setUserReplyCount(newReplyCount);
-    if (newReplyCount > MAX_USER_REPLIES) {
-      setHasReachedLimit(true);
-      setTimeout(() => {
-        const contactMessage = createDirectContactMessage();
-        setMessages(prev => [...prev, contactMessage]);
-        setIsTyping(false);
-      }, 1000);
-      return;
-    }
 
     try {
       const response = await fetch(`${API_BASE_URL}/chatbot/message`, {
@@ -589,39 +454,6 @@ Our local team will be happy to help you plan the perfect visit to Biduk-Biduk!`
 
         {/* Input Area */}
         <div className="p-4">
-          {/* Reply Counter */}
-          {userReplyCount > 0 && !hasReachedLimit && (
-            <div className="mb-2 text-xs text-white/70 font-semibold text-center">
-              {(() => {
-                const remaining = MAX_USER_REPLIES - userReplyCount;
-                const total = MAX_USER_REPLIES;
-                switch (currentLanguage) {
-                  case 'id': return `Sisa percobaan: ${remaining} dari ${total}`;
-                  case 'ar': return `المحاولات المتبقية: ${remaining} من ${total}`;
-                  case 'zh': return `剩余尝试次数: ${remaining} / ${total}`;
-                  case 'fr': return `Tentatives restantes: ${remaining} sur ${total}`;
-                  case 'es': return `Intentos restantes: ${remaining} de ${total}`;
-                  default: return `Remaining attempts: ${remaining} of ${total}`;
-                }
-              })()}
-            </div>
-          )}
-          
-          {/* Reached Limit Message */}
-          {hasReachedLimit && (
-            <div className="mb-2 text-xs text-orange-200 text-center font-medium">
-              {(() => {
-                switch (currentLanguage) {
-                  case 'id': return '⚠️ Batas percobaan tercapai. Pesan selanjutnya akan diarahkan ke kontak langsung.';
-                  case 'ar': return '⚠️ تم الوصول إلى الحد الأقصى للمحاولات. سيتم توجيه الرسائل التالية إلى الاتصال المباشر.';
-                  case 'zh': return '⚠️ 已达到最大尝试次数。下一条消息将转至直接联系。';
-                  case 'fr': return '⚠️ Nombre maximum de tentatives atteint. Les prochains messages seront dirigés vers un contact direct.';
-                  case 'es': return '⚠️ Máximo de intentos alcanzado. Los próximos mensajes serán dirigidos al contacto directo.';
-                  default: return '⚠️ Maximum attempts reached. Next messages will be directed to direct contact.';
-                }
-              })()}
-            </div>
-          )}
           
           <form onSubmit={handleSendMessage} className="flex gap-2 items-end">
             <textarea
