@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Icon, LatLngBounds, Map, tileLayer, geoJSON, marker } from "leaflet";
-import type { Map as LeafletMapType } from "leaflet";
+import type { Map as LeafletMapType, LeafletMouseEvent } from "leaflet";
 
 interface Feature {
   type: "Feature";
@@ -302,7 +302,8 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
         }
       }
     };
-  }, [isMounted]); // Remove center from dependencies - only initialize once
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMounted]); // onMapClick intentionally omitted to prevent map re-initialization
 
   // Update GeoJSON layer when mapData changes
   useEffect(() => {
@@ -457,7 +458,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
                 // Ignore errors during mouseout
               }
             })
-            .on("click", (e: any) => {
+            .on("click", (e: LeafletMouseEvent) => {
               // Stop event from bubbling to the map
               if (e && e.originalEvent) {
                 e.originalEvent.stopPropagation();
